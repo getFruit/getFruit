@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    
+<include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+
+	<com.astuetz.PagerSlidingTabStrip
+	    android:id="@+id/tabs"
+	    android:layout_width="match_parent"
+	    android:layout_height="30dp"
+	    android:layout_below="@+id/common_actionbar" >
+
+    </com.astuetz.PagerSlidingTabStrip>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_above="@+id/buttoms"
+        android:layout_below="@+id/tabs" >
+
+    </android.support.v4.view.ViewPager>
+<LinearLayout
+    android:id="@+id/buttoms"
+    android:layout_width="match_parent"
+    android:layout_height="50dip"
+    android:layout_alignParentBottom="true"
+
+    android:orientation="horizontal"
+    android:paddingBottom="1dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="2dp" >
+
+    <ImageButton
+        android:id="@+id/ib_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/color_all_transparent"
+        android:src="@drawable/button_selector_home" />
+	<ImageButton
+        android:id="@+id/ib_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="3dp"
+        android:background="@color/color_all_transparent"
+        android:src="@drawable/button_selector_category" />
+    <ImageButton
+        android:paddingLeft="3dp"
+        android:id="@+id/ib_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/color_all_transparent"
+        android:src="@drawable/button_selector_person" />
+<ImageButton
+        android:paddingLeft="3dp"
+        android:id="@+id/ib_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/color_all_transparent"
+        android:src="@drawable/button_selector_cart" />
+    <ImageButton
+        android:id="@+id/ib_garden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/color_all_transparent"
+        android:src="@drawable/button_selector_garden" />
+
+    </LinearLayout>
+</RelativeLayout>
+

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.saicmotor.telematicsas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_color_white"
+    android:orientation="vertical"
+    android:paddingRight="0dp" >
+
+    <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+
+    <LinearLayout
+        android:id="@+id/step1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/editText_phone"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:ems="10"
+            android:hint=" 请输入你的手机号"
+            android:inputType="phone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/step2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+         >
+
+        <TextView
+            android:id="@+id/textView_showmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已向 13752525252发送验证码"
+            android:textColor="@color/base_color_gray"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/editText_code"
+                android:layout_width="170dp"
+                android:layout_height="58dp"
+                android:ems="10"
+                android:hint=" 请输入验证码"
+                android:inputType="number" >
+
+                <requestFocus />
+            </EditText>
+
+            <com.get.fruit.view.TimeButton
+                android:id="@+id/bt_getcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="20dp"
+                android:text="重新获取" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/step3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+         >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:layout_margin="20dp"
+            android:text="请填写用户信息" />
+
+        <EditText
+            android:id="@+id/editText_username"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="   用户名 (2-20位)"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/editText_password"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="   密码 (6-20位)"
+            android:inputType="textPassword"
+            android:maxLength="20" />
+
+        <EditText
+            android:id="@+id/editText_password2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="   确认密码"
+            android:inputType="textPassword"
+            android:maxLength="20" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_width="274dp"
+        android:layout_height="50dp"
+        android:layout_margin="25dp"
+        android:layout_gravity="center"
+        android:background="@color/base_color_blue"
+        android:text="下一步"
+        android:textColor="@color/base_color_white"
+        android:textSize="25sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/register_pic" />
+
+</LinearLayout>

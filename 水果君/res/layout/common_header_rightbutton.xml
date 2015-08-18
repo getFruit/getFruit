@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_layout_imagebuttonlayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:padding="6dip"
+     >
+
+    <Button
+        android:id="@+id/headerimagebutton"
+        android:layout_width="50dip"
+        android:layout_height="45dip"
+        android:clickable="false"
+        android:contentDescription="@string/app_name"
+        android:focusable="false"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:background="@color/color_all_transparent"
+        android:textColor="@color/base_color_white"
+        android:textSize="16sp" />
+
+</LinearLayout>

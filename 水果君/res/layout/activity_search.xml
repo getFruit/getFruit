@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+
+    <EditText
+        android:id="@+id/et_inputkeyword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="输入关键字"
+        android:padding="10dp"
+        android:textSize="22sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        style="@style/Smile.TextView._Gray"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/base_color_gray"
+        android:paddingLeft="20dp"
+        android:paddingTop="8dp"
+        android:text="热门搜索词"
+        android:textColor="@color/text_color"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/keywords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <Button
+            android:id="@+id/keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/keyword_shape"
+            android:text="奇异果"
+            android:textColor="@color/keyworld_shape_button"
+            android:textSize="26sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
