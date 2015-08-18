@@ -1,54 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="100dp"
+    android:layout_height="120dp"
     android:layout_marginTop="5dp"
-    android:background="#dddddd"
+    android:background="#F1F1F1"
     android:orientation="horizontal" >
 
     <RadioButton
-        android:id="@+id/radioButton1"
+        android:id="@+id/cart_item_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/cart_item_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/shape_base" />
+        android:layout_gravity="center"
+        android:src="@drawable/test_cart"
+        android:background="@drawable/imageview_shape_layer" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="6dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/cart_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="水果大杂烩"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="简单的文字说明。。。。。。"/>
+            android:id="@+id/cart_item_describe"
+            android:layout_width="111dp"
+            android:layout_height="40dp"
+            android:text="简单的文字说明。。。。。。"
+            android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/base_color_red"
-            android:text="￥" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/base_color_red"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cart_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="55.0"
+                android:textColor="@color/base_color_red"
+                android:textSize="30sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/cart_item_count"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:background="@drawable/edittext_shape"
+        android:ems="3"
+        android:inputType="number"
+        android:gravity="center"
+        android:text="11" >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageButton
+        android:id="@+id/cart_item_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:background="@color/color_all_transparent"
+        android:src="@drawable/cart_choose" />
 
 </LinearLayout>
