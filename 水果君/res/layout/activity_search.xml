@@ -28,7 +28,7 @@
         android:paddingLeft="20dp"
         android:paddingTop="8dp"
         android:text="热门搜索词"
-        android:textColor="@color/text_color"
+        android:textColor="@color/text_color_gray"
         android:textSize="18sp" />
 
     <LinearLayout

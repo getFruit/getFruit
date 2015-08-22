@@ -4,7 +4,8 @@
     android:layout_height="120dp"
     android:layout_marginTop="5dp"
     android:background="#F1F1F1"
-    android:orientation="horizontal" >
+    android:layout_margin="10dp"
+    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.get.fruit">
 
     <RadioButton
         android:id="@+id/cart_item_check"
@@ -12,22 +13,28 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="" />
-
-    <ImageView
+    
+   <!--  <com.get.fruit.view.RoundAngleImageView 
+        app:roundWidth="60dp"
+        app:roundHeight="60dp"
+        android:src="@drawable/test_cart"
+        
+        /> -->
+     <ImageView
         android:id="@+id/cart_item_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:src="@drawable/test_cart"
-        android:background="@drawable/imageview_shape_layer" />
+        />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="102dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="15dp"
         android:orientation="vertical" >
 
         <TextView
@@ -35,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="水果大杂烩"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/cart_item_describe"
@@ -53,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:text="￥"
                 android:textColor="@color/base_color_red"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/cart_item_price"
@@ -72,7 +79,7 @@
         android:layout_width="40dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:background="@drawable/edittext_shape"
+        android:background="@drawable/edittext_shape_rectangle"
         android:ems="3"
         android:inputType="number"
         android:gravity="center"
@@ -87,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/cart_choose" />
 
 </LinearLayout>

@@ -4,14 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * 首�?�项管理
- * 
- * @ClassName: SharePreferenceUtil
- * @Description: TODO
- * @author smile
- * @date 2014-6-10 下午4:20:14
- */
+
 @SuppressLint("CommitPrefEdits")
 public class SharePreferenceUtil {
 	private SharedPreferences mSharedPreferences;
@@ -27,7 +20,6 @@ public class SharePreferenceUtil {
 	private String SHARED_KEY_VOICE = "shared_key_sound";
 	private String SHARED_KEY_VIBRATE = "shared_key_vibrate";
 
-	// 是否允许推�?��?�知
 	public boolean isAllowPushNotify() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_NOTIFY, true);
 	}
@@ -37,7 +29,6 @@ public class SharePreferenceUtil {
 		editor.commit();
 	}
 
-	// 允许声音
 	public boolean isAllowVoice() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_VOICE, true);
 	}
@@ -47,7 +38,6 @@ public class SharePreferenceUtil {
 		editor.commit();
 	}
 
-	// 允许震动
 	public boolean isAllowVibrate() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_VIBRATE, true);
 	}

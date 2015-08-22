@@ -191,8 +191,16 @@
             android:label="@string/title_activity_show_fruit" >
         </activity>
         <activity
-            android:name="com.get.fruit.activity.AddFruitActivity"
+            android:name=".activity.AddFruitActivity"
             android:label="@string/title_activity_add_fruit" >
+        </activity>
+        <activity
+            android:name=".activity.CartActivity"
+            android:label="@string/title_activity_cart" >
+        </activity>
+        <activity
+            android:name="com.get.fruit.activity.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

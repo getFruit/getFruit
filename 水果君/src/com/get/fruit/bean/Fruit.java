@@ -12,7 +12,7 @@ public class Fruit extends BmobObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String name ,color,origin,season,describe;
+	private String number,name ,color,origin,season,describe,taste;
 	private Category category;
 	private String[] function;
 	private Fruiterer fruiterer;
@@ -24,6 +24,19 @@ public class Fruit extends BmobObject implements Serializable {
 	
 	
 	
+
+
+	
+
+	public String getNumber() {
+		return number;
+	}
+
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
 
 
@@ -184,6 +197,18 @@ public class Fruit extends BmobObject implements Serializable {
 
 	public void setPictures(BmobFile[] pictures) {
 		this.pictures = pictures;
+	}
+
+
+
+	public String getTaste() {
+		return taste;
+	}
+
+
+
+	public void setTaste(String taste) {
+		this.taste = taste;
 	}
 	
 	

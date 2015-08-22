@@ -8,12 +8,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 
 public class StringUtils {
-	/**
-	 * �?验邮箱格式是否正�?
-	 * 
-	 * @param target
-	 * @return
-	 */
+
 	public final static boolean isValidEmail(CharSequence target) {
 		if (target == null) {
 			return false;

@@ -214,7 +214,7 @@ public class HeaderLayout extends LinearLayout {
 	}
 	public void setRightButtonAndText(int backid,CharSequence charSequence) {
 		if(backid < 0){
-			mRightImageButton.setBackgroundColor(getResources().getColor(R.color.color_all_transparent));
+			mRightImageButton.setBackgroundColor(getResources().getColor(R.color.base_color_all_transparent));
 		}else{
 			mRightImageButton.setBackgroundResource(backid);
 		}

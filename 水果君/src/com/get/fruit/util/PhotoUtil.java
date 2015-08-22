@@ -21,14 +21,14 @@ import android.media.ThumbnailUtils;
 public class PhotoUtil {
 
 	/**
-	 * 鍥炴敹鍨冨溇 recycle
+	 * 回收垃圾 recycle
 	 * 
 	 * @throws
 	 */
 	public static void recycle(Bitmap bitmap) {
-		// 鍏堝垽鏂槸鍚﹀凡缁忓洖鏀?
+		// 先判断是否已经回收
 		if (bitmap != null && !bitmap.isRecycled()) {
-			// 鍥炴敹骞朵笖缃负null
+			// 回收并且置为null
 			bitmap.recycle();
 			bitmap = null;
 		}
@@ -36,7 +36,7 @@ public class PhotoUtil {
 	}
 
 	/**
-	 * 鑾峰彇鎸囧畾璺緞涓嬬殑鍥剧墖鐨勬寚瀹氬ぇ灏忕殑缂╃暐鍥? getImageThumbnail
+	 * 获取指定路径下的图片的指定大小的缩略图 getImageThumbnail
 	 * 
 	 * @return Bitmap
 	 * @throws
@@ -46,10 +46,10 @@ public class PhotoUtil {
 		Bitmap bitmap = null;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		// 鑾峰彇杩欎釜鍥剧墖鐨勫鍜岄珮锛屾敞鎰忔澶勭殑bitmap涓簄ull
+		// 获取这个图片的宽和高，注意此处的bitmap为null
 		bitmap = BitmapFactory.decodeFile(imagePath, options);
-		options.inJustDecodeBounds = false; // 璁句负 false
-		// 璁＄畻缂╂斁姣?
+		options.inJustDecodeBounds = false; // 设为 false
+		// 计算缩放比
 		int h = options.outHeight;
 		int w = options.outWidth;
 		int beWidth = w / width;
@@ -64,9 +64,9 @@ public class PhotoUtil {
 			be = 1;
 		}
 		options.inSampleSize = be;
-		// 閲嶆柊璇诲叆鍥剧墖锛岃鍙栫缉鏀惧悗鐨刡itmap锛屾敞鎰忚繖娆¤鎶妎ptions.inJustDecodeBounds 璁句负 false
+		// 重新读入图片，读取缩放后的bitmap，注意这次要把options.inJustDecodeBounds 设为 false
 		bitmap = BitmapFactory.decodeFile(imagePath, options);
-		// 鍒╃敤ThumbnailUtils鏉ュ垱寤虹缉鐣ュ浘锛岃繖閲岃鎸囧畾瑕佺缉鏀惧摢涓狟itmap瀵硅薄
+		// 利用ThumbnailUtils来创建缩略图，这里要指定要缩放哪个Bitmap对象
 		bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
 				ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
 		return bitmap;
@@ -75,9 +75,9 @@ public class PhotoUtil {
 	/**
 	 * saveBitmap
 	 * 
-	 * @param @param filename---瀹屾暣鐨勮矾寰勬牸寮?-鍖呭惈鐩綍浠ュ強鏂囦欢鍚?
+	 * @param @param filename---完整的路径格式-包含目录以及文件名
 	 * @param @param bitmap
-	 * @param @param isDelete --鏄惁鍙暀涓?寮?
+	 * @param @param isDelete --是否只留一张
 	 * @return void
 	 * @throws
 	 */
@@ -89,7 +89,7 @@ public class PhotoUtil {
 		}
 
 		File file = new File(dirpath, filename);
-		// 鑻ュ瓨鍦ㄥ嵆鍒犻櫎-榛樿鍙繚鐣欎竴寮?
+		// 若存在即删除-默认只保留一张
 		if (isDelete) {
 			if (file.exists()) {
 				file.delete();
@@ -155,11 +155,11 @@ public class PhotoUtil {
 
 	/**
 	 * 
-	 * 璇诲彇鍥剧墖灞炴?э細鏃嬭浆鐨勮搴?
+	 * 读取图片属性：旋转的角度
 	 * 
 	 * @param path
-	 *            鍥剧墖缁濆璺緞
-	 * @return degree鏃嬭浆鐨勮搴?
+	 *            图片绝对路径
+	 * @return degree旋转的角度
 	 */
 
 	public static int readPictureDegree(String path) {
@@ -188,29 +188,29 @@ public class PhotoUtil {
 	}
 
 	/**
-	 * 鏃嬭浆鍥剧墖涓?瀹氳搴? rotaingImageView
+	 * 旋转图片一定角度 rotaingImageView
 	 * 
 	 * @return Bitmap
 	 * @throws
 	 */
 	public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
-		// 鏃嬭浆鍥剧墖 鍔ㄤ綔
+		// 旋转图片 动作
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
-		// 鍒涘缓鏂扮殑鍥剧墖
+		// 创建新的图片
 		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
 				bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		return resizedBitmap;
 	}
 
 	/**
-	 * 灏嗗浘鐗囧彉涓哄渾瑙?
+	 * 将图片变为圆角
 	 * 
 	 * @param bitmap
-	 *            鍘烞itmap鍥剧墖
+	 *            原Bitmap图片
 	 * @param pixels
-	 *            鍥剧墖鍦嗚鐨勫姬搴?(鍗曚綅:鍍忕礌(px))
-	 * @return 甯︽湁鍦嗚鐨勫浘鐗?(Bitmap 绫诲瀷)
+	 *            图片圆角的弧度(单位:像素(px))
+	 * @return 带有圆角的图片(Bitmap 类型)
 	 */
 	public static Bitmap toRoundCorner(Bitmap bitmap, int pixels) {
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -235,7 +235,7 @@ public class PhotoUtil {
 	}
 
 	/**
-	 * 灏嗗浘鐗囪浆鍖栦负鍦嗗舰澶村儚
+	 * 将图片转化为圆形头像
 	 * 
 	 * @Title: toRoundBitmap
 	 * @throws
@@ -286,16 +286,16 @@ public class PhotoUtil {
 				(int) dst_right, (int) dst_bottom);
 		final RectF rectF = new RectF(dst);
 
-		paint.setAntiAlias(true);// 璁剧疆鐢荤瑪鏃犻敮榻?
+		paint.setAntiAlias(true);// 设置画笔无锯齿
 
-		canvas.drawARGB(0, 0, 0, 0); // 濉厖鏁翠釜Canvas
+		canvas.drawARGB(0, 0, 0, 0); // 填充整个Canvas
 
-		// 浠ヤ笅鏈変袱绉嶆柟娉曠敾鍦?,drawRounRect鍜宒rawCircle
-		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);// 鐢诲渾瑙掔煩褰紝绗竴涓弬鏁颁负鍥惧舰鏄剧ず鍖哄煙锛岀浜屼釜鍙傛暟鍜岀涓変釜鍙傛暟鍒嗗埆鏄按骞冲渾瑙掑崐寰勫拰鍨傜洿鍦嗚鍗婂緞銆?
+		// 以下有两种方法画圆,drawRounRect和drawCircle
+		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);// 画圆角矩形，第一个参数为图形显示区域，第二个参数和第三个参数分别是水平圆角半径和垂直圆角半径。
 		// canvas.drawCircle(roundPx, roundPx, roundPx, paint);
 
-		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));// 璁剧疆涓ゅ紶鍥剧墖鐩镐氦鏃剁殑妯″紡,鍙傝?僪ttp://trylovecatch.iteye.com/blog/1189452
-		canvas.drawBitmap(bitmap, src, dst, paint); // 浠ode.SRC_IN妯″紡鍚堝苟bitmap鍜屽凡缁廳raw浜嗙殑Circle
+		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));// 设置两张图片相交时的模式,参考http://trylovecatch.iteye.com/blog/1189452
+		canvas.drawBitmap(bitmap, src, dst, paint); // 以Mode.SRC_IN模式合并bitmap和已经draw了的Circle
 
 		return output;
 	}

@@ -90,9 +90,12 @@ public abstract class BaseFragment extends Fragment {
 	public void startAnimActivityWithData(Class<?> cla,String key, Serializable value) {
 		Intent intent=new Intent(getActivity(), cla);
 		intent.putExtra(key, value);
-		this.startActivity(new Intent(getActivity(), cla));
+		this.startActivity(intent);
 	}
 
+	public void startAnimActivity(Class<?> cla) {
+		this.startActivity(new Intent(getActivity(), cla));
+	}
 	public void startAnimActivity(Intent intent) {
 		this.startActivity(intent);
 	}

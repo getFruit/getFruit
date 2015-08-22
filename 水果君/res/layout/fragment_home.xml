@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="homeIBClick"
-            android:background="@color/color_all_transparent"
+            android:background="@color/base_color_all_transparent"
             android:src="@drawable/home_recommend" />
 
         <ImageButton
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/color_all_transparent"
+            android:background="@color/base_color_all_transparent"
             
             android:src="@drawable/home_welfare" />
 
@@ -145,7 +145,7 @@
             android:onClick="homeIBClick"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/color_all_transparent"
+            android:background="@color/base_color_all_transparent"
             
             android:src="@drawable/home_shop" />
 
@@ -155,7 +155,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/color_all_transparent"
+            android:background="@color/base_color_all_transparent"
              
             android:src="@drawable/home_chart" />
 
@@ -166,7 +166,7 @@
             android:onClick="homeIBClick"
             
             android:layout_weight="1"
-            android:background="@color/color_all_transparent"
+            android:background="@color/base_color_all_transparent"
             android:src="@drawable/home_lecture" />
     </LinearLayout>
 
@@ -182,7 +182,7 @@
         android:background="@color/base_color_gray"
         android:gravity="center_vertical"
         android:text="水果园"
-        android:textColor="@color/text_color"
+        android:textColor="@color/text_color_gray"
         android:textSize="16sp" />
 
     <GridView

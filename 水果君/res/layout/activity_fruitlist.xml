@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/button_selector_home" />
 	<ImageButton
         android:id="@+id/ib_category"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingLeft="3dp"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/button_selector_category" />
     <ImageButton
         android:paddingLeft="3dp"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/button_selector_person" />
 <ImageButton
         android:paddingLeft="3dp"
@@ -66,14 +66,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/button_selector_cart" />
     <ImageButton
         android:id="@+id/ib_garden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/button_selector_garden" />
 
     </LinearLayout>

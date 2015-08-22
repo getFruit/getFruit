@@ -92,7 +92,9 @@ public class SplashActivity extends BaseActivity {
 				finish();
 				break;
 			case GO_LOGIN:
-				startAnimActivity(LoginActivity.class);
+				startAnimActivity(AddFruitActivity.class);//test
+				//startAnimActivity(LoginActivity.class);
+				
 				finish();
 				break;
 			}

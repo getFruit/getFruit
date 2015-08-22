@@ -15,6 +15,7 @@
  */
 package com.get.fruit.adapter.util;
 
+import android.R.integer;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -125,6 +126,10 @@ public abstract class BaseQuickAdapter<T, H extends BaseAdapterHelper> extends B
     public void add(T elem) {
         data.add(elem);
         notifyDataSetChanged();
+    }
+    public void addTo(int position,T elem) {
+    	data.add(position,elem);
+    	notifyDataSetChanged();
     }
 
     public void addAll(List<T> elem) {

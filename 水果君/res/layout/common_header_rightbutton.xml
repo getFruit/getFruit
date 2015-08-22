@@ -18,7 +18,7 @@
         android:focusable="false"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:textColor="@color/base_color_white"
         android:textSize="16sp" />
 

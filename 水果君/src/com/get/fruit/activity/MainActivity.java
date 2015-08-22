@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity {
 		fCart=new CartFragment();
 		fGarden=new GardenFragment();
 		
-		mFragments=new Fragment[]{fHome,fCategory,fCart,fPerson,fGarden};
+		mFragments=new Fragment[]{fHome,fCategory,fPerson,fCart,fGarden};
 		initTopBarForBoth("Ë®¹û¾ý", R.drawable.base_action_bar_addrees_selector,address,homeLeftListener,
 		
 		R.drawable.base_action_bar_search_selector,  null, new onRightImageButtonClickListener() {

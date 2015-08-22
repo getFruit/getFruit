@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.94"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:paddingLeft="3dp"
         android:src="@drawable/button_selector_home" />
 
@@ -34,7 +34,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="match_parent"
 	    android:layout_weight="0.94"
-	    android:background="@color/color_all_transparent"
+	    android:background="@color/base_color_all_transparent"
 	    android:paddingLeft="3dp"
 	    android:src="@drawable/button_selector_category" />
 
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.94"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:paddingLeft="3dp"
         android:src="@drawable/button_selector_person" />
 
@@ -52,7 +52,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_weight="0.95"
-    android:background="@color/color_all_transparent"
+    android:background="@color/base_color_all_transparent"
     android:paddingLeft="3dp"
     android:src="@drawable/button_selector_cart" />
 
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.95"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         android:src="@drawable/button_selector_garden" />
 
     </LinearLayout>

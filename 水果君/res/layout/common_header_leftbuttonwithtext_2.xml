@@ -3,7 +3,7 @@
     android:id="@+id/header_layout_imagebuttonlayout"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/color_all_transparent"
+    android:background="@color/base_color_all_transparent"
     android:orientation="vertical"
     android:padding="4dp" >
 
@@ -19,7 +19,7 @@
         android:id="@+id/headerimagebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/color_all_transparent"
+        android:background="@color/base_color_all_transparent"
         />
 
 </LinearLayout>
