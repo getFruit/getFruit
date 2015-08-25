@@ -39,7 +39,7 @@
         android:layout_width="268dp"
         android:layout_height="50dp"
         android:layout_margin="35dp"
-        android:background="@color/base_color_blue"
+        android:background="@drawable/button_bg"
         android:text="登陆"
         android:gravity="center"
         android:layout_gravity="center"

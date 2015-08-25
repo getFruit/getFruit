@@ -12,22 +12,22 @@ public class Fruit extends BmobObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String number,name ,color,origin,season,describe,taste;
-	private Category category;
-	private String[] function;
-	private Fruiterer fruiterer;
-	private float price;
-	private double count;
-	private Integer favorite;
-	private BmobFile picture;
-	private BmobFile[] pictures;
+	private String number,describe,origin;//编号,描述,产地
+	private CategoryName categoryName;//种类名称
+	private Color color;//颜色
+	private Season season;//季节
+	private FruitShop shop;//所属商店
+	private float price;//价格
+	private double count;//数量
+	private Integer favorite;//收藏数
+	private BmobFile picture;//主图
+	private BmobFile[] pictures;//附图（可选）
 	
 	
 	
 
 
 	
-
 	public String getNumber() {
 		return number;
 	}
@@ -40,38 +40,38 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 
-	public String getName() {
-		return name;
+	public CategoryName getCategoryName() {
+		return categoryName;
 	}
 
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCategoryName(CategoryName categoryName) {
+		this.categoryName = categoryName;
 	}
 
 
 
-	public Category getCategory() {
-		return category;
-	}
-
-
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-
-
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
 
 
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = color;
+	}
+
+
+
+	public Season getSeason() {
+		return season;
+	}
+
+
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 
@@ -88,18 +88,6 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 
-	public String getSeason() {
-		return season;
-	}
-
-
-
-	public void setSeason(String season) {
-		this.season = season;
-	}
-
-
-
 	public String getDescribe() {
 		return describe;
 	}
@@ -112,26 +100,15 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 
-	public String[] getFunction() {
-		return function;
+
+	public FruitShop getShop() {
+		return shop;
 	}
 
 
 
-	public void setFunction(String[] function) {
-		this.function = function;
-	}
-
-
-
-	public Fruiterer getFruiterer() {
-		return fruiterer;
-	}
-
-
-
-	public void setFruiterer(Fruiterer fruiterer) {
-		this.fruiterer = fruiterer;
+	public void setShop(FruitShop shop) {
+		this.shop = shop;
 	}
 
 
@@ -199,21 +176,33 @@ public class Fruit extends BmobObject implements Serializable {
 		this.pictures = pictures;
 	}
 
-
-
-	public String getTaste() {
-		return taste;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public enum Season{
+		
+		春天, 夏天, 秋天, 冬天
+	}
+	
+	public enum Color{
+		
+		红, 黄, 蓝, 绿, 黑, 白, 紫, 橙
+	}
+	
+	public enum Origin{
+		南方 ,北方 ,西部 ,进口
+	}
+	
+	public enum CategoryName{
+		西瓜, 苹果, 柠檬, 柑橘, 猕猴桃, 樱桃, 葡萄, 草莓, 菠萝, 哈密瓜, 甘蔗, 橙子, 荔枝, 蓝莓, 榴莲, 柚子, 杨桃, 火龙果, 石榴, 香蕉, 木瓜, 梨, 树莓, 杏, 芒果, 桃, 山竹;
 	}
 
-
-
-	public void setTaste(String taste) {
-		this.taste = taste;
-	}
-	
-	
-	
-	
-	
-	
 }

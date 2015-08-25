@@ -38,7 +38,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
  */
 public class App extends Application {
 
-	public static App mInstance;
+	public static App mInstance; 
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 
@@ -51,7 +51,7 @@ public class App extends Application {
 		// 是否开启debug模式--默认开启状态
 		BmobChat.DEBUG_MODE = true;
 		mInstance = this;
-		//init();
+		init();
 	} 
 
 	private void init() {
@@ -101,7 +101,7 @@ public class App extends Application {
 	}
 
 	/**
-	 * 实现实位回调监听
+	 * 实现百度定位回调监听
 	 */
 	public class MyLocationListener implements BDLocationListener {
 
@@ -124,9 +124,7 @@ public class App extends Application {
 
 	/** 初始化ImageLoader */
 	public static void initImageLoader(Context context) {
-		File cacheDir = StorageUtils.getOwnCacheDirectory(context,
-				"bmobim/Cache");// 获取到缓存的目录地址
-		// 创建配置ImageLoader(所有的选项都是可选的,只使用那些你真的想定制)，这个可以设定在APPLACATION里面，设置为全局的配置参数
+		File cacheDir = StorageUtils.getOwnCacheDirectory(context,BmobConstants.MyTempDir);// 获取到缓存的目录地址
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
 				context)
 				// 线程池内加载的数量

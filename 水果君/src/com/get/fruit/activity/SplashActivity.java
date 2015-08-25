@@ -45,16 +45,17 @@ public class SplashActivity extends BaseActivity {
 			ShowToast("當前無網絡連接！");
 		}
 		BmobChat.getInstance(this).init(Config.applicationId);
-		// 开启定位
-		//initLocClient();
-		 //注册地图 SDK 广播监听者
-		IntentFilter iFilter = new IntentFilter();
-		iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
-		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
-		mReceiver = new BaiduReceiver();
-		registerReceiver(mReceiver, iFilter);
-
 		if (userManager.getCurrentUser() != null) {
+			// 开启定位
+			initLocClient();
+			 //注册地图 SDK 广播监听者
+			IntentFilter iFilter = new IntentFilter();
+			iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
+			iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
+			mReceiver = new BaiduReceiver();
+			registerReceiver(mReceiver, iFilter);
+
+			
 			//updateUserInfos();
 			mHandler.sendEmptyMessageDelayed(GO_HOME, 1000);
 		} else {
@@ -92,8 +93,8 @@ public class SplashActivity extends BaseActivity {
 				finish();
 				break;
 			case GO_LOGIN:
-				startAnimActivity(AddFruitActivity.class);//test
-				//startAnimActivity(LoginActivity.class);
+				//startAnimActivity(AddFruitActivity.class);//test
+				startAnimActivity(LoginActivity.class);
 				
 				finish();
 				break;

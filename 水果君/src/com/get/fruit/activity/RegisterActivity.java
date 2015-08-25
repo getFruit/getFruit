@@ -47,6 +47,13 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     		BmobSMS.initialize(this,Config.applicationId);
     		initTopBarForLeft("注册");
     		initView();
+    		/*
+    		//for test
+    		step1.setVisibility(View.GONE);
+    		step2.setVisibility(View.GONE);
+	        step3.setVisibility(View.VISIBLE);
+	        phoneNumber="13312345353";
+	        step=3;*/
     		msavedInstanceState=savedInstanceState;
     	}
 		public void initView() {
@@ -93,12 +100,11 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     		progress.setMessage("正在注册...");
     		progress.setCanceledOnTouchOutside(false);
     		progress.show();
-    		//由于每个应用的注册所需的资料都不一样，故IM sdk未提供注册方法，用户可按照bmod SDK的注册方式进行注册。
-    		//注册的时候需要注意两点：1、User表中绑定设备id和type，2、设备表中绑定username字段
     		final User bu = new User();
     		bu.setUsername(name);
     		bu.setPassword(password);
-    		bu.setPhone(phoneNumber);
+    		bu.setMobilePhoneNumber(phoneNumber);
+    		bu.setMobilePhoneNumberVerified(true);
     		//将user和设备id进行绑定
     		bu.setDeviceType("android");
     		bu.setInstallId(BmobInstallation.getInstallationId(this));
@@ -123,7 +129,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     			public void onFailure(int arg0, String arg1) {
     				// TODO Auto-generated method stub
     				BmobLog.i(arg1);
-    				ShowToast("注册失败:" + arg1);
+    				ShowToast("注册失败:" + arg0+"-"+arg1);
     				progress.dismiss();
     			}
     		});

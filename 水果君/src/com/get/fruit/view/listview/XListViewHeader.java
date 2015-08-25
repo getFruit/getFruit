@@ -52,7 +52,7 @@ public class XListViewHeader extends LinearLayout {
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT, 0);
 		mContainer = (LinearLayout) LayoutInflater.from(context).inflate(
-				R.layout.xlistview_header, null);
+				R.layout.include_xlistview_header, null);
 		addView(mContainer, lp);
 		setGravity(Gravity.BOTTOM);
 

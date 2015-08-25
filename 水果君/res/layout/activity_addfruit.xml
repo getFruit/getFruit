@@ -214,46 +214,6 @@
             android:layout_height="0.8dp"
             android:background="@color/line_color_gray"/>
 		
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp" >
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="口味"
-                android:textColor="@color/text_color_gray"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/add_taste"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:text="酸酸的"
-                android:textColor="@color/text_green"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/add_taste_choose"
-                android:layout_width="40dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@color/base_color_all_transparent"
-                android:src="@drawable/add_choose" />
-        </LinearLayout>
-		<LinearLayout android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="@color/line_color_gray"/>
-		
 		<LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="20dp"
@@ -365,11 +325,21 @@
                 android:background="@drawable/shape_base"
                 android:height="80dp"
                 android:hint="   输入商品详细描述"
+                
                 >
 
             </EditText>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/add_commit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:background="@drawable/button_bg"
+            android:textColor="@color/base_color_white"
+            android:text="提交" />
             
         </LinearLayout>
         

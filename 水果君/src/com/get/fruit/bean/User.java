@@ -3,13 +3,14 @@ package com.get.fruit.bean;
 import java.util.Date;
 
 import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.v3.datatype.BmobGeoPoint;
 
 public class User extends BmobChatUser {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8520852L;
 
 	/**
 	 * //性别-true-男
@@ -18,13 +19,23 @@ public class User extends BmobChatUser {
 	
 	private Date birthday;
 	
-	private String phone;
-	
-	private String school;
+	private String school;//针对学生
 	
 	private String qqNumber;
 	
 	private String realName;
+	
+	private BmobGeoPoint location;
+
+	
+	
+	public BmobGeoPoint getLocation() {
+		return location;
+	}
+
+	public void setLocation(BmobGeoPoint location) {
+		this.location = location;
+	}
 
 	public boolean isSex() {
 		return sex;
@@ -40,14 +51,6 @@ public class User extends BmobChatUser {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public String getSchool() {

@@ -2,6 +2,7 @@ package com.get.fruit.activity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -37,17 +39,22 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 import com.get.fruit.BmobConstants;
 import com.get.fruit.R;
+import com.get.fruit.R.id;
 import com.get.fruit.adapter.util.BaseAdapterHelper;
 import com.get.fruit.adapter.util.QuickAdapter;
+import com.get.fruit.bean.Fruit;
+import com.get.fruit.bean.Fruit.CategoryName;
+import com.get.fruit.bean.Fruit.Season;
 import com.get.fruit.util.PhotoUtil;
 
 public class AddFruitActivity extends BaseActivity implements OnClickListener {
 
 	//private TextView addCategoryTextView,addSeasonTextView,addOriginTextView,addColorTextView;
-	private TextView addTextViews[];
-	private EditText addPriceEditText,addCounEditText,addDescribeEditText;
 	//private ImageButton addPicChoose,addCategoryChoose,addSeasonChoose,addOriginCHoose,addColorChoose;
-	private ImageButton chooseButtons[];
+	private TextView addTextViews[]=new TextView[4];
+	private EditText addPriceEditText,addCounEditText,addDescribeEditText;
+	private ImageButton chooseButtons[]=new ImageButton[4];
+	private Button addCommit;
 	String from = "";
 	private GridView mGridView;
 	private QuickAdapter<Bitmap> mQuickAdapter;
@@ -55,13 +62,28 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	private ScrollView parentScroll;
 	private ScrollView childScroll;
 	public static int currentClickedItem=0;
-	
+	private static Intent intent;
+	private Fruit fruit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addfruit);
-		initView();
 		
+		initView();
+		initData();
+		
+	}
+	/** 
+	* @Title: initData 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void initData() {
+		// TODO Auto-generated method stub
+		intent=new Intent(AddFruitActivity.this,CategorySelectActivity.class);
+		fruit=new Fruit();
 	}
 	/** 
 	* @Title: initView 
@@ -72,20 +94,25 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	*/
 	private void initView() {
 		// TODO Auto-generated method stub
-		initTopBarForLeft("Ìí¼Ó");
+		initTopBarForLeft("æ·»åŠ ");
+		
 		layout_all = (LinearLayout) findViewById(R.id.layout_all);
+		
+		addCommit=(Button) findViewById(R.id.add_commit);
+		addCommit.setOnClickListener(this);
+		addCounEditText=(EditText) findViewById(R.id.add_count);
+		addPriceEditText=(EditText) findViewById(R.id.add_price);
+		addDescribeEditText=(EditText) findViewById(R.id.add_describe);
 		
 		chooseButtons[0]=(ImageButton) findViewById(R.id.add_category_choose);
 		chooseButtons[1]=(ImageButton) findViewById(R.id.add_season_choose);
 		chooseButtons[2]=(ImageButton) findViewById(R.id.add_origin_choose);
 		chooseButtons[3]=(ImageButton) findViewById(R.id.add_color_choose);
-		chooseButtons[4]=(ImageButton) findViewById(R.id.add_taste_choose);
 		
-		addTextViews[0]=(EditText) findViewById(R.id.add_category);
-		addTextViews[1]=(EditText) findViewById(R.id.add_season);
-		addTextViews[2]=(EditText) findViewById(R.id.add_origin);
-		addTextViews[3]=(EditText) findViewById(R.id.add_color);
-		addTextViews[4]=(EditText) findViewById(R.id.add_taste);
+		addTextViews[0]=(TextView) findViewById(R.id.add_category);
+		addTextViews[1]=(TextView) findViewById(R.id.add_season);
+		addTextViews[2]=(TextView) findViewById(R.id.add_origin);
+		addTextViews[3]=(TextView) findViewById(R.id.add_color);
 		for(View v:chooseButtons){
 			v.setOnClickListener(this);
 		}
@@ -97,16 +124,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 			protected void convert(final BaseAdapterHelper helper, final Bitmap item) {
 				helper.setImageBitmap(R.id.item_image, item);
 
-				/*//É¾³ı°´Å¥
-				helper.setOnClickListener(R.id.item_CH, new OnClickListener() {
-					
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-					}
-				});
-				*/
-				//Ìí¼Ó°´Å¥
+				//æ·»åŠ æŒ‰é’®
 				helper.setOnClickListener(R.id.item_image, new OnClickListener() {
 					
 					@Override
@@ -117,7 +135,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 					}
 				});
 				
-				//³¤°´ÊÂ¼ş
+				//é•¿æŒ‰äº‹ä»¶
 				helper.setOnLongClickListener(R.id.item_image, new OnLongClickListener() {
 					
 					@Override
@@ -153,7 +171,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	private View layout_all;
 
 	private void showAvatarPop() {
-		View view = LayoutInflater.from(this).inflate(R.layout.pop_showavator,
+		View view = LayoutInflater.from(this).inflate(R.layout.include_pop_showavator,
 				null);
 		layout_choose = (RelativeLayout) view.findViewById(R.id.layout_choose);
 		layout_photo = (RelativeLayout) view.findViewById(R.id.layout_photo);
@@ -161,7 +179,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View arg0) {
-				ShowLog("µã»÷ÅÄÕÕ");
+				ShowLog("ç‚¹å‡»æ‹ç…§");
 				// TODO Auto-generated method stub
 				layout_choose.setBackgroundColor(getResources().getColor(
 						R.color.base_color_white));
@@ -171,10 +189,10 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				if (!dir.exists()) {
 					dir.mkdirs();
 				}
-				// Ô­Í¼
+				// åŸå›¾
 				File file = new File(dir, new SimpleDateFormat("yyMMddHHmmss")
 						.format(new Date()));
-				filePath = file.getAbsolutePath();// »ñÈ¡ÏàÆ¬µÄ±£´æÂ·¾¶
+				filePath = file.getAbsolutePath();// è·å–ç›¸ç‰‡çš„ä¿å­˜è·¯å¾„
 				Uri imageUri = Uri.fromFile(file);
 
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -188,7 +206,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				ShowLog("µã»÷Ïà²á");
+				ShowLog("ç‚¹å‡»ç›¸å†Œ");
 				layout_photo.setBackgroundColor(getResources().getColor(
 						R.color.base_color_white));
 				layout_choose.setBackgroundDrawable(getResources().getDrawable(
@@ -219,7 +237,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		avatorPop.setFocusable(true);
 		avatorPop.setOutsideTouchable(true);
 		avatorPop.setBackgroundDrawable(new BitmapDrawable());
-		// ¶¯»­Ğ§¹û ´Óµ×²¿µ¯Æğ
+		// åŠ¨ç”»æ•ˆæœ ä»åº•éƒ¨å¼¹èµ·
 		avatorPop.setAnimationStyle(R.style.Animations_GrowFromBottom);
 		avatorPop.showAtLocation(layout_all, Gravity.BOTTOM, 0, 0);
 	}
@@ -253,8 +271,8 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	}
 
 	Bitmap newBitmap;
-	boolean isFromCamera = false;// Çø·ÖÅÄÕÕ
-	int degree = 0;//Ğı×ª
+	boolean isFromCamera = false;// åŒºåˆ†æ‹ç…§
+	int degree = 0;//æ—‹è½¬
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -262,22 +280,22 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA:// ÅÄÕÕĞŞ¸ÄÍ·Ïñ
+		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA:// æ‹ç…§ä¿®æ”¹å¤´åƒ
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
-					ShowToast("SD²»¿ÉÓÃ");
+					ShowToast("SDä¸å¯ç”¨");
 					return;
 				}
 				isFromCamera = true;
 				File file = new File(filePath);
 				degree = PhotoUtil.readPictureDegree(file.getAbsolutePath());
-				Log.i("life", "ÅÄÕÕºóµÄ½Ç¶È£º" + degree);
+				Log.i("life", "æ‹ç…§åçš„è§’åº¦ï¼š" + degree);
 				startImageAction(Uri.fromFile(file), 200, 200,
 						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
 			}
 			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION:// ±¾µØĞŞ¸ÄÍ·Ïñ
+		case BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION:// æœ¬åœ°ä¿®æ”¹å¤´åƒ
 			if (avatorPop != null) {
 				avatorPop.dismiss();
 			}
@@ -288,7 +306,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
-					ShowToast("SD²»¿ÉÓÃ");
+					ShowToast("SDä¸å¯ç”¨");
 					return;
 				}
 				isFromCamera = false;
@@ -296,34 +314,52 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				startImageAction(uri, 200, 200,
 						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
 			} else {
-				ShowToast("ÕÕÆ¬»ñÈ¡Ê§°Ü");
+				ShowToast("ç…§ç‰‡è·å–å¤±è´¥");
 			}
 
 			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP:// ²Ã¼ôÍ·Ïñ·µ»Ø
+		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP:// è£å‰ªå¤´åƒè¿”å›
 			// TODO sent to crop
 			if (avatorPop != null) {
 				avatorPop.dismiss();
 			}
 			if (data == null) {
-				//È¡ÏûÑ¡Ôñ
+				//å–æ¶ˆé€‰æ‹©
 				return;
 			} else {
 				saveCropAvator(data);
 			}
-			// ³õÊ¼»¯ÎÄ¼şÂ·¾¶
+			// åˆå§‹åŒ–æ–‡ä»¶è·¯å¾„
 			filePath = "";
-			// ÉÏ´«Í·Ïñ
+			// ä¸Šä¼ å¤´åƒ
 			//uploadAvatar();
 			break;
 			
-		case BmobConstants.REQUESTCODE_FROM_ADDFRUIT:
+		case BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY:
 			if (resultCode == RESULT_OK) {
 				if (data==null) {
 					break;
 				}
-				data.getIntExtra("witch",-1);
-				//hear
+				
+				switch (data.getIntExtra("witch",-1)) {
+				case 0:
+					addTextViews[0].setText(data.getStringExtra("value"));
+					fruit.setCategoryName((CategoryName) data.getSerializableExtra("value"));
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+			break;
+		case BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORADDRESS:
+			if (resultCode == RESULT_OK) {
+				if (data==null) {
+					break;
+				}
+				addTextViews[2].setText(data.getStringExtra("address"));
+				fruit.setOrigin((String) data.getStringExtra("fullAddress"));
 			}
 			
 			break;
@@ -333,16 +369,18 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+
+	
 	private void uploadAvatar() {
-		BmobLog.i("Í·ÏñµØÖ·£º" + path);
+		BmobLog.i("å¤´åƒåœ°å€ï¼š" + path);
 		final BmobFile bmobFile = new BmobFile(new File(path));
 		bmobFile.upload(this, new UploadFileListener() {
 
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				String url = bmobFile.getFileUrl();
-				// ¸üĞÂBmobUser¶ÔÏó
+				String url = bmobFile.getUrl();
+				// æ›´æ–°BmobUserå¯¹è±¡
 			}
 
 			@Override
@@ -354,7 +392,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onFailure(int arg0, String msg) {
 				// TODO Auto-generated method stub
-				ShowToast("Í·ÏñÉÏ´«Ê§°Ü£º" + msg);
+				ShowToast("å¤´åƒä¸Šä¼ å¤±è´¥ï¼š" + msg);
 			}
 		});
 	}
@@ -364,7 +402,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	String path;
 
 	/**
-	 * ±£´æ²Ã¼ôµÄÍ·Ïñ
+	 * ä¿å­˜è£å‰ªçš„å¤´åƒ
 	 * 
 	 * @param data
 	 */
@@ -402,13 +440,38 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
+		case R.id.add_origin_choose:
+			startActivityForResult(new Intent(AddFruitActivity.this,LocationActivity.class), BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORADDRESS);
+			return;
 		case R.id.add_category_choose:
-			//startActivityForResult(intent, requestCode, options)
+			intent.putExtra("for", "ç§ç±»");
+			startActivityForResult(intent, BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY);
+			break;
+		case R.id.add_season_choose:
+			intent.putExtra("for", "å­£èŠ‚");
+			startActivityForResult(intent, BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY);
+			break;
+		case R.id.add_color_choose:
+			intent.putExtra("for", "é¢œè‰²");
+			startActivityForResult(intent, BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY);
 			break;
 
+		case R.id.add_commit:
+			commt();
 		default:
 			break;
 		}
+	}
+	/** 
+	* @Title: commt 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void commt() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
