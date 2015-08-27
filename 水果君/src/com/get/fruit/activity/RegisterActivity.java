@@ -22,6 +22,7 @@ import cn.bmob.v3.listener.SaveListener;
 import com.get.fruit.BmobConstants;
 import com.get.fruit.Config;
 import com.get.fruit.R;
+import com.get.fruit.bean.FruitShop;
 import com.get.fruit.bean.User;
 import com.get.fruit.util.CommonUtils;
 import com.get.fruit.util.StringUtils;
@@ -110,31 +111,32 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
     		bu.setInstallId(BmobInstallation.getInstallationId(this));
     		bu.signUp(RegisterActivity.this, new SaveListener() {
 
-    			@Override
-    			public void onSuccess() {
-    				// TODO Auto-generated method stub
-    				progress.dismiss();
-    				ShowToast("注册成功");
-    				// 将设备与username进行绑定
-    				userManager.bindInstallationForRegister(bu.getUsername());
-    				sendBroadcast(new Intent(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
-    				// 启动主页
-    				Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-    				startActivity(intent);
-    				finish();
-    				
-    			}
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				progress.dismiss();
+				ShowToast("用户注册成功");
+				// 将设备与username进行绑定
+				userManager.bindInstallationForRegister(bu.getUsername());
+				
+				
+				// 启动主页
+				sendBroadcast(new Intent(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
+				Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+				startActivity(intent);
+				finish();	
+				
+			}
 
-    			@Override
-    			public void onFailure(int arg0, String arg1) {
-    				// TODO Auto-generated method stub
-    				BmobLog.i(arg1);
-    				ShowToast("注册失败:" + arg0+"-"+arg1);
-    				progress.dismiss();
-    			}
-    		});
-    	}
-
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				BmobLog.i(arg1);
+				ShowToast("注册失败:" + arg0+"-"+arg1);
+				progress.dismiss();
+			}
+		});
+	}
 		/* (non-Javadoc)
 		 * @see android.view.View.OnClickListener#onClick(android.view.View)
 		 */
@@ -145,7 +147,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 			switch (step) {
 			case 1:
 				phoneNumber = et_phone.getText().toString();
-				if(!StringUtils.isPhoneNumberValid(phoneNumber)){
+				if(!StringUtils.isPhone(phoneNumber)){
 					ShowToast("电话号码不正确！");
 					break;
 				}

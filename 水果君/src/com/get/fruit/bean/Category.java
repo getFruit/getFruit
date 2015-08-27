@@ -8,6 +8,10 @@
 */
 package com.get.fruit.bean;
 
+import java.io.Serializable;
+
+import cn.bmob.v3.BmobObject;
+
 /** 
  * @ClassName: Category 
  * @Description: TODO
@@ -16,10 +20,14 @@ package com.get.fruit.bean;
  *  
  */
 
-public class Category {
+public class Category  extends BmobObject implements Serializable{
+	
+	private static final long serialVersionUID = 85208520L;
+	
 	private String categoryName;
 	private String[] functions;
 	private Taste taste;
+	
 	
 	
 	

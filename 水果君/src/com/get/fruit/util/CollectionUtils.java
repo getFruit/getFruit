@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.push.a.t;
 
 public class CollectionUtils {
 
@@ -19,12 +20,6 @@ public class CollectionUtils {
 		return false;
 	}
 
-	/**
-	 * list转map 以用户名为key
-	 * 
-	 * @return Map<String,BmobChatUser>
-	 * @throws
-	 */
 	public static Map<String, BmobChatUser> list2map(List<BmobChatUser> users) {
 		Map<String, BmobChatUser> friends = new HashMap<String, BmobChatUser>();
 		for (BmobChatUser user : users) {
@@ -34,8 +29,6 @@ public class CollectionUtils {
 	}
 
 	/**
-	 * map转list
-	 * 
 	 * @Title: map2list
 	 * @return List<BmobChatUser>
 	 * @throws
@@ -50,4 +43,5 @@ public class CollectionUtils {
 		}
 		return users;
 	}
+	
 }

@@ -1,9 +1,10 @@
 package com.get.fruit.bean;
 
-import java.util.Date;
-
 import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+
+import com.bmob.BmobProFile;
 
 public class User extends BmobChatUser {
 
@@ -17,7 +18,7 @@ public class User extends BmobChatUser {
 	 */
 	private boolean sex;
 	
-	private Date birthday;
+	private BmobDate birthday;
 	
 	private String school;//Õë¶ÔÑ§Éú
 	
@@ -27,7 +28,6 @@ public class User extends BmobChatUser {
 	
 	private BmobGeoPoint location;
 
-	
 	
 	public BmobGeoPoint getLocation() {
 		return location;
@@ -45,11 +45,11 @@ public class User extends BmobChatUser {
 		this.sex = sex;
 	}
 
-	public Date getBirthday() {
+	public BmobDate getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(BmobDate birthday) {
 		this.birthday = birthday;
 	}
 
@@ -77,6 +77,8 @@ public class User extends BmobChatUser {
 		this.realName = realName;
 	}
 
+	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

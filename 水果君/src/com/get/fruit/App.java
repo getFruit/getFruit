@@ -12,13 +12,18 @@ import android.preference.PreferenceManager;
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.util.BmobLog;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.listener.SaveListener;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.bmob.BmobConfiguration;
+import com.bmob.BmobPro;
+import com.get.fruit.bean.FruitShop;
 import com.get.fruit.bean.User;
 import com.get.fruit.util.SharePreferenceUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -44,6 +49,7 @@ public class App extends Application {
 
 	public static BmobGeoPoint lastPoint = null;// 上一次定位到的经纬度
 
+	private static FruitShop myshop=null;
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -52,13 +58,27 @@ public class App extends Application {
 		BmobChat.DEBUG_MODE = true;
 		mInstance = this;
 		init();
-	} 
+	}
 
 	private void init() {
 		mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
 		mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
 		initImageLoader(getApplicationContext());
+		initBmobPro();
 		initBaidu();
+	}
+
+	/** 
+	* @Title: initBmobPro 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void initBmobPro() {
+		// TODO Auto-generated method stub
+		BmobConfiguration config = new BmobConfiguration.Builder(mInstance).customExternalCacheDir("水果君").build();
+		BmobPro.getInstance(mInstance).initConfig(config);
 	}
 
 	public User getCurrentUser() {
@@ -67,6 +87,19 @@ public class App extends Application {
 			return user;
 		}
 		return null;
+	}
+
+	public FruitShop getMyShop(){
+		return myshop;
+	}
+	
+	
+	public static FruitShop getMyshop() {
+		return myshop;
+	}
+
+	public static void setMyshop(FruitShop myshop) {
+		App.myshop = myshop;
 	}
 
 	/**

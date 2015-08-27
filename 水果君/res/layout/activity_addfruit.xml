@@ -18,6 +18,16 @@
         android:text="商品信息上传"
         android:textColor="@color/base_color_blue" />
 
+    <EditText
+        android:id="@+id/add_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="名称：（默认为水果种类）"
+        android:textColor="@color/base_color_blue"
+        android:textSize="20sp">
+        <requestFocus />
+    </EditText>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

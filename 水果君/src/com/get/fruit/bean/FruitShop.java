@@ -10,7 +10,9 @@ package com.get.fruit.bean;
 
 import java.io.Serializable;
 
+import cn.bmob.im.util.BmobUtils;
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
 /** 
@@ -29,11 +31,31 @@ public class FruitShop extends BmobObject implements Serializable{
 	
 	private String name,address;//店名，地址（省-市-县）
 	private User owner;//老板
-	private Integer rank ; //等级
-	private double  sale;  //销量
+	private Integer rank=1 ; //等级
+	private double  sale=0.0;  //销量
 	private BmobGeoPoint location;//具体坐标
 	
 	
+	
+	public FruitShop(String name, String address, User owner) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.owner = owner;
+	}
+	
+	
+	public FruitShop(String name, User owner, String address, Integer rank,
+			double sale) {
+		super();
+		this.name = name;
+		this.owner = owner;
+		this.address = address;
+		this.rank = rank;
+		this.sale = sale;
+	}
+
+
 	public String getName() {
 		return name;
 	}

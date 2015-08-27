@@ -27,13 +27,12 @@ public class BmobConstants {
 	/**
 	 * 拍照回调
 	 */
-	public static final int REQUESTCODE_UPLOADAVATAR_CAMERA = 1;//拍照修改头像
-	public static final int REQUESTCODE_UPLOADAVATAR_LOCATION = 2;//本地相册修改头像
-	public static final int REQUESTCODE_UPLOADAVATAR_CROP = 3;//系统裁剪头像
 	
 	public static final int REQUESTCODE_TAKE_CAMERA = 0x000001;//拍照
 	public static final int REQUESTCODE_TAKE_LOCAL = 0x000002;//本地图片
-	public static final int REQUESTCODE_TAKE_LOCATION = 0x000003;//位置
+	public static final int REQUESTCODE_PICTURE_CROP =0x000003;//系统裁剪头像
+	
+	public static final int REQUESTCODE_TAKE_LOCATION = 0x000004;//位置选择
 	
 	
 	public static final int REQUESTCODE_FROM_ADDFRUIT_FORADDRESS = 0x000006;//商品上传分类调用

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,38 +35,53 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.bmob.im.util.BmobLog;
+import cn.bmob.im.util.BmobUtils;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.UploadFileListener;
+import cn.bmob.v3.listener.SaveListener;
 
+import com.bmob.BmobProFile;
+import com.bmob.btp.callback.UploadBatchListener;
+import com.get.fruit.App;
 import com.get.fruit.BmobConstants;
 import com.get.fruit.R;
-import com.get.fruit.R.id;
 import com.get.fruit.adapter.util.BaseAdapterHelper;
 import com.get.fruit.adapter.util.QuickAdapter;
 import com.get.fruit.bean.Fruit;
 import com.get.fruit.bean.Fruit.CategoryName;
+import com.get.fruit.bean.Fruit.Color;
 import com.get.fruit.bean.Fruit.Season;
+import com.get.fruit.bean.FruitShop;
 import com.get.fruit.util.PhotoUtil;
+import com.get.fruit.util.StringUtils;
 
 public class AddFruitActivity extends BaseActivity implements OnClickListener {
 
 	//private TextView addCategoryTextView,addSeasonTextView,addOriginTextView,addColorTextView;
 	//private ImageButton addPicChoose,addCategoryChoose,addSeasonChoose,addOriginCHoose,addColorChoose;
 	private TextView addTextViews[]=new TextView[4];
-	private EditText addPriceEditText,addCounEditText,addDescribeEditText;
+	private EditText addPriceEditText,addCounEditText,addDescribeEditText,addNameEditText;
 	private ImageButton chooseButtons[]=new ImageButton[4];
 	private Button addCommit;
 	String from = "";
 	private GridView mGridView;
 	private QuickAdapter<Bitmap> mQuickAdapter;
-	private List<String> pics=new LinkedList<String>();
+	private List<String> pics=new LinkedList();
 	private ScrollView parentScroll;
 	private ScrollView childScroll;
 	public static int currentClickedItem=0;
 	private static Intent intent;
 	private Fruit fruit;
+	static FruitShop shop;
+	
+
+
+
+
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addfruit);
 		
@@ -81,9 +97,26 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	* @throws 
 	*/
 	private void initData() {
-		// TODO Auto-generated method stub
+		/*
+		shop=new FruitShop("小小水果",App.mInstance.getCurrentUser(), "贵州省-遵义市-遵义县", 1,0.0);
+		shop.save(AddFruitActivity.this, new SaveListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				ShowToast("商店注册ok");
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				BmobLog.i(arg1);
+				ShowToast("商店注册失败:" + arg0+"-"+arg1);
+			}
+		});
+		*/
 		intent=new Intent(AddFruitActivity.this,CategorySelectActivity.class);
-		fruit=new Fruit();
+		fruit=new Fruit(App.mInstance.getMyShop());
 	}
 	/** 
 	* @Title: initView 
@@ -103,7 +136,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		addCounEditText=(EditText) findViewById(R.id.add_count);
 		addPriceEditText=(EditText) findViewById(R.id.add_price);
 		addDescribeEditText=(EditText) findViewById(R.id.add_describe);
-		
+		addNameEditText=(EditText) findViewById(R.id.add_name);
 		chooseButtons[0]=(ImageButton) findViewById(R.id.add_category_choose);
 		chooseButtons[1]=(ImageButton) findViewById(R.id.add_season_choose);
 		chooseButtons[2]=(ImageButton) findViewById(R.id.add_origin_choose);
@@ -140,8 +173,6 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public boolean onLongClick(View arg0) {
-						ShowLog(helper.getPosition()+"p");
-						ShowLog(mQuickAdapter.getCount()+"c");
 						if (helper.getPosition()==mQuickAdapter.getCount()-1) {
 							return false;
 						}
@@ -166,7 +197,6 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	RelativeLayout layout_choose;
 	RelativeLayout layout_photo;
 	PopupWindow avatorPop;
-
 	public String filePath = "";
 	private View layout_all;
 
@@ -198,7 +228,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 				startActivityForResult(intent,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA);
+						BmobConstants.REQUESTCODE_TAKE_CAMERA);
 			}
 		});
 		layout_choose.setOnClickListener(new OnClickListener() {
@@ -215,7 +245,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				intent.setDataAndType(
 						MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 				startActivityForResult(intent,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION);
+						BmobConstants.REQUESTCODE_TAKE_LOCAL);
 			}
 		});
 
@@ -280,7 +310,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CAMERA:// 拍照修改头像
+		case BmobConstants.REQUESTCODE_TAKE_CAMERA://相机返回
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
@@ -292,10 +322,10 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				degree = PhotoUtil.readPictureDegree(file.getAbsolutePath());
 				Log.i("life", "拍照后的角度：" + degree);
 				startImageAction(Uri.fromFile(file), 200, 200,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
+						BmobConstants.REQUESTCODE_PICTURE_CROP, true);
 			}
 			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_LOCATION:// 本地修改头像
+		case BmobConstants.REQUESTCODE_TAKE_LOCAL:// 本地相册返回
 			if (avatorPop != null) {
 				avatorPop.dismiss();
 			}
@@ -312,13 +342,13 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				isFromCamera = false;
 				uri = data.getData();
 				startImageAction(uri, 200, 200,
-						BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP, true);
+						BmobConstants.REQUESTCODE_PICTURE_CROP, true);
 			} else {
 				ShowToast("照片获取失败");
 			}
 
 			break;
-		case BmobConstants.REQUESTCODE_UPLOADAVATAR_CROP:// 裁剪头像返回
+		case BmobConstants.REQUESTCODE_PICTURE_CROP:// 裁剪头像返回
 			// TODO sent to crop
 			if (avatorPop != null) {
 				avatorPop.dismiss();
@@ -327,12 +357,8 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				//取消选择
 				return;
 			} else {
-				saveCropAvator(data);
+				saveCropedPicturer(data);
 			}
-			// 初始化文件路径
-			filePath = "";
-			// 上传头像
-			//uploadAvatar();
 			break;
 			
 		case BmobConstants.REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY:
@@ -345,6 +371,14 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				case 0:
 					addTextViews[0].setText(data.getStringExtra("value"));
 					fruit.setCategoryName((CategoryName) data.getSerializableExtra("value"));
+					break;
+				case 1:
+					addTextViews[1].setText(data.getStringExtra("value"));
+					fruit.setSeason((Season) data.getSerializableExtra("value"));
+					break;
+				case 3:
+					addTextViews[3].setText(data.getStringExtra("value"));
+					fruit.setColor((Color) data.getSerializableExtra("value"));
 					break;
 
 				default:
@@ -371,51 +405,24 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 
 
 	
-	private void uploadAvatar() {
-		BmobLog.i("头像地址：" + path);
-		final BmobFile bmobFile = new BmobFile(new File(path));
-		bmobFile.upload(this, new UploadFileListener() {
-
-			@Override
-			public void onSuccess() {
-				// TODO Auto-generated method stub
-				String url = bmobFile.getUrl();
-				// 更新BmobUser对象
-			}
-
-			@Override
-			public void onProgress(Integer arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onFailure(int arg0, String msg) {
-				// TODO Auto-generated method stub
-				ShowToast("头像上传失败：" + msg);
-			}
-		});
-	}
-
-
-	
-	String path;
 
 	/**
-	 * 保存裁剪的头像
+	 * 处理裁剪后的图像
 	 * 
 	 * @param data
 	 */
-	private void saveCropAvator(Intent data) {
+	String path;
+	private void saveCropedPicturer(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
 			Bitmap bitmap = extras.getParcelable("data");
 			Log.i("life", "avatar - bitmap = " + bitmap);
 			if (bitmap != null) {
-				String filename = new SimpleDateFormat("yyMMddHHmmss").format(new Date());
-				path = BmobConstants.MyAvatarDir + filename;
+				String filename = new SimpleDateFormat("yyMMddHHmmss").format(new Date())+".jpg";
 				PhotoUtil.saveBitmap(BmobConstants.MyTempDir, filename,bitmap, true);
-				pics.add(currentClickedItem, path);
+				ShowLog(BmobConstants.MyTempDir+filename);
+				path=BmobConstants.MyTempDir+filename;
+				pics.add(currentClickedItem,path);
 				bitmap = PhotoUtil.toRoundCorner(bitmap, 40);
 				if (currentClickedItem!=mQuickAdapter.getCount()-1) {
 					
@@ -427,7 +434,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				if (isFromCamera && degree != 0) {
 					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
 				}
-				ShowLog((String.valueOf(bitmap==null)));
+				ShowLog("bitmap==null  ->"+(String.valueOf(bitmap==null)));
 				if (bitmap != null && bitmap.isRecycled()) {
 					bitmap.recycle();
 				}
@@ -469,9 +476,109 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	* @return void
 	* @throws 
 	*/
+	int i=0;
 	private void commt() {
-		// TODO Auto-generated method stub
+		uploadSuccessed=3;
+		i++;
+		fruit.setCategoryName(CategoryName.哈密瓜);
+		fruit.setColor(Color.橙);
+		fruit.setName("水果 "+i);
+		fruit.setCount(123+i*10);
+		fruit.setPrice((float) (1.2+i));
+		fruit.setSeason(Season.冬天);
+		fruit.setDescribe("rweqeqweqewqeqnluinkjklnjklnjk"+i);
+		fruit.setNumber(123123122+i+"");
+		/*
+		float price=Float.valueOf(addPriceEditText.getText().toString());
+		double count =Double.valueOf(addCounEditText.getText().toString());
+		
+		try {
+			fruit.setPrice(price);
+			fruit.setCount(count);
+		} catch (Exception e) {
+			ShowToast("价格和数量输入不合法");
+			
+			return;
+		}
+		
+		
+		if(StringUtils.isEmptys(new String[]{fruit.getCategoryName().toString(),fruit.getColor().toString(),fruit.getSeason().toString(),fruit.getOrigin().toString()})){
+			ShowToast("请完善信息");
+			return;
+		}
+		String name=addNameEditText.getText().toString();
+		fruit.setName(StringUtils.isEmpty(name)?fruit.getCategoryName().toString():name);
+		*/
+		
+		addCommit.setClickable(false);
+		ShowLog(" 正在上传...");
+		uploadPics();
+		while(0<uploadSuccessed&&uploadSuccessed<1){
+			addCommit.setText(uploadSuccessed+" 正在上传...");
+			try {
+				ShowLog(Thread.currentThread().getName()+" 正在等待上传...");
+
+				Thread.currentThread();
+				Thread.sleep(500);
+				//test
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (uploadSuccessed==0) {
+			addCommit.setText("上传失败");
+			addCommit.setClickable(true);
+			return;
+			
+		}
+		ShowLog("save....");
+		fruit.save(this, new SaveListener() {
+		    @Override
+		    public void onSuccess() {
+		        // TODO Auto-generated method stub
+		    	ShowLog("添加成功");
+		    }
+		    @Override
+		    public void onFailure(int code, String msg) {
+		        // TODO Auto-generated method stub
+		    	ShowLog("添加失败:"+msg);
+		    }
+		});
+		
+		fruit=new Fruit(shop);
+		addCommit.setClickable(true);
 		
 	}
+	
+	
+	//上传图片
+	static int uploadSuccessed=3;
+	private void uploadPics() {
+		BmobProFile.getInstance(this).uploadBatch(pics.toArray(new String[pics.size()]), new UploadBatchListener() {
+
+            @SuppressLint("NewApi")
+			@Override
+            public void onSuccess(boolean isFinish,String[] fileNames,String[] urls,BmobFile[] files) {
+            	fruit.setPictures(Arrays.copyOfRange(fileNames, 1, fileNames.length));
+            	uploadSuccessed=1;
+            	ShowLog("批量上传成功");
+            }
+
+            @Override
+            public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {
+            	uploadSuccessed=totalPercent;
+				ShowLog(Thread.currentThread().getName()+" 正在上传...");
+                ShowLog("onProgress :"+curIndex+"---"+curPercent+"---"+total+"----"+totalPercent);
+            }
+
+            @Override
+            public void onError(int statuscode, String errormsg) {
+                // TODO Auto-generated method stub
+            	uploadSuccessed=0;
+            	ShowLog("批量上传出错："+statuscode+"--"+errormsg);
+            }
+        });
+    }
 
 }

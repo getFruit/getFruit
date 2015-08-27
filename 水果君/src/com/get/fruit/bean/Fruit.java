@@ -3,7 +3,7 @@ package com.get.fruit.bean;
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobRelation;
 
 public class Fruit extends BmobObject implements Serializable {
 
@@ -12,22 +12,44 @@ public class Fruit extends BmobObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String number,describe,origin;//编号,描述,产地
+	private String number,name,describe,origin;//编号,描述,产地
 	private CategoryName categoryName;//种类名称
 	private Color color;//颜色
 	private Season season;//季节
 	private FruitShop shop;//所属商店
 	private float price;//价格
 	private double count;//数量
-	private Integer favorite;//收藏数
-	private BmobFile picture;//主图
-	private BmobFile[] pictures;//附图（可选）
+	private BmobRelation likes;//收藏的用户
+	private String picture;//主图(filename)
+	private String[] pictures;//附图（可选）
 	
 	
 	
 
+	
 
 	
+	public Fruit(FruitShop shop) {
+		this.shop = shop;
+	}
+
+
+
+	
+	public String getName() {
+		return name;
+	}
+
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+
 	public String getNumber() {
 		return number;
 	}
@@ -137,14 +159,16 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 
-	public Integer getFavorite() {
-		return favorite;
+
+
+	public BmobRelation getLikes() {
+		return likes;
 	}
 
 
 
-	public void setFavorite(Integer favorite) {
-		this.favorite = favorite;
+	public void setLikes(BmobRelation likes) {
+		this.likes = likes;
 	}
 
 
@@ -154,25 +178,25 @@ public class Fruit extends BmobObject implements Serializable {
 	}
 	
 	
-	public BmobFile getPicture() {
+	public String getPicture() {
 		return picture;
 	}
 
 
 
-	public void setPicture(BmobFile picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 
 
 
-	public BmobFile[] getPictures() {
+	public String[] getPictures() {
 		return pictures;
 	}
 
 
 
-	public void setPictures(BmobFile[] pictures) {
+	public void setPictures(String[] pictures) {
 		this.pictures = pictures;
 	}
 

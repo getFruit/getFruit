@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import cn.bmob.im.bean.BmobChatUser;
@@ -68,6 +70,14 @@ public class LoginActivity extends BaseActivity{
 		usernameEditText = (EditText) findViewById(R.id.editText_username_login);
 		passwordEditText = (EditText) findViewById(R.id.editText_password_login);
 		loginButton = (Button) findViewById(R.id.bt_login);
+		loginButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				login();
+			}
+		});
 		
 	}
 
@@ -136,7 +146,13 @@ public class LoginActivity extends BaseActivity{
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		unregisterReceiver(receiver);
+		
+		try {
+			unregisterReceiver(receiver);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
