@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,8 +35,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import cn.bmob.im.util.BmobLog;
-import cn.bmob.im.util.BmobUtils;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -46,13 +45,14 @@ import com.get.fruit.BmobConstants;
 import com.get.fruit.R;
 import com.get.fruit.adapter.util.BaseAdapterHelper;
 import com.get.fruit.adapter.util.QuickAdapter;
+import com.get.fruit.bean.Category;
 import com.get.fruit.bean.Fruit;
-import com.get.fruit.bean.Fruit.CategoryName;
 import com.get.fruit.bean.Fruit.Color;
 import com.get.fruit.bean.Fruit.Season;
 import com.get.fruit.bean.FruitShop;
 import com.get.fruit.util.PhotoUtil;
 import com.get.fruit.util.StringUtils;
+import com.google.gson.Gson;
 
 public class AddFruitActivity extends BaseActivity implements OnClickListener {
 
@@ -62,7 +62,6 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	private EditText addPriceEditText,addCounEditText,addDescribeEditText,addNameEditText;
 	private ImageButton chooseButtons[]=new ImageButton[4];
 	private Button addCommit;
-	String from = "";
 	private GridView mGridView;
 	private QuickAdapter<Bitmap> mQuickAdapter;
 	private List<String> pics=new LinkedList();
@@ -71,14 +70,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	public static int currentClickedItem=0;
 	private static Intent intent;
 	private Fruit fruit;
-	static FruitShop shop;
-	
-
-
-
-
-	
-	
+	private static FruitShop shop=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -97,26 +89,8 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	* @throws 
 	*/
 	private void initData() {
-		/*
-		shop=new FruitShop("小小水果",App.mInstance.getCurrentUser(), "贵州省-遵义市-遵义县", 1,0.0);
-		shop.save(AddFruitActivity.this, new SaveListener() {
-			
-			@Override
-			public void onSuccess() {
-				// TODO Auto-generated method stub
-				ShowToast("商店注册ok");
-			}
-			
-			@Override
-			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-				BmobLog.i(arg1);
-				ShowToast("商店注册失败:" + arg0+"-"+arg1);
-			}
-		});
-		*/
 		intent=new Intent(AddFruitActivity.this,CategorySelectActivity.class);
-		fruit=new Fruit(App.mInstance.getMyShop());
+		fruit=new Fruit(shop);
 	}
 	/** 
 	* @Title: initView 
@@ -151,7 +125,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		}
 		
 		mGridView =(GridView) findViewById(R.id.add_gridView);
-		mGridView.setAdapter(mQuickAdapter=new QuickAdapter<Bitmap>(AddFruitActivity.this,R.layout.add_gridview_item ) {
+		mGridView.setAdapter(mQuickAdapter=new QuickAdapter<Bitmap>(AddFruitActivity.this,R.layout.item_add_gridview ) {
 
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final Bitmap item) {
@@ -192,14 +166,11 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		mQuickAdapter.add(BitmapFactory.decodeResource(getResources(), R.id.item_image));
 	}
 	
-	
-	
 	RelativeLayout layout_choose;
 	RelativeLayout layout_photo;
 	PopupWindow avatorPop;
 	public String filePath = "";
 	private View layout_all;
-
 	private void showAvatarPop() {
 		View view = LayoutInflater.from(this).inflate(R.layout.include_pop_showavator,
 				null);
@@ -271,7 +242,6 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		avatorPop.setAnimationStyle(R.style.Animations_GrowFromBottom);
 		avatorPop.showAtLocation(layout_all, Gravity.BOTTOM, 0, 0);
 	}
-
 	
 	/**
 	 * @Title: startImageAction
@@ -370,7 +340,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				switch (data.getIntExtra("witch",-1)) {
 				case 0:
 					addTextViews[0].setText(data.getStringExtra("value"));
-					fruit.setCategoryName((CategoryName) data.getSerializableExtra("value"));
+					fruit.setCategory((Category) data.getSerializableExtra("value"));
 					break;
 				case 1:
 					addTextViews[1].setText(data.getStringExtra("value"));
@@ -402,10 +372,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 
 		}
 	}
-
-
 	
-
 	/**
 	 * 处理裁剪后的图像
 	 * 
@@ -423,7 +390,9 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				ShowLog(BmobConstants.MyTempDir+filename);
 				path=BmobConstants.MyTempDir+filename;
 				pics.add(currentClickedItem,path);
-				bitmap = PhotoUtil.toRoundCorner(bitmap, 40);
+				if (isFromCamera && degree != 0) {
+					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
+				}
 				if (currentClickedItem!=mQuickAdapter.getCount()-1) {
 					
 					mQuickAdapter.addTo(currentClickedItem, bitmap);
@@ -431,10 +400,6 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 				}else {
 					mQuickAdapter.addTo(mQuickAdapter.getCount()-1, bitmap);
 				}
-				if (isFromCamera && degree != 0) {
-					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
-				}
-				ShowLog("bitmap==null  ->"+(String.valueOf(bitmap==null)));
 				if (bitmap != null && bitmap.isRecycled()) {
 					bitmap.recycle();
 				}
@@ -478,105 +443,133 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	*/
 	int i=0;
 	private void commt() {
-		uploadSuccessed=3;
+		uploadSuccessed=1;
+		/*
+		//test
 		i++;
-		fruit.setCategoryName(CategoryName.哈密瓜);
+		fruit.setNumber(123123122+i+"");
+		
+		fruit.setCategory(new Category("西瓜"));
 		fruit.setColor(Color.橙);
-		fruit.setName("水果 "+i);
+		fruit.setSeason(Season.冬天);
+		fruit.setOrigin("山西省-太原市-忻州");
+		fruit.setDescribe("rweqeqweqewqeqnluinkjklnjklnjk"+i);
+		fruit.setName("大西瓜");
 		fruit.setCount(123+i*10);
 		fruit.setPrice((float) (1.2+i));
-		fruit.setSeason(Season.冬天);
-		fruit.setDescribe("rweqeqweqewqeqnluinkjklnjklnjk"+i);
-		fruit.setNumber(123123122+i+"");
-		/*
-		float price=Float.valueOf(addPriceEditText.getText().toString());
-		double count =Double.valueOf(addCounEditText.getText().toString());
+		*/
+		if (fruit.getCategory()==null) {
+			ShowToast("请选择种类");
+			return;
+		}
 		
 		try {
+			float price=Float.valueOf(addPriceEditText.getText().toString());
+			double count =Double.valueOf(addCounEditText.getText().toString());
 			fruit.setPrice(price);
 			fruit.setCount(count);
 		} catch (Exception e) {
 			ShowToast("价格和数量输入不合法");
-			
 			return;
 		}
 		
-		
-		if(StringUtils.isEmptys(new String[]{fruit.getCategoryName().toString(),fruit.getColor().toString(),fruit.getSeason().toString(),fruit.getOrigin().toString()})){
+		String[] ssStrings=new String[]{fruit.getColor().toString(),fruit.getSeason().toString(),fruit.getOrigin()};
+		if(StringUtils.isEmptys(ssStrings)){
 			ShowToast("请完善信息");
 			return;
 		}
-		String name=addNameEditText.getText().toString();
-		fruit.setName(StringUtils.isEmpty(name)?fruit.getCategoryName().toString():name);
-		*/
 		
-		addCommit.setClickable(false);
-		ShowLog(" 正在上传...");
-		uploadPics();
-		while(0<uploadSuccessed&&uploadSuccessed<1){
-			addCommit.setText(uploadSuccessed+" 正在上传...");
-			try {
-				ShowLog(Thread.currentThread().getName()+" 正在等待上传...");
-
-				Thread.currentThread();
-				Thread.sleep(500);
-				//test
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if (uploadSuccessed==0) {
-			addCommit.setText("上传失败");
-			addCommit.setClickable(true);
+		String name=addNameEditText.getText().toString();
+		fruit.setName(StringUtils.isEmpty(name)?fruit.getCategory().getCategoryName():name);
+		fruit.setDescribe(addDescribeEditText.getText().toString());
+		
+		
+		if (pics.size()<=0) {
+			ShowToast("至少添加一张主图");
 			return;
-			
 		}
+		addCommit.setClickable(false);
+		//上传
+		uploadPics();
+		
+		
+	}
+	public void saveFruit() {
 		ShowLog("save....");
+		if ((shop=App.getMyshop())==null) {
+			ShowToast("商店未初始化");
+			return;
+		}
+		fruit.setShop(shop);
+		ShowLog("fruit:"+new Gson().toJson(fruit, Fruit.class));
 		fruit.save(this, new SaveListener() {
 		    @Override
 		    public void onSuccess() {
 		        // TODO Auto-generated method stub
+		    	ShowToast("添加成功");
 		    	ShowLog("添加成功");
+		    	//重置视图，数据
+				resetViewAndData(true);
 		    }
 		    @Override
 		    public void onFailure(int code, String msg) {
 		        // TODO Auto-generated method stub
 		    	ShowLog("添加失败:"+msg);
+		    	ShowToast("添加失败:"+msg);
+		    	//重置视图，数据
+				resetViewAndData(false);
 		    }
 		});
-		
+	}
+	public void resetViewAndData(boolean successed) {
+		if(!successed)
+			return;
 		fruit=new Fruit(shop);
 		addCommit.setClickable(true);
+		mQuickAdapter.clear();
+		mQuickAdapter.add(BitmapFactory.decodeResource(getResources(), R.drawable.add_upload));
+		pics.clear();
+		
+		addCounEditText.setText("");
+		addPriceEditText.setText("");
+		addNameEditText.setText("");
 		
 	}
 	
-	
-	//上传图片
-	static int uploadSuccessed=3;
+	static int uploadSuccessed=0;
 	private void uploadPics() {
+		ShowLog(" 正在上传...");
+		final  ProgressDialog progress = new ProgressDialog(AddFruitActivity.this);
+		progress.setMessage("正在上传...");
+		progress.setCanceledOnTouchOutside(false);
+		progress.show();
 		BmobProFile.getInstance(this).uploadBatch(pics.toArray(new String[pics.size()]), new UploadBatchListener() {
 
             @SuppressLint("NewApi")
 			@Override
             public void onSuccess(boolean isFinish,String[] fileNames,String[] urls,BmobFile[] files) {
+            	fruit.setPicture(files[0]);
             	fruit.setPictures(Arrays.copyOfRange(fileNames, 1, fileNames.length));
-            	uploadSuccessed=1;
+            	uploadSuccessed=101;
             	ShowLog("批量上传成功");
+            	progress.dismiss();
+            	saveFruit();
             }
 
             @Override
             public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {
             	uploadSuccessed=totalPercent;
-				ShowLog(Thread.currentThread().getName()+" 正在上传...");
-                ShowLog("onProgress :"+curIndex+"---"+curPercent+"---"+total+"----"+totalPercent);
+                ShowLog("onProgress :"+curIndex+" / "+total+"----"+totalPercent+"%");
             }
 
             @Override
             public void onError(int statuscode, String errormsg) {
                 // TODO Auto-generated method stub
-            	uploadSuccessed=0;
+            	progress.dismiss();
+            	uploadSuccessed=-1;
             	ShowLog("批量上传出错："+statuscode+"--"+errormsg);
+            	//重置视图，数据
+        		resetViewAndData(false);
             }
         });
     }

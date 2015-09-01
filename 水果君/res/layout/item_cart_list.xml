@@ -20,10 +20,12 @@
         android:src="@drawable/test_cart"
         
         /> -->
-     <ImageView
+     <com.get.fruit.view.RoundAngleImageView
         android:id="@+id/cart_item_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        app:roundWidth="10dp"
+        app:roundHeight="10dp"
         android:layout_gravity="center"
         android:src="@drawable/test_cart"
         />

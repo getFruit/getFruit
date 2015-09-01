@@ -17,8 +17,10 @@
         android:layout_height="60dp"
         android:layout_gravity="right"
         android:hint="   用户名/手机号"
-        android:maxLength="20"
-        android:textSize="20sp" >
+        android:maxLength="11"
+        android:inputType="phone"
+        android:textSize="26sp"
+         >
 
         <requestFocus />
     </EditText>

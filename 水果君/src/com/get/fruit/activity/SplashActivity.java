@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -57,6 +58,7 @@ public class SplashActivity extends BaseActivity {
 		}
 		BmobChat.getInstance(this).init(Config.applicationId);
 		if (userManager.getCurrentUser() != null) {
+			//test
 			ShowLog("query...");
 			BmobQuery<FruitShop> query=new BmobQuery<FruitShop>();
 			query.addWhereEqualTo("owner",userManager.getCurrentUser());
@@ -71,6 +73,7 @@ public class SplashActivity extends BaseActivity {
 					}
 					App.setMyshop(arg0.get(0));
 					ShowLog("init shop successed");
+					ShowToast("init shop successed "+App.getMyshop().getName());
 				}
 				
 				@Override
@@ -123,8 +126,9 @@ public class SplashActivity extends BaseActivity {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case GO_HOME:
-				startAnimActivity(AddFruitActivity.class);//test
+				startAnimActivity(ListFruitsActivity.class);//test
 				/*
+				startAnimActivity(AddFruitActivity.class);//test
 				startAnimActivity(MainActivity.class);
 				 */
 				finish();

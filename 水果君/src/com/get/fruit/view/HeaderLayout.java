@@ -1,23 +1,16 @@
 package com.get.fruit.view;
 
-import org.apache.http.auth.NTCredentials;
-
-import android.R.integer;
 import android.content.Context;
-import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable.Orientation;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.get.fruit.App;
 import com.get.fruit.R;
-import com.get.fruit.util.PixelUtil;
 
 
 /** 自定义头部布局
@@ -29,22 +22,28 @@ import com.get.fruit.util.PixelUtil;
 public class HeaderLayout extends LinearLayout {
 	private LayoutInflater mInflater;
 	private View mHeader;
+	
 	private LinearLayout mLayoutLeftContainer;
 	private LinearLayout mLayoutRightContainer;
+	private LinearLayout mLayoutMiddleContainer;
+	
 	private TextView mHtvSubTitle;
 	private TextView mLeftText;
-	private LinearLayout mLayoutRightImageButtonLayout;
 	private Button mRightImageButton;
-	private onRightImageButtonClickListener mRightImageButtonClickListener;
+	private EditText mEditText;
 	
+	private LinearLayout mLayoutMiddleLayout;
 	private LinearLayout mLayoutLeftImageButtonLayout;
-	private ImageButton mLeftImageButton;
+	private LinearLayout mLayoutRightImageButtonLayout;
+	
+	private onRightImageButtonClickListener mRightImageButtonClickListener;
 	private onLeftImageButtonClickListener mLeftImageButtonClickListener;
 
 	private int defaultTitle=R.string.app_name;
 	private int defaultLeftImageButton=R.drawable.base_action_bar_back_bg_selector;
+	
 	public enum HeaderStyle {// 头部整体样式
-		DEFAULT_TITLE, TITLE_LIFT_IMAGEBUTTON, TITLE_RIGHT_IMAGEBUTTON, TITLE_DOUBLE_IMAGEBUTTON;
+		LEFT_MIDDLE_RIGHT,DEFAULT_TITLE, TITLE_LIFT_IMAGEBUTTON, TITLE_RIGHT_IMAGEBUTTON, TITLE_DOUBLE_IMAGEBUTTON;
 	}
 
 	public HeaderLayout(Context context) {
@@ -66,8 +65,7 @@ public class HeaderLayout extends LinearLayout {
 
 	public void initViews() {
 		mLayoutLeftContainer = (LinearLayout) findViewByHeaderId(R.id.header_layout_leftview_container);
-		// mLayoutMiddleContainer = (LinearLayout)
-		// findViewByHeaderId(R.id.header_layout_middleview_container);中间部分添加搜索或者其他按钮时可打开
+		mLayoutMiddleContainer = (LinearLayout)findViewByHeaderId(R.id.header_layout_middleview_container);
 		mLayoutRightContainer = (LinearLayout) findViewByHeaderId(R.id.header_layout_rightview_container);
 		mHtvSubTitle = (TextView) findViewByHeaderId(R.id.header_htv_subtitle);
 		
@@ -100,8 +98,16 @@ public class HeaderLayout extends LinearLayout {
 			titleLeftImageButton();
 			titleRightImageButton();
 			break;
+			
+		case LEFT_MIDDLE_RIGHT:
+			middleView();
+			titleLeftImageButton();
+			titleRightImageButton();
+			getmLayoutLeftImageButtonLayout().setHorizontalGravity(HORIZONTAL);
+			break;
 		}
 	}
+
 
 	// 默认文字标题
 	private void defaultTitle() {
@@ -116,21 +122,27 @@ public class HeaderLayout extends LinearLayout {
 		mLayoutLeftContainer.addView(mleftImageButtonView);
 		mLayoutLeftImageButtonLayout = (LinearLayout) mleftImageButtonView
 				.findViewById(R.id.header_layout_imagebuttonlayout);
-		mLeftImageButton = (ImageButton) mleftImageButtonView
-				.findViewById(R.id.headerimagebutton);
 		mLeftText=(TextView) mleftImageButtonView
 				.findViewById(R.id.lefttext);
-		mLeftImageButton.setOnClickListener(new OnClickListener() {
+		mLeftText.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				
 				if (mLeftImageButtonClickListener != null) {
-					Log.d("deeee", "leftclick");
 					mLeftImageButtonClickListener.onClick();
 				}
 			}
 		});
+	}
+	//中间自定义布局
+	private void middleView() {
+		// TODO Auto-generated method stub
+		View mMiddleView=mInflater.inflate(
+				R.layout.common_header_middleview, null);
+		mLayoutMiddleContainer.addView(mMiddleView);
+		mLayoutMiddleLayout=(LinearLayout) mMiddleView
+				.findViewById(R.id.header_layout_imagebuttonlayout);
+		mEditText=(EditText) mMiddleView.findViewById(R.id.middle_edittext);
 	}
 
 	// 右侧自定义按钮
@@ -153,10 +165,6 @@ public class HeaderLayout extends LinearLayout {
 		});
 	}
 	
-	
-	
-	
-	
 	public void setTitleAndRightButton(CharSequence title, int backid,CharSequence charSequence,
 			onRightImageButtonClickListener onRightImageButtonClickListener) {
 		setDefaultTitle(title);
@@ -170,38 +178,18 @@ public class HeaderLayout extends LinearLayout {
 	}
 	
 	public void setTitleAndLeftImageButton(CharSequence title, int backid,CharSequence leftCharSequence,
-			onLeftImageButtonClickListener listener) {
+			onLeftImageButtonClickListener listener, int direct) {
 		setDefaultTitle(title);
 		mLayoutLeftContainer.setVisibility(View.VISIBLE);
-		if (mLeftImageButton != null) {
-			Log.d("deeee", "slis");
-			setOnLeftImageButtonClickListener(listener);
-			setLeftButton(backid);
-			setLeftText(leftCharSequence);
-		}else {
-			mLayoutLeftContainer.setVisibility(View.GONE);
-		}
+		setLeftButton(backid,direct);
+		setLeftText(leftCharSequence);
+		setOnLeftImageButtonClickListener(listener);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public Button getRightImageButton(){
 		if(mRightImageButton!=null){
 			return mRightImageButton;
-		}
-		return null;
-	}
-	public ImageButton getLefttImageButton(){
-		if(mLeftImageButton!=null){
-			return mLeftImageButton;
 		}
 		return null;
 	}
@@ -222,20 +210,23 @@ public class HeaderLayout extends LinearLayout {
 			mRightImageButton.setText(charSequence);
 		}
 	}
-	public void setLeftButton(int backid) {
+	public void setLeftButton(int backid,int direct) {
+		//1234->left top right,buttom
 		if (backid > 0) {
-		Log.d("left", "le");
-			mLeftImageButton.setImageResource(backid);
+			Drawable drawable= getResources().getDrawable(backid);  
+			drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
+			mLeftText.setCompoundDrawables(direct==1?drawable:null, direct==2?drawable:null, direct==3?drawable:null, direct==4?drawable:null);  
+			//mLeftText.setCompoundDrawablesWithIntrinsicBounds(direct==1?backid:null, direct==2?backid:null, direct==3?backid:null, direct==4?backid:null);
+			mLeftText.setVisibility(View.VISIBLE);
 		}else {
-			mLeftImageButton.setVisibility(View.GONE);
+			mLeftText.setVisibility(View.GONE);
 		}
 	}
 	public void setLeftText(CharSequence charSequence) {
-		if (charSequence!=null) {
-			mLeftText.setVisibility(View.VISIBLE);
-			mLeftText.setText(charSequence);
+		if (charSequence==null) {
+			mLeftText.setText("");
 		}else {
-			mLeftText.setVisibility(View.GONE);
+			mLeftText.setText(charSequence);
 		}
 	}
 
@@ -263,6 +254,14 @@ public class HeaderLayout extends LinearLayout {
 	
 	
 	
+	public EditText getmEditText() {
+		return mEditText;
+	}
+
+	public void setmEditText(EditText mEditText) {
+		this.mEditText = mEditText;
+	}
+
 	public TextView getmHtvSubTitle() {
 		return mHtvSubTitle;
 	}
@@ -279,8 +278,8 @@ public class HeaderLayout extends LinearLayout {
 		this.mLeftText = mLeftText;
 	}
 
-	public LinearLayout getmLayoutLeftContainer() {
-		return mLayoutLeftContainer;
+	public LinearLayout getmLayoutLeftImageButtonLayout() {
+		return mLayoutLeftImageButtonLayout;
 	}
 
 }

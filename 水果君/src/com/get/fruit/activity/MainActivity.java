@@ -1,5 +1,6 @@
 package com.get.fruit.activity;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import cn.bmob.push.a.in;
 
 import com.get.fruit.R;
 import com.get.fruit.activity.fragment.CartFragment;
@@ -36,6 +39,8 @@ public class MainActivity extends BaseActivity {
 	private Fragment[] mFragments;
 	private  static int currentSelect;
 	private CharSequence address="天津";
+	private Intent intent;
+	private int to=0;
 	private onLeftImageButtonClickListener homeLeftListener=new onLeftImageButtonClickListener() {
 		@Override
 		public void onClick() {
@@ -72,7 +77,6 @@ public class MainActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 	
 		initView();
-		mButtons[0].setSelected(true);
 		initEvent();
 	}
 
@@ -111,8 +115,7 @@ public class MainActivity extends BaseActivity {
 				// 点击search按钮 事件响应
 				startAnimActivity(SearchActivity.class);
 			}
-		});
-		
+		},4);
 		
 		mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@Override
@@ -125,15 +128,11 @@ public class MainActivity extends BaseActivity {
 				return mFragments.length;
 			}
 		};
-
 		mViewPager.setAdapter(mAdapter);
 		mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
-		changeFonts(mHeaderLayout, this);
+		//changeFonts(mHeaderLayout, this);
 	}
-	
-
-
 	
 	private void initEvent() {
 		//底部按钮事件
@@ -159,7 +158,6 @@ public class MainActivity extends BaseActivity {
 		});
 }
 
-	
 	public void setSelect(int currentItem) {
 		// TODO Auto-generated method stub
 		mViewPager.setCurrentItem(currentItem);
@@ -171,24 +169,23 @@ public class MainActivity extends BaseActivity {
 		//mHeaderLayout.setVisibility(View.VISIBLE);
 		switch (currentItem) {
 		case 0:
-			mHeaderLayout.setTitleAndLeftImageButton("水果君", R.drawable.base_action_bar_addrees_selector,address, homeLeftListener);
+			mHeaderLayout.setTitleAndLeftImageButton("水果君", R.drawable.base_action_bar_addrees_selector,address, homeLeftListener,4);
 			break;
 		case 1:
-			mHeaderLayout.setTitleAndLeftImageButton("分类", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener);
+			mHeaderLayout.setTitleAndLeftImageButton("分类", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		case 2:
-			mHeaderLayout.setTitleAndLeftImageButton("个人中心", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener);
+			mHeaderLayout.setTitleAndLeftImageButton("个人中心", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		case 3:
-			mHeaderLayout.setTitleAndLeftImageButton("购物车", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener);
+			mHeaderLayout.setTitleAndLeftImageButton("购物车", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		case 4:
-			mHeaderLayout.setTitleAndLeftImageButton("果园", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener);
+			mHeaderLayout.setTitleAndLeftImageButton("果园", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		}
 		
 	}
-	
 	
 
 class ButtonsOnclickListener implements OnClickListener{
@@ -223,8 +220,6 @@ class ButtonsOnclickListener implements OnClickListener{
 	
 	
 	
-	
-	
 	//再按一次退出
 	private long mPressedTime = 0;
 	private int currentTabIndex;
@@ -245,7 +240,31 @@ class ButtonsOnclickListener implements OnClickListener{
 		}
 	}
 	
+	
+//here
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		intent=getIntent();
+		to=intent.getIntExtra("to", 0);
+		this.mButtonsOnclickListener.onClick(mButtons[to]);
+		super.onResume();
+	}
+	
+	
+	/*
+	@Override
+	protected void onResumeFragments() {
+		// TODO Auto-generated method stub
+		super.onResumeFragments();
+	}
 
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+	}
+*/
 	public void homeIBClick(View arg0) {
 		// TODO Auto-generated method stub
 		playHeartbeatAnimation(arg0);

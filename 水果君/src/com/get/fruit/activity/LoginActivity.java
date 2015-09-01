@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity{
 						startAnimActivity(RegisterActivity.class);
 					}
 			}
-		);
+				,1);
 		
 				
 		init();

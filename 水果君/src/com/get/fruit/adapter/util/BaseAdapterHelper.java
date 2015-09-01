@@ -35,7 +35,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import cn.bmob.v3.datatype.BmobFile;
 
 import com.squareup.picasso.Picasso;
@@ -231,7 +230,7 @@ public class BaseAdapterHelper {
     }
     public BaseAdapterHelper setImageBitmapFromBmobFile(int viewId,BmobFile file ) {
     	ImageView view = retrieveView(viewId);
-    	file.loadImage(context, view);
+    	file.loadImageThumbnail(context, view, 88, 88);
     	return this;
     }
 

@@ -114,7 +114,7 @@ public class HomeFragment extends BaseFragment{
 		//gridview
 		mGridView=(GridView) findViewById(R.id.home_gridView);
 		
-		mGridView.setAdapter(mAdapter=new QuickAdapter<HomeAD>(getActivity(), R.layout.home_gridview_item) {
+		mGridView.setAdapter(mAdapter=new QuickAdapter<HomeAD>(getActivity(), R.layout.item_home_gridview) {
 
 			@Override
 			protected void convert(BaseAdapterHelper helper, final HomeAD item) {
@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment{
 				helper.setText(R.id.price, String.valueOf(item.getPrice()));
 				helper.setImageBitmapFromBmobFile(R.id.pic, item.getPic());
 				
-				helper.setOnClickListener(R.layout.home_gridview_item, new OnClickListener() {
+				helper.setOnClickListener(R.layout.item_home_gridview, new OnClickListener() {
 					
 					@Override
 					public void onClick(View arg0) {

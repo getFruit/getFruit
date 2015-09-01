@@ -62,6 +62,13 @@ public class Category  extends BmobObject implements Serializable{
 	
 	
 	
+	public Category(String categoryName) {
+		super();
+		this.categoryName = categoryName;
+	}
+
+
+
 	public enum Taste{
 	
 		酸酸的,甜甜的,小清新,重口味;

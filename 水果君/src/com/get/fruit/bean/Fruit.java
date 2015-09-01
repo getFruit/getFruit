@@ -3,6 +3,7 @@ package com.get.fruit.bean;
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
 
 public class Fruit extends BmobObject implements Serializable {
@@ -13,14 +14,15 @@ public class Fruit extends BmobObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String number,name,describe,origin;//编号,描述,产地
-	private CategoryName categoryName;//种类名称
+	private Category category;//种类名称
 	private Color color;//颜色
 	private Season season;//季节
 	private FruitShop shop;//所属商店
 	private float price;//价格
 	private double count;//数量
+	private Integer paynum;//付款人数（直接写入实体，减少查询）
 	private BmobRelation likes;//收藏的用户
-	private String picture;//主图(filename)
+	private BmobFile picture;//主图(filename)
 	private String[] pictures;//附图（可选）
 	
 	
@@ -62,14 +64,14 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 
-	public CategoryName getCategoryName() {
-		return categoryName;
+	public Category getCategory() {
+		return category;
 	}
 
 
 
-	public void setCategoryName(CategoryName categoryName) {
-		this.categoryName = categoryName;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 
@@ -159,6 +161,21 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 
+	
+
+
+	public Integer getPaynum() {
+		return paynum;
+	}
+
+
+
+
+	public void setPaynum(Integer paynum) {
+		this.paynum = paynum;
+	}
+
+
 
 
 	public BmobRelation getLikes() {
@@ -178,13 +195,13 @@ public class Fruit extends BmobObject implements Serializable {
 	}
 	
 	
-	public String getPicture() {
+	public BmobFile getPicture() {
 		return picture;
 	}
 
 
 
-	public void setPicture(String picture) {
+	public void setPicture(BmobFile picture) {
 		this.picture = picture;
 	}
 
@@ -223,10 +240,6 @@ public class Fruit extends BmobObject implements Serializable {
 	
 	public enum Origin{
 		南方 ,北方 ,西部 ,进口
-	}
-	
-	public enum CategoryName{
-		西瓜, 苹果, 柠檬, 柑橘, 猕猴桃, 樱桃, 葡萄, 草莓, 菠萝, 哈密瓜, 甘蔗, 橙子, 荔枝, 蓝莓, 榴莲, 柚子, 杨桃, 火龙果, 石榴, 香蕉, 木瓜, 梨, 树莓, 杏, 芒果, 桃, 山竹;
 	}
 
 }

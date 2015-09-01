@@ -7,19 +7,16 @@
     android:orientation="vertical"
     android:padding="4dp" >
 
+
+
     <TextView
         android:id="@+id/lefttext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/base_color_white"
-        android:textSize="16sp" />
-
-    <ImageButton
-        android:id="@+id/headerimagebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/base_color_all_transparent"
-        />
+        android:drawableBottom="@drawable/base_action_bar_addrees_selector"
+        android:clickable="true"
+        android:textSize="16sp" />
 
 </LinearLayout>

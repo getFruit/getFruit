@@ -239,7 +239,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 					titleName,
 					R.drawable.base_action_bar_back_login_selector,
 					null,
-					new OnLeftButtonClickListener());
+					new OnLeftButtonClickListener(),1);
 		}
     }
 

@@ -172,7 +172,6 @@ public class MyImageView extends ImageView {
 		camera.rotateY(RolateX < 0 ? rolateX : -rolateX);
 		camera.getMatrix(matrix);
 		camera.restore();
-		// 控制中心�?
 		if (RolateX > 0 && rolateX != 0) {
 			matrix.preTranslate(-vWidth, -scaleY);
 			matrix.postTranslate(vWidth, scaleY);

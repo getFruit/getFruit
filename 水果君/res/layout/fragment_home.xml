@@ -171,7 +171,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView0"
         style="@style/Smile.TextView._Gray"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -189,7 +189,7 @@
         android:id="@+id/home_gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textView0"
         android:layout_centerHorizontal="true"
         android:horizontalSpacing="10dp"
         android:numColumns="2"

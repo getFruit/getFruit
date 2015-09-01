@@ -1,5 +1,6 @@
 package com.get.fruit.activity;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -12,10 +13,10 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,7 +25,6 @@ import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.util.BmobLog;
 
-import com.baidu.platform.comapi.map.v;
 import com.get.fruit.App;
 import com.get.fruit.R;
 import com.get.fruit.util.CommonUtils;
@@ -125,11 +125,6 @@ public class BaseActivity extends FragmentActivity {
 		mHeaderLayout.setDefaultTitle(titleName);
 	}
 	
-	/*public void setTopBar(int leftDrawableId,onLeftImageButtonClickListener listener,int rightDrawableId,String text,
-			onRightImageButtonClickListener listener2) {
-		mHeaderLayout.setRightImageButton(rightDrawableId,listener2);
-	}*/
-	
 	
 	public void initTopBarForOnlyTitle(String titleName) {
 		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
@@ -143,10 +138,22 @@ public class BaseActivity extends FragmentActivity {
 	 * @throws
 	 */
 	public void initTopBarForBoth(String titleName, int leftDrawableId,CharSequence leftText,onLeftImageButtonClickListener leftlistener,int rightDrawableId,String text,
-			onRightImageButtonClickListener rightlistener) {
+			onRightImageButtonClickListener rightlistener,int direct) {
 		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
 		mHeaderLayout.init(HeaderStyle.TITLE_DOUBLE_IMAGEBUTTON);
-		mHeaderLayout.setTitleAndLeftImageButton(titleName, leftDrawableId,leftText,leftlistener);
+		mHeaderLayout.setTitleAndLeftImageButton(titleName, leftDrawableId,leftText,leftlistener,direct);
+		mHeaderLayout.setTitleAndRightButton(titleName, rightDrawableId,text,rightlistener);
+	}
+	/**
+	 * 初始化标题栏-带搜索框布局
+	 * @return void
+	 * @throws
+	 */
+	public void initTopBarForMiddleView(String titleName, int leftDrawableId,CharSequence leftText,onLeftImageButtonClickListener leftlistener,int rightDrawableId,String text,
+			onRightImageButtonClickListener rightlistener,int direct) {
+		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
+		mHeaderLayout.init(HeaderStyle.LEFT_MIDDLE_RIGHT);
+		mHeaderLayout.setTitleAndLeftImageButton(titleName, leftDrawableId,leftText,leftlistener,direct);
 		mHeaderLayout.setTitleAndRightButton(titleName, rightDrawableId,text,rightlistener);
 	}
 	
@@ -162,7 +169,8 @@ public class BaseActivity extends FragmentActivity {
 		mHeaderLayout.setTitleAndLeftImageButton(titleName,
 				R.drawable.base_action_bar_back_bg_selector,
 				null,
-				new OnLeftButtonClickListener());
+				new OnLeftButtonClickListener(),
+				1);
 	}
 	
 	

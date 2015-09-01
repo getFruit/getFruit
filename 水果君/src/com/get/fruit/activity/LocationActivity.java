@@ -43,7 +43,7 @@ public class LocationActivity extends BaseActivity {
 					finish();
 				}
 			}
-		});
+		},1);
         
         //城市选择
         mCityPicker=(CityPicker) findViewById(R.id.citypicker);

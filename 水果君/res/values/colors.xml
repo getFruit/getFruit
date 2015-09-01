@@ -9,7 +9,7 @@
     <color name="base_color_white">#ffffff</color>
     <color name="base_color_blue">#ff64C500</color>
     <color name="base_color_blue_half">#ff99FE80</color>     
-    <color name="base_color_red">#FF0024</color>
+    <color name="base_color_red">#F46306</color>
     <color name="base_color_all_transparent">#00000000</color>
     <color name="base_color_half_transparent">#b0000000</color>
     <color name="base_color_transparent_bg">#80000000</color>
@@ -18,7 +18,13 @@
     
     <color name="view_grap_gray">#EDEDED</color>
     <color name="line_color_gray">#A9AAA6</color>
+    <color name="line_color_black">#AAAAAA</color>
+    <color name="bg_color_gray">#F1F1F1</color>
+    <color name="bg_color_gray_unact">#88000000</color>
+    <color name="bg_color_black">#464646</color>
     <color name="text_color_gray">#666666</color><!-- 文字颜色 -->
+    <color name="text_color_green">#64C500</color><!-- 文字颜色 -->
+    
     <color name="keyworld_shape_button">#ff30C93A</color>
     
     

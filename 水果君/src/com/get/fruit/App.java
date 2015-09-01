@@ -89,16 +89,12 @@ public class App extends Application {
 		return null;
 	}
 
-	public FruitShop getMyShop(){
-		return myshop;
-	}
-	
-	
 	public static FruitShop getMyshop() {
 		return myshop;
 	}
 
 	public static void setMyshop(FruitShop myshop) {
+		App.mInstance.getSpUtil();
 		App.myshop = myshop;
 	}
 

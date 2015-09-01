@@ -21,9 +21,11 @@
             android:id="@+id/editText_phone"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:ems="10"
             android:hint=" 请输入你的手机号"
-            android:inputType="phone" />
+	        android:maxLength="11"
+	        android:inputType="phone"
+	        android:textSize="26sp" 
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -79,7 +81,7 @@
          >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

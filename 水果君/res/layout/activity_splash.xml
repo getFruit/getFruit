@@ -14,7 +14,7 @@
 
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/activity_logo_center"
@@ -27,14 +27,14 @@
         android:id="@+id/activity_logo_gif"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_above="@+id/textView1"
+        android:layout_above="@+id/textView0"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
         android:background="@drawable/launch_logo"
         android:contentDescription="@string/app_name" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/activity_logo_center"
@@ -48,7 +48,7 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp"
         android:src="@drawable/launch_bottom" />
