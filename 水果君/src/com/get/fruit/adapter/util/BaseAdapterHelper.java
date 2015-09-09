@@ -23,6 +23,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -230,7 +231,14 @@ public class BaseAdapterHelper {
     }
     public BaseAdapterHelper setImageBitmapFromBmobFile(int viewId,BmobFile file ) {
     	ImageView view = retrieveView(viewId);
-    	file.loadImageThumbnail(context, view, 88, 88);
+    	Log.i("baseadapter", "loadimage  "+view.getWidth()+"  "+view.getHeight());
+    	file.loadImage(context, view,view.getWidth(),view.getHeight());
+    	return this;
+    }
+    public BaseAdapterHelper setImageThumbnailFromBmobFile(int viewId,BmobFile file ) {
+    	ImageView view = retrieveView(viewId);
+    	Log.i("baseadapter", "loadImageThumbnail  "+view.getWidth()+"  "+view.getHeight());
+    	file.loadImageThumbnail(context, view,view.getWidth(),view.getHeight());
     	return this;
     }
 

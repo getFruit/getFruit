@@ -55,6 +55,7 @@
                 android:layout_width="170dp"
                 android:layout_height="58dp"
                 android:ems="10"
+                android:singleLine="true"
                 android:hint=" 请输入验证码"
                 android:inputType="number" >
 

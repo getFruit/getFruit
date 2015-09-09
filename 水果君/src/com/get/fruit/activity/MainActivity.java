@@ -1,47 +1,42 @@
 package com.get.fruit.activity;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.TextView;
-
-import cn.bmob.push.a.in;
 
 import com.get.fruit.R;
 import com.get.fruit.activity.fragment.CartFragment;
+import com.get.fruit.activity.fragment.CartFragment.CartCallBack;
 import com.get.fruit.activity.fragment.CategoryFragment;
 import com.get.fruit.activity.fragment.GardenFragment;
 import com.get.fruit.activity.fragment.HomeFragment;
 import com.get.fruit.activity.fragment.PersonFragment;
+import com.get.fruit.view.HeaderLayout;
 import com.get.fruit.view.HeaderLayout.onLeftImageButtonClickListener;
 import com.get.fruit.view.HeaderLayout.onRightImageButtonClickListener;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements  OnClickListener, CartCallBack {
 
-	ButtonsOnclickListener mButtonsOnclickListener=new ButtonsOnclickListener();
 	
+
 	private ViewPager mViewPager;
 	private FragmentPagerAdapter mAdapter;
-	//private ImageButton mHome,mCategory,mPerson,mCart,mGarden;
 	private ImageButton[] mButtons=new ImageButton[5];
 	private Fragment fHome,fCategory,fPerson,fCart,fGarden;
 	private Fragment[] mFragments;
 	private  static int currentSelect;
 	private CharSequence address="天津";
 	private Intent intent;
-	private int to=0;
+	private int to=0;//需要前往的fragment
+	
 	private onLeftImageButtonClickListener homeLeftListener=new onLeftImageButtonClickListener() {
+		@SuppressLint("NewApi")
 		@Override
 		public void onClick() {
 			// TODO Auto-generated method stub
@@ -51,18 +46,6 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
-		   case RESULT_OK:
-		    Bundle b=data.getExtras();
-		    address=b.getString("address");
-		    mHeaderLayout.setLeftText(address);
-		    break;
-		default:
-		    break;
-		    }
-		}
 	private onLeftImageButtonClickListener baseLeftListener=new onLeftImageButtonClickListener() {
 		@Override
 		public void onClick() {
@@ -71,6 +54,20 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (resultCode) {
+		case RESULT_OK:
+			Bundle b=data.getExtras();
+			address=b.getString("address");
+			mHeaderLayout.setLeftText(address);
+			break;
+		default:
+			break;
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,7 +110,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick() {
 				// 点击search按钮 事件响应
-				startAnimActivity(SearchActivity.class);
+				startAnimActivity(ListFruitsActivity.class);
 			}
 		},4);
 		
@@ -137,7 +134,7 @@ public class MainActivity extends BaseActivity {
 	private void initEvent() {
 		//底部按钮事件
 		for(ImageButton b: mButtons){
-			b.setOnClickListener(mButtonsOnclickListener);
+			b.setOnClickListener(this);
 		}
 		
 		//viewPager滑动事件
@@ -160,6 +157,7 @@ public class MainActivity extends BaseActivity {
 
 	public void setSelect(int currentItem) {
 		// TODO Auto-generated method stub
+		ShowLog("setSelect  "+currentItem);
 		mViewPager.setCurrentItem(currentItem);
 		
 		for(ImageButton b:mButtons){
@@ -175,20 +173,22 @@ public class MainActivity extends BaseActivity {
 			mHeaderLayout.setTitleAndLeftImageButton("分类", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		case 2:
+			ShowLog("person");
 			mHeaderLayout.setTitleAndLeftImageButton("个人中心", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		case 3:
+			ShowLog("cart");
 			mHeaderLayout.setTitleAndLeftImageButton("购物车", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
 		case 4:
 			mHeaderLayout.setTitleAndLeftImageButton("果园", R.drawable.base_action_bar_back_bg_selector,null, baseLeftListener,1);
 			break;
+		default:
+			break;
 		}
 		
+		
 	}
-	
-
-class ButtonsOnclickListener implements OnClickListener{
 	
 	@Override
 	public void onClick(View arg0) {
@@ -216,10 +216,6 @@ class ButtonsOnclickListener implements OnClickListener{
 		
 	}
 	
-}
-	
-	
-	
 	//再按一次退出
 	private long mPressedTime = 0;
 	private int currentTabIndex;
@@ -240,17 +236,16 @@ class ButtonsOnclickListener implements OnClickListener{
 		}
 	}
 	
-	
-//here
+	//here
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		intent=getIntent();
 		to=intent.getIntExtra("to", 0);
-		this.mButtonsOnclickListener.onClick(mButtons[to]);
+		ShowLog("onResume>>   to..."+to);
+		this.onClick(mButtons[to]);
 		super.onResume();
 	}
-	
 	
 	/*
 	@Override
@@ -376,6 +371,16 @@ class ButtonsOnclickListener implements OnClickListener{
 				view.setAlpha(0);
 			}
 		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.get.fruit.activity.fragment.CartFragment.CartCallBack#getRightButton()
+	 */
+	@Override
+	public HeaderLayout getHeaderLayout() {
+		// TODO Auto-generated method stub
+		return mHeaderLayout;
 	}
 
 }

@@ -15,7 +15,7 @@ import cn.bmob.v3.datatype.BmobFile;
 
 /** 
  * @ClassName: HomeAD 
- * @Description: TODO
+ * @Description: 首页广告，轮播广告
  * @author LiQinglin
  * @date 2015-8-16 下午5:10:09 
  *  
@@ -29,16 +29,23 @@ public class HomeAD extends BmobObject implements Serializable {
 	private String name;
 	private float price;
 	private BmobFile pic;
+	private Boolean top;
 	private Fruit fruit;
-	public HomeAD(String name, float price, BmobFile pic, Fruit fruit) {
-		super();
-		this.name = name;
-		this.price = price;
-		this.pic = pic;
-		this.fruit = fruit;
-	}
+
+
 	public HomeAD() {
 		super();
+	}
+	
+	
+	public Boolean getTop() {
+		return top;
+	}
+	public void setTop(Boolean top) {
+		this.top = top;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	public String getName() {
 		return name;

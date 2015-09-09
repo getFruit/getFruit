@@ -11,14 +11,10 @@
 
     <Button
         android:id="@+id/headerimagebutton"
-        android:layout_width="45dip"
-        android:layout_height="40dip"
-        android:clickable="false"
-        android:contentDescription="@string/app_name"
-        android:focusable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:background="@color/base_color_all_transparent"
         android:textColor="@color/base_color_white"
         android:textSize="16sp" />
 

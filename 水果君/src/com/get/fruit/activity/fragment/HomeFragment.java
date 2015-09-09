@@ -1,6 +1,10 @@
 package com.get.fruit.activity.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
@@ -12,35 +16,46 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher.ViewFactory;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobQuery.CachePolicy;
+import cn.bmob.v3.listener.FindListener;
 
+import com.bmob.BmobProFile;
+import com.bmob.btp.callback.DownloadListener;
 import com.get.fruit.R;
 import com.get.fruit.activity.BaseFragment;
-import com.get.fruit.activity.ShowFruitActivity;
+import com.get.fruit.activity.DetailActivity;
 import com.get.fruit.adapter.util.BaseAdapterHelper;
 import com.get.fruit.adapter.util.QuickAdapter;
 import com.get.fruit.bean.HomeAD;
+import com.get.fruit.util.CollectionUtils;
+import com.get.fruit.util.TimeUtil;
+import com.get.fruit.view.MyGridView;
 import com.get.fruit.view.Rotate3D;
 
 public class HomeFragment extends BaseFragment{
-	int[] imageIds = new int[] 
-			{
-				R.drawable.a, R.drawable.b,
-				R.drawable.c, R.drawable.d
-				 };
+	static int adnum=4;//轮播光告数
+	static int ad2num=6;//首页广告数
+	static  long casheage=TimeUtil.DAY*3;
+	
+	List<Drawable> adpics=new ArrayList<Drawable>();
 	ImageView[] views = new ImageView[4];
 	ImageSwitcher imswitcher;
 	GestureDetector mGestureDetector;
+	List<HomeAD> ads=new ArrayList<HomeAD>();
 	int i=0;
 	Runnable r;
 	
-	private GridView mGridView;
+	private MyGridView mGridView;
 	private QuickAdapter<HomeAD> mAdapter;
 	private HomeAD[] dataAds;
 	
+	
+	
+	ImageView imageView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -58,9 +73,13 @@ public class HomeFragment extends BaseFragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
+		imageView=(ImageView) findViewById(R.id.imageView1);
 		initView();
+		loadData();
+		loadData2();
 	}
+
+	
 
 	/** 
 	* @Title: initView 
@@ -79,17 +98,19 @@ public class HomeFragment extends BaseFragment{
 			{
 				ImageView imageView = new ImageView(getActivity());
 				imageView.setBackgroundColor(0xff0000);
-				imageView.setScaleType(ImageView.ScaleType.FIT_START);
+				imageView.setScaleType(ImageView.ScaleType.CENTER);
 				imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 				return imageView;
 			}
 		});
 		imswitcher.setImageResource(R.drawable.a);
-		ShowLog("getparent");
 		mGestureDetector = new GestureDetector(getActivity(), new MyGestureListener());
+
+		
+		//启动轮播事件监听
 		imswitcher.setOnTouchListener(new OnTouchListener() {
-			
+		
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
@@ -98,7 +119,9 @@ public class HomeFragment extends BaseFragment{
 				return true;
 			}
 		});
-		
+		//启动轮播
+		DownloadTask dTask = new DownloadTask();   
+		dTask.execute(100);
 	
 		//按钮
 		ImageView v1 = (ImageView) findViewById(R.id.View1);
@@ -112,39 +135,125 @@ public class HomeFragment extends BaseFragment{
 		views[0].setSelected(true);
 		
 		//gridview
-		mGridView=(GridView) findViewById(R.id.home_gridView);
-		
-		mGridView.setAdapter(mAdapter=new QuickAdapter<HomeAD>(getActivity(), R.layout.item_home_gridview) {
+		mGridView=(MyGridView) findViewById(R.id.home_gridView);
+		mAdapter=new QuickAdapter<HomeAD>(getActivity(), R.layout.item_home_gridview) {
 
 			@Override
 			protected void convert(BaseAdapterHelper helper, final HomeAD item) {
 				// TODO Auto-generated method stub
-				helper.setText(R.id.title, item.getName());
-				helper.setText(R.id.price, String.valueOf(item.getPrice()));
-				helper.setImageBitmapFromBmobFile(R.id.pic, item.getPic());
-				
-				helper.setOnClickListener(R.layout.item_home_gridview, new OnClickListener() {
+				helper.setText(R.id.home_title, item.getName());
+				helper.setText(R.id.home_price, String.valueOf(item.getPrice()));
+				helper.setImageBitmapFromBmobFile(R.id.home_pic, item.getPic());
+				helper.setOnClickListener(R.id.home_pic , new OnClickListener() {
 					
 					@Override
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
-						ShowToast("item:  "+item.getName());
-						
-						
-						startAnimActivityWithData(ShowFruitActivity.class,"fruit",item);
+						startAnimActivityWithData(DetailActivity.class,"fruit",item.getFruit());
 					}
 				});
 			}
-		});
-
-		//启动轮播
-		DownloadTask dTask = new DownloadTask();   
-		dTask.execute(100);  
+		};
+		mGridView.setAdapter(mAdapter);
 	}
 	
 	
+	/** 
+	* @Title: loadData 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void loadData() {
+		// TODO Auto-generated method stub
+		BmobQuery< HomeAD> query=new BmobQuery<HomeAD>();
+		query.setMaxCacheAge(casheage);
+		query.addWhereEqualTo("top", true);
+		query.setLimit(adnum);
+		query.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE);
+		query.findObjects(getActivity(), new FindListener<HomeAD>() {
+			
+			@Override
+			public void onSuccess(List<HomeAD> arg0) {
+				// TODO Auto-generated method stub
+				if(!(CollectionUtils.isNotNull(arg0)&&arg0.size()==4))
+					return;
+				ads=arg0;
+				downloadPics();
+			}
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				ShowLog("广告查询失败： "+arg1);
+			}
+		});
+	}
+	
+	//下载图片
+	public void downloadPics(){
+	
+		for (int i = 0; i < ads.size(); i++) {
+			
+			BmobProFile.getInstance(getActivity()).download(ads.get(i).getPic().getFilename(), new DownloadListener() {
+	
+		        @Override
+		        public void onSuccess(String fullPath) {
+		            // TODO Auto-generated method stub
+		        	adpics.add(Drawable.createFromPath(fullPath));
+		            ShowLog("下载成功："+fullPath);
+		        }
+	
+		        @Override
+		        public void onProgress(String localPath, int percent) {
+		            // TODO Auto-generated method stub
+		        	ShowLog("download-->onProgress :"+percent);
+		        }
+	
+		        @Override
+		        public void onError(int statuscode, String errormsg) {
+		            // TODO Auto-generated method stub
+		        	ShowLog("下载出错："+statuscode +"--"+errormsg);
+		        }
+		    });
+		}
+		
+	}
+	
+	/** 
+	 * @Title: loadData2 
+	 * @Description: TODO
+	 * @param 
+	 * @return void
+	 * @throws 
+	 */
+	private void loadData2() {
+		// TODO Auto-generated method stub
+		BmobQuery< HomeAD> query=new BmobQuery<HomeAD>();
+		query.setMaxCacheAge(casheage);
+		query.addWhereNotEqualTo("top", true);
+		query.setLimit(ad2num);
+		query.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE);
+		query.findObjects(getActivity(), new FindListener<HomeAD>() {
+			
+			@Override
+			public void onSuccess(List<HomeAD> arg0) {
+				// TODO Auto-generated method stub
+				if(CollectionUtils.isNotNull(arg0))
+					mAdapter.addAll(arg0);
+				}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				ShowLog("广告查询失败： "+arg1);
+			}
+		});
+	}
+	
+	
+	
 	//改变圆点颜色
-	@SuppressLint("NewApi")
 	public void	setDotState(int m)
 	{
 	
@@ -152,7 +261,6 @@ public class HomeFragment extends BaseFragment{
 	  {
 		  if(i==m)
 		  {
-			  ShowLog("i=m: "+i);
 			  views[i].setSelected(true);
 		  }
 		  else
@@ -164,7 +272,9 @@ public class HomeFragment extends BaseFragment{
 	  }
 	
 	}
+	
 	//轮播动作
+	@SuppressLint("NewApi")
 	public void setImageSwitcherState(int direction) {
 		float halfWidth=imswitcher.getWidth()/2.0f;  
 		 float halfHeight=imswitcher.getHeight()/2.0f;  
@@ -184,23 +294,26 @@ public class HomeFragment extends BaseFragment{
 		 
 		 i=(i+direction);
 		 
-		 Log.i("i的值",String.valueOf(i));
 		int p= i%4;
-		 Log.i("p的值",String.valueOf(p));
 		if(p>=0)
 		{
 			setDotState(p);
-		imswitcher.setImageResource(imageIds[p]);
+			if (adpics.size()>p) {
+				imswitcher.setImageDrawable(adpics.get(p));
+			}
 		
 		}else
 		{
 			
 		int	k=4+p;
 		setDotState(k);
-			imswitcher.setImageResource(imageIds[k]);
+		if(adpics.size()>k){
+			imswitcher.setImageDrawable(adpics.get(k));
+		}
 			
 		}
 	}
+	
 	private class MyGestureListener implements GestureDetector.OnGestureListener
 	{
 
@@ -247,12 +360,11 @@ public class HomeFragment extends BaseFragment{
 			
 			if(p>=0)
 			{
-				ShowToast(String.valueOf(p));
+				startAnimActivityWithData(DetailActivity.class, "fruit", ads.get(p).getFruit());
 			}else
 			{
-				
 				int k =4+p;
-				ShowToast(String.valueOf(k));
+				startAnimActivityWithData(DetailActivity.class, "fruit", ads.get(k).getFruit());
 			}
 			return true;
 		}
@@ -260,10 +372,8 @@ public class HomeFragment extends BaseFragment{
 		
 		
 	}
-	
-	
-	
-	 class DownloadTask extends AsyncTask
+	//自动轮播
+	class DownloadTask extends AsyncTask
 	 {
 
 		@SuppressWarnings("unchecked")
@@ -293,13 +403,14 @@ public class HomeFragment extends BaseFragment{
 		protected void onProgressUpdate(Object... values) {
 			// TODO Auto-generated method stub
 			super.onProgressUpdate(values);
-			
 			setImageSwitcherState(1);  
 			
 		 
 		}
 		
 	 }
-	 
+	
+	
+	
 	 
 }

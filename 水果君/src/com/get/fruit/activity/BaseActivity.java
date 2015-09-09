@@ -132,11 +132,13 @@ public class BaseActivity extends FragmentActivity {
 		mHeaderLayout.setDefaultTitle(titleName);
 	}
 	
-	/**
-	 * 初始化标题栏-带左右按钮
-	 * @return void
-	 * @throws
-	 */
+	/** 
+	* @Title: initTopBarForBoth
+	* @Description: direction 1234->left top right buttom
+	* @param 
+	* @return void
+	* @throws 
+	*/
 	public void initTopBarForBoth(String titleName, int leftDrawableId,CharSequence leftText,onLeftImageButtonClickListener leftlistener,int rightDrawableId,String text,
 			onRightImageButtonClickListener rightlistener,int direct) {
 		mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
@@ -169,13 +171,13 @@ public class BaseActivity extends FragmentActivity {
 		mHeaderLayout.setTitleAndLeftImageButton(titleName,
 				R.drawable.base_action_bar_back_bg_selector,
 				null,
-				new OnLeftButtonClickListener(),
+				new OnLeftClickListenerFinishMe(),
 				1);
 	}
 	
 	
 	// 左边按钮的点击事件
-	public class OnLeftButtonClickListener implements
+	public class OnLeftClickListenerFinishMe implements
 			onLeftImageButtonClickListener {
 
 		@Override

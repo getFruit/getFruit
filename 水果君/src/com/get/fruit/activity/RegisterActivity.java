@@ -231,7 +231,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 			return f;
 		}
 		
-		
+		/*
 		public void initTopBarForLeft(String titleName) {
 			mHeaderLayout = (HeaderLayout)findViewById(R.id.common_actionbar);
 			mHeaderLayout.init(HeaderStyle.TITLE_LIFT_IMAGEBUTTON);
@@ -239,8 +239,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 					titleName,
 					R.drawable.base_action_bar_back_login_selector,
 					null,
-					new OnLeftButtonClickListener(),1);
-		}
+					new OnLeftClickListenerFinishMe(),1);
+		}*/
     }
 
 

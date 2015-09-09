@@ -1,8 +1,10 @@
 package com.get.fruit.util;
 
+import cn.bmob.im.util.BmobLog;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 
 @SuppressLint("CommitPrefEdits")
@@ -20,6 +22,18 @@ public class SharePreferenceUtil {
 	private String SHARED_KEY_VOICE = "shared_key_sound";
 	private String SHARED_KEY_VIBRATE = "shared_key_vibrate";
 
+	
+	public boolean saveValue(String key, String value) {
+		return editor.putString(key, value).commit();
+	}
+
+	public String getValue(String key) {
+		return mSharedPreferences.getString(key, "");
+	}
+	public static void ShowLog(String msg){
+		BmobLog.i(msg);
+	}
+	
 	public boolean isAllowPushNotify() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_NOTIFY, true);
 	}

@@ -234,8 +234,9 @@ public class App extends Application {
 			longtitude = lon;
 		}
 	}
-
 	
+	
+
 	public final String PREF_LATITUDE = "latitude";// ¾­¶È
 	private String latitude = "";
 
@@ -273,9 +274,11 @@ public class App extends Application {
 		setLatitude(null);
 		setLongtitude(null);
 	}
-
+	
 	
 	public static void ShowLog(String msg){
 		BmobLog.i(msg);
 	}
+
+	
 }

@@ -4,66 +4,160 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <LinearLayout
-        android:id="@+id/home_ad_imageswitch"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:orientation="vertical" >
-        <ImageSwitcher
-            android:id="@+id/imageSwitcher1"
-            android:layout_width="match_parent"
-            android:layout_height="116dip"
-            android:background="#ebeaea" >
-        </ImageSwitcher>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" >
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginTop="-30dp" >
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
             <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center" >
+                android:id="@+id/home_ad_imageswitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:orientation="vertical" >
 
-                <ImageView
-                    android:id="@+id/View1"
-                    android:layout_width="20px"
-                    android:layout_height="20px"
-                    android:layout_weight="25"
-                    android:background="@drawable/home_dot_shape" />
+                <ImageSwitcher
+                    android:id="@+id/imageSwitcher1"
+                    android:layout_width="match_parent"
+                    android:layout_height="116dip"
+                    android:background="#ebeaea" >
+                </ImageSwitcher>
 
-                <ImageView
-                    android:id="@+id/View2"
-                    android:layout_width="20px"
-                    android:layout_height="20px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="25"
-                    android:background="@drawable/home_dot_shape" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="-30dp" >
 
-                <ImageView
-                    android:id="@+id/View3"
-                    android:layout_width="20px"
-                    android:layout_height="20px"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="25"
-                    android:background="@drawable/home_dot_shape" />
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center" >
 
-                <ImageView
-                    android:id="@+id/View4"
-                    android:layout_width="20px"
-                    android:layout_height="20px"
-                    android:layout_weight="25"
-                    android:background="@drawable/home_dot_shape" />
+                        <ImageView
+                            android:id="@+id/View1"
+                            android:layout_width="20px"
+                            android:layout_height="20px"
+                            android:layout_weight="25"
+                            android:background="@drawable/home_dot_shape" />
+
+                        <ImageView
+                            android:id="@+id/View2"
+                            android:layout_width="20px"
+                            android:layout_height="20px"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="25"
+                            android:background="@drawable/home_dot_shape" />
+
+                        <ImageView
+                            android:id="@+id/View3"
+                            android:layout_width="20px"
+                            android:layout_height="20px"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="25"
+                            android:background="@drawable/home_dot_shape" />
+
+                        <ImageView
+                            android:id="@+id/View4"
+                            android:layout_width="20px"
+                            android:layout_height="20px"
+                            android:layout_weight="25"
+                            android:background="@drawable/home_dot_shape" />
+                    </LinearLayout>
+                </FrameLayout>
             </LinearLayout>
-        </FrameLayout>
 
-      
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/home_ibs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="homeIBClick" >
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/base_color_all_transparent"
+                    android:onClick="homeIBClick"
+                    android:src="@drawable/home_recommend" />
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/base_color_all_transparent"
+                    android:onClick="homeIBClick"
+                    android:src="@drawable/home_welfare" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/base_color_all_transparent"
+                    android:onClick="homeIBClick"
+                    android:src="@drawable/home_shop" />
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/base_color_all_transparent"
+                    android:onClick="homeIBClick"
+                    android:src="@drawable/home_chart" />
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/base_color_all_transparent"
+                    android:onClick="homeIBClick"
+                    android:src="@drawable/home_lecture" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView0"
+                style="@style/Smile.TextView._Gray"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/base_color_gray"
+                android:gravity="center_vertical"
+                android:text="水果园"
+                android:textColor="@color/text_color_gray"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/a"/>
+
+            <com.get.fruit.view.MyGridView
+                android:id="@+id/home_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:verticalSpacing="10dp" >
+            </com.get.fruit.view.MyGridView>
+        </LinearLayout>
+
+    </ScrollView>
 
     <!--
     <LinearLayout
@@ -109,92 +203,5 @@
             android:src="@drawable/bottom" />
     </LinearLayout>
     -->
-
-    <LinearLayout
-        android:id="@+id/home_ibs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/home_ad_imageswitch"
-        android:layout_below="@+id/home_ad_imageswitch"
-        android:layout_marginTop="10dp"
-        android:onClick="homeIBClick" >
-
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="homeIBClick"
-            android:background="@color/base_color_all_transparent"
-            android:src="@drawable/home_recommend" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:onClick="homeIBClick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/base_color_all_transparent"
-            
-            android:src="@drawable/home_welfare" />
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:onClick="homeIBClick"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/base_color_all_transparent"
-            
-            android:src="@drawable/home_shop" />
-
-        <ImageButton
-            android:onClick="homeIBClick"
-            android:id="@+id/imageButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/base_color_all_transparent"
-             
-            android:src="@drawable/home_chart" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="homeIBClick"
-            
-            android:layout_weight="1"
-            android:background="@color/base_color_all_transparent"
-            android:src="@drawable/home_lecture" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView0"
-        style="@style/Smile.TextView._Gray"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/home_ad_imageswitch"
-        android:layout_alignRight="@+id/home_ad_imageswitch"
-        android:layout_below="@+id/home_ibs"
-        android:layout_marginTop="20dp"
-        android:background="@color/base_color_gray"
-        android:gravity="center_vertical"
-        android:text="水果园"
-        android:textColor="@color/text_color_gray"
-        android:textSize="16sp" />
-
-    <GridView
-        android:id="@+id/home_gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView0"
-        android:layout_centerHorizontal="true"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:verticalSpacing="10dp" >
-
-    </GridView>
 
 </RelativeLayout>

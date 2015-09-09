@@ -9,7 +9,7 @@
         layout="@layout/include_action_bar" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -72,29 +72,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_line_width_1"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1"
+        android:layout_below="@+id/tabs"
         android:background="@color/line_color_black"
         android:orientation="vertical" >
     </LinearLayout>
     
-<!--     
-
-    <FrameLayout
-        android:id="@+id/list_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout1"
-        android:visibility="gone"
-        android:layout_marginTop="-16dp" >
-
-    </FrameLayout>
-
-     -->
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="500dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
         android:orientation="vertical" >
@@ -103,7 +89,7 @@
         
         <com.get.fruit.view.listview.XListView
 	        android:id="@+id/xListView1"
-	        android:layout_width="fill_parent"
+	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:headerDividersEnabled="false"
 	        android:divider="@color/base_color_white"

@@ -10,56 +10,56 @@ import android.annotation.SuppressLint;
 public class TimeUtil {
 
 	public final static String FORMAT_YEAR = "yyyy";
-	public final static String FORMAT_MONTH_DAY = "MM鏈坉d鏃?";
+	public final static String FORMAT_MONTH_DAY = "MM月dd日";
 
 	public final static String FORMAT_DATE = "yyyy-MM-dd";
 	public final static String FORMAT_TIME = "HH:mm";
-	public final static String FORMAT_MONTH_DAY_TIME = "MM鏈坉d鏃?  hh:mm";
+	public final static String FORMAT_MONTH_DAY_TIME = "MM月dd日  hh:mm";
 
 	public final static String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm";
 	public final static String FORMAT_DATE1_TIME = "yyyy/MM/dd HH:mm";
 	public final static String FORMAT_DATE_TIME_SECOND = "yyyy/MM/dd HH:mm:ss";
 
-	private static SimpleDateFormat sdf = new SimpleDateFormat();
-	private static final int YEAR = 365 * 24 * 60 * 60;// 骞?
-	private static final int MONTH = 30 * 24 * 60 * 60;// 鏈?
-	private static final int DAY = 24 * 60 * 60;// 澶?
-	private static final int HOUR = 60 * 60;// 灏忔椂
-	private static final int MINUTE = 60;// 鍒嗛挓
+	public static SimpleDateFormat sdf = new SimpleDateFormat();
+	public static final int YEAR = 365 * 24 * 60 * 60;// 年
+	public static final int MONTH = 30 * 24 * 60 * 60;// 月
+	public static final int DAY = 24 * 60 * 60;// 天
+	public static final int HOUR = 60 * 60;// 小时
+	public static final int MINUTE = 60;// 分钟
 
 	/**
-	 * 鏍规嵁鏃堕棿鎴宠幏鍙栨弿杩版?ф椂闂达紝濡?3鍒嗛挓鍓嶏紝1澶╁墠
+	 * 根据时间戳获取描述性时间，如3分钟前，1天前
 	 * 
 	 * @param timestamp
-	 *            鏃堕棿鎴? 鍗曚綅涓烘绉?
-	 * @return 鏃堕棿瀛楃涓?
+	 *            时间戳 单位为毫秒
+	 * @return 时间字符串
 	 */
 	public static String getDescriptionTimeFromTimestamp(long timestamp) {
 		long currentTime = System.currentTimeMillis();
-		long timeGap = (currentTime - timestamp) / 1000;// 涓庣幇鍦ㄦ椂闂寸浉宸鏁?
+		long timeGap = (currentTime - timestamp) / 1000;// 与现在时间相差秒数
 		System.out.println("timeGap: " + timeGap);
 		String timeStr = null;
 		if (timeGap > YEAR) {
-			timeStr = timeGap / YEAR + "骞村墠";
+			timeStr = timeGap / YEAR + "年前";
 		} else if (timeGap > MONTH) {
-			timeStr = timeGap / MONTH + "涓湀鍓?";
-		} else if (timeGap > DAY) {// 1澶╀互涓?
-			timeStr = timeGap / DAY + "澶╁墠";
-		} else if (timeGap > HOUR) {// 1灏忔椂-24灏忔椂
-			timeStr = timeGap / HOUR + "灏忔椂鍓?";
-		} else if (timeGap > MINUTE) {// 1鍒嗛挓-59鍒嗛挓
-			timeStr = timeGap / MINUTE + "鍒嗛挓鍓?";
-		} else {// 1绉掗挓-59绉掗挓
-			timeStr = "鍒氬垰";
+			timeStr = timeGap / MONTH + "个月前";
+		} else if (timeGap > DAY) {// 1天以上
+			timeStr = timeGap / DAY + "天前";
+		} else if (timeGap > HOUR) {// 1小时-24小时
+			timeStr = timeGap / HOUR + "小时前";
+		} else if (timeGap > MINUTE) {// 1分钟-59分钟
+			timeStr = timeGap / MINUTE + "分钟前";
+		} else {// 1秒钟-59秒钟
+			timeStr = "刚刚";
 		}
 		return timeStr;
 	}
 
 	/**
-	 * 鑾峰彇褰撳墠鏃ユ湡鐨勬寚瀹氭牸寮忕殑瀛楃涓?
+	 * 获取当前日期的指定格式的字符串
 	 * 
 	 * @param format
-	 *            鎸囧畾鐨勬棩鏈熸椂闂存牸寮忥紝鑻ヤ负null鎴?""鍒欎娇鐢ㄦ寚瀹氱殑鏍煎紡"yyyy-MM-dd HH:MM"
+	 *            指定的日期时间格式，若为null或""则使用指定的格式"yyyy-MM-dd HH:MM"
 	 * @return
 	 */
 	public static String getCurrentTime(String format) {
@@ -71,27 +71,27 @@ public class TimeUtil {
 		return sdf.format(new Date());
 	}
 
-	// date绫诲瀷杞崲涓篠tring绫诲瀷
-	// formatType鏍煎紡涓簓yyy-MM-dd HH:mm:ss//yyyy骞碝M鏈坉d鏃? HH鏃秏m鍒唖s绉?
-	// data Date绫诲瀷鐨勬椂闂?
+	// date类型转换为String类型
+	// formatType格式为yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日 HH时mm分ss秒
+	// data Date类型的时间
 	public static String dateToString(Date data, String formatType) {
 		return new SimpleDateFormat(formatType).format(data);
 	}
 
-	// long绫诲瀷杞崲涓篠tring绫诲瀷
-	// currentTime瑕佽浆鎹㈢殑long绫诲瀷鐨勬椂闂?
-	// formatType瑕佽浆鎹㈢殑string绫诲瀷鐨勬椂闂存牸寮?
+	// long类型转换为String类型
+	// currentTime要转换的long类型的时间
+	// formatType要转换的string类型的时间格式
 	public static String longToString(long currentTime, String formatType) {
 		String strTime = "";
-		Date date = longToDate(currentTime, formatType);// long绫诲瀷杞垚Date绫诲瀷
-		strTime = dateToString(date, formatType); // date绫诲瀷杞垚String
+		Date date = longToDate(currentTime, formatType);// long类型转成Date类型
+		strTime = dateToString(date, formatType); // date类型转成String
 		return strTime;
 	}
 
-	// string绫诲瀷杞崲涓篸ate绫诲瀷
-	// strTime瑕佽浆鎹㈢殑string绫诲瀷鐨勬椂闂达紝formatType瑕佽浆鎹㈢殑鏍煎紡yyyy-MM-dd HH:mm:ss//yyyy骞碝M鏈坉d鏃?
-	// HH鏃秏m鍒唖s绉掞紝
-	// strTime鐨勬椂闂存牸寮忓繀椤昏涓巉ormatType鐨勬椂闂存牸寮忕浉鍚?
+	// string类型转换为date类型
+	// strTime要转换的string类型的时间，formatType要转换的格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日
+	// HH时mm分ss秒，
+	// strTime的时间格式必须要与formatType的时间格式相同
 	public static Date stringToDate(String strTime, String formatType) {
 		SimpleDateFormat formatter = new SimpleDateFormat(formatType);
 		Date date = null;
@@ -104,32 +104,32 @@ public class TimeUtil {
 		return date;
 	}
 
-	// long杞崲涓篋ate绫诲瀷
-	// currentTime瑕佽浆鎹㈢殑long绫诲瀷鐨勬椂闂?
-	// formatType瑕佽浆鎹㈢殑鏃堕棿鏍煎紡yyyy-MM-dd HH:mm:ss//yyyy骞碝M鏈坉d鏃? HH鏃秏m鍒唖s绉?
+	// long转换为Date类型
+	// currentTime要转换的long类型的时间
+	// formatType要转换的时间格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日 HH时mm分ss秒
 	public static Date longToDate(long currentTime, String formatType) {
-		Date dateOld = new Date(currentTime); // 鏍规嵁long绫诲瀷鐨勬绉掓暟鐢熷懡涓?涓猟ate绫诲瀷鐨勬椂闂?
-		String sDateTime = dateToString(dateOld, formatType); // 鎶奷ate绫诲瀷鐨勬椂闂磋浆鎹负string
-		Date date = stringToDate(sDateTime, formatType); // 鎶奡tring绫诲瀷杞崲涓篋ate绫诲瀷
+		Date dateOld = new Date(currentTime); // 根据long类型的毫秒数生命一个date类型的时间
+		String sDateTime = dateToString(dateOld, formatType); // 把date类型的时间转换为string
+		Date date = stringToDate(sDateTime, formatType); // 把String类型转换为Date类型
 		return date;
 	}
 
-	// string绫诲瀷杞崲涓簂ong绫诲瀷
-	// strTime瑕佽浆鎹㈢殑String绫诲瀷鐨勬椂闂?
-	// formatType鏃堕棿鏍煎紡
-	// strTime鐨勬椂闂存牸寮忓拰formatType鐨勬椂闂存牸寮忓繀椤荤浉鍚?
+	// string类型转换为long类型
+	// strTime要转换的String类型的时间
+	// formatType时间格式
+	// strTime的时间格式和formatType的时间格式必须相同
 	public static long stringToLong(String strTime, String formatType) {
-		Date date = stringToDate(strTime, formatType); // String绫诲瀷杞垚date绫诲瀷
+		Date date = stringToDate(strTime, formatType); // String类型转成date类型
 		if (date == null) {
 			return 0;
 		} else {
-			long currentTime = dateToLong(date); // date绫诲瀷杞垚long绫诲瀷
+			long currentTime = dateToLong(date); // date类型转成long类型
 			return currentTime;
 		}
 	}
 
-	// date绫诲瀷杞崲涓簂ong绫诲瀷
-	// date瑕佽浆鎹㈢殑date绫诲瀷鐨勬椂闂?
+	// date类型转换为long类型
+	// date要转换的date类型的时间
 	public static long dateToLong(Date date) {
 		return date.getTime();
 	}
@@ -145,7 +145,7 @@ public class TimeUtil {
 	}
 
 	/**
-	 * 鑾峰彇鑱婂ぉ鏃堕棿锛氬洜涓簊dk鐨勬椂闂撮粯璁ゅ埌绉掓晠搴旇涔?1000
+	 * 获取聊天时间：因为sdk的时间默认到秒故应该乘1000
 	 * 
 	 * @Title: getChatTime
 	 * @Description: TODO
@@ -165,13 +165,13 @@ public class TimeUtil {
 
 		switch (temp) {
 		case 0:
-			result = "浠婂ぉ " + getHourAndMin(clearTime);
+			result = "今天 " + getHourAndMin(clearTime);
 			break;
 		case 1:
-			result = "鏄ㄥぉ " + getHourAndMin(clearTime);
+			result = "昨天 " + getHourAndMin(clearTime);
 			break;
 		case 2:
-			result = "鍓嶅ぉ " + getHourAndMin(clearTime);
+			result = "前天 " + getHourAndMin(clearTime);
 			break;
 
 		default:

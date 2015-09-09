@@ -6,8 +6,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.get.fruit.R;
@@ -30,7 +30,7 @@ public class HeaderLayout extends LinearLayout {
 	private TextView mHtvSubTitle;
 	private TextView mLeftText;
 	private Button mRightImageButton;
-	private EditText mEditText;
+	private SearchView mEditText;
 	
 	private LinearLayout mLayoutMiddleLayout;
 	private LinearLayout mLayoutLeftImageButtonLayout;
@@ -142,7 +142,7 @@ public class HeaderLayout extends LinearLayout {
 		mLayoutMiddleContainer.addView(mMiddleView);
 		mLayoutMiddleLayout=(LinearLayout) mMiddleView
 				.findViewById(R.id.header_layout_imagebuttonlayout);
-		mEditText=(EditText) mMiddleView.findViewById(R.id.middle_edittext);
+		mEditText=(SearchView) mMiddleView.findViewById(R.id.middle_search);
 	}
 
 	// 右侧自定义按钮
@@ -165,15 +165,15 @@ public class HeaderLayout extends LinearLayout {
 		});
 	}
 	
-	public void setTitleAndRightButton(CharSequence title, int backid,CharSequence charSequence,
+	public void setTitleAndRightButton(CharSequence title, Integer backid,CharSequence charSequence,
 			onRightImageButtonClickListener onRightImageButtonClickListener) {
 		setDefaultTitle(title);
 		mLayoutRightContainer.setVisibility(View.VISIBLE);
-		if (mRightImageButton != null) {
+		if (mRightImageButton != null&&backid!=null) {
 			setRightButtonAndText(backid,charSequence);
 			setOnRightImageButtonClickListener(onRightImageButtonClickListener);
 		}else {
-			mLayoutRightContainer.setVisibility(View.GONE);
+			mLayoutRightContainer.setVisibility(View.INVISIBLE);
 		}
 	}
 	
@@ -254,11 +254,11 @@ public class HeaderLayout extends LinearLayout {
 	
 	
 	
-	public EditText getmEditText() {
+	public SearchView getmEditText() {
 		return mEditText;
 	}
 
-	public void setmEditText(EditText mEditText) {
+	public void setmEditText(SearchView mEditText) {
 		this.mEditText = mEditText;
 	}
 

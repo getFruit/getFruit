@@ -8,17 +8,24 @@
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
 
+    
     <EditText
-        android:id="@+id/et_inputkeyword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="输入关键字"
-        android:padding="10dp"
-        android:textSize="22sp" >
+            android:id="@+id/et_inputkeyword"
+            android:hint="输入关键字"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/classify_search"
+            android:singleLine="true"   
+            android:padding="10dp"
+        	android:textSize="22sp"
+            android:inputType="textAutoComplete"
+        	android:imeOptions="actionSearch" 
+        	android:layout_margin="10dp"
+            android:gravity="center" >
 
-        <requestFocus />
-    </EditText>
+            <requestFocus />
+        </EditText>
 
     <TextView
         style="@style/Smile.TextView._Gray"

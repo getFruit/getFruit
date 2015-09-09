@@ -1,5 +1,6 @@
 package com.get.fruit.activity.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class PersonFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		ShowLog("onCreateView....per");
 		return inflater.inflate(R.layout.fragment_person, container, false);
 	}
 
@@ -53,5 +55,8 @@ public class PersonFragment extends BaseFragment {
 			}
 		});
 	}
+
+	
+	
 	
 }

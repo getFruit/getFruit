@@ -25,7 +25,7 @@ public class LocationActivity extends BaseActivity {
         setContentView(R.layout.activity_location);
         selectedAddress=(TextView) findViewById(R.id.selected_address);
         intent= this.getIntent();
-        initTopBarForBoth("选择地址", R.drawable.base_action_bar_back_bg_selector, null, new OnLeftButtonClickListener() , -1, "确定", new onRightImageButtonClickListener() {
+        initTopBarForBoth("选择地址", R.drawable.base_action_bar_back_bg_selector, null, new OnLeftClickListenerFinishMe() , -1, "确定", new onRightImageButtonClickListener() {
 			
 			@Override
 			public void onClick() {
