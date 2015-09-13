@@ -12,10 +12,8 @@ import android.preference.PreferenceManager;
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.util.BmobLog;
-import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
-import cn.bmob.v3.listener.SaveListener;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;

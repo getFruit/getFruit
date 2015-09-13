@@ -13,12 +13,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Spinner;
@@ -26,10 +28,13 @@ import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobQuery.CachePolicy;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
+import com.get.fruit.App;
 import com.get.fruit.R;
 import com.get.fruit.adapter.util.BaseAdapterHelper;
 import com.get.fruit.adapter.util.QuickAdapter;
+import com.get.fruit.bean.CartItem;
 import com.get.fruit.bean.Cityinfo;
 import com.get.fruit.bean.Fruit;
 import com.get.fruit.util.CitycodeUtil;
@@ -45,7 +50,7 @@ import com.get.fruit.view.listview.XListView.IXListViewListener;
 public class ListFruitsActivity extends BaseActivity {
 	
 	static CachePolicy policy=CachePolicy.CACHE_ELSE_NETWORK;//缓存策略
-	static int limit=15;//每页条数
+	static int limit=8;//每页条数
 	static int currentPage=0;//当前页
 	static String provinceString="";//产地省份
 	static String cityString="";//产地城市
@@ -67,8 +72,8 @@ public class ListFruitsActivity extends BaseActivity {
 		setContentView(R.layout.activity_listfruit);
 		intent=getIntent();
 		searchBy=intent.getStringExtra("searchBy");
-		ShowLog(searchBy);
 		keyWord=intent.getStringExtra("keyWord");
+		ShowLog("searchBy   "+searchBy+"   keyWord "+keyWord);
 		initView();
 	}
 
@@ -143,17 +148,21 @@ public class ListFruitsActivity extends BaseActivity {
 		tabsClick(tabs[0]);
 	}
 
-	
+	/** 
+	* @Title: initListView 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
 	public void initListView() {
 		mListView=(XListView) findViewById(R.id.xListView1);
-		
 		mqQuickAdapter=new QuickAdapter<Fruit>(ListFruitsActivity.this,R.layout.item_listfruit){
 			
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final Fruit item) {
 				// TODO Auto-generated method stub
-				ShowLog(item.getName());
-				
+				ShowLog("convert    "+item.getName());
 				helper.setText(R.id.list_item_name, item.getName());
 				helper.setText(R.id.list_item_address, item.getOrigin());
 				if(item.getCategory().getFunctions()!=null){
@@ -174,10 +183,27 @@ public class ListFruitsActivity extends BaseActivity {
 				helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
 					
 					@Override
-					public void onClick(View arg0) {
+					public void onClick(final View arg0) {
 						// TODO Auto-generated method stub
-						//addToCart();
+							CartItem cartItem=new CartItem();
+							cartItem.setMine(App.mInstance.getCurrentUser());
+							cartItem.setFruit(item);
+							cartItem.save(ListFruitsActivity.this, new SaveListener() {
+								
+								@Override
+								public void onSuccess() {
+									// TODO Auto-generated method stub
+									arg0.setClickable(false);
+								}
+								
+								@Override
+								public void onFailure(int arg0, String arg1) {
+									// TODO Auto-generated method stub
+									ShowToast("添加失败");
+								}
+							});
 						}
+
 				});
 				
 				helper.setOnClickListener(R.id.list_item_image, new OnClickListener() {
@@ -224,9 +250,22 @@ public class ListFruitsActivity extends BaseActivity {
 
 	}
 	
+	//挺止刷新，加载
+	private void stopLoadMore() {
+		if (mListView.getPullLoading()) {
+			mListView.stopLoadMore();
+		}
+	}
+	private void stopRefresh() {
+		if (mListView.getPullRefreshing()) {
+			mListView.stopRefresh();
+		}
+	}
+	
+	
 	//列表查询
 	public void query(){
-		ShowLog("query");
+		ShowLog("query:>> order: "+order+" order: "+order);
 		
 		BmobQuery<Fruit> query = new BmobQuery<Fruit>();
 		query.setCachePolicy(policy); 
@@ -254,13 +293,18 @@ public class ListFruitsActivity extends BaseActivity {
 			@Override
 			public void onSuccess(List<Fruit> arg0) {
 				// TODO Auto-generated method stub
-				ShowLog("onSuccess："+arg0.size());
+				ShowLog("query onSuccess："+arg0.size());
 				
 				if (CollectionUtils.isNotNull(arg0)) {
-					mqQuickAdapter.clear();
+					if(currentPage==0){
+						mqQuickAdapter.clear();
+					}
+					
 					mqQuickAdapter.addAll(arg0);
+					ShowLog("arg0.size() >=limit  "+String.valueOf(arg0.size() >=limit));
 					mListView.setPullLoadEnable(arg0.size() >=limit);
 					currentPage+=1;
+					arg0.clear();
 				}else {
 					
 					ShowToast("暂无数据!");
@@ -276,30 +320,39 @@ public class ListFruitsActivity extends BaseActivity {
 				ShowLog("数据获取错误" +arg0+ arg1);
 				mListView.setPullLoadEnable(false);
 				stopLoadMore();
+				stopRefresh();
 			}
 		});
 		
 	}
 	
 	
+	
 	static int current=3;
-	static String[] reversed=new String[]{"","",""}; 
+	static String[] reversed=new String[]{"-","-",""}; 
 	static String order="";
+	//排序方式选择按钮点击事件
 	@SuppressLint({ "ResourceAsColor", "NewApi" })
 	public void tabsClick(View view){
+		currentPage=0;
+		try {
+			mListView.removeAllViews();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		for(TextView textView:tabs){
 			textView.setTextColor(getResources().getColor(R.color.text_color_gray));
 		}
-		ShowLog("kkk");
 		((TextView) view).setTextColor(getResources().getColor(R.color.text_color_green));
 		
 		if(current<3&&view.getId()==tabs[current].getId()){
 			if(reversed[current].equals("")){
-				tabs[current].setSelected(true);
+				tabs[current].setSelected(false);
 				reversed[current]="-";
 			}else {
-				tabs[current].setSelected(false);
+				tabs[current].setSelected(true);
 				reversed[current]="";
 			}
 		}
@@ -316,22 +369,25 @@ public class ListFruitsActivity extends BaseActivity {
 				if(popupwindow==null){
 					initShareMenu();
 				}
-				popupwindow.showAsDropDown(view, 25, 1);
+				openPopuWindow(view);
 			}
 			break;
 
 		case R.id.textView0:
 			current=0;
-			order=reversed+"paynum,createdAt";
+			order=reversed[0]+"paynum,"+reversed[0]+"liksNumber";
+			query();
 			break;
 			
 		case R.id.textView1:
 			current=1;
-			order=reversed+"paynum";
+			order=reversed[1]+"paynum";
+			query();
 			break;
 		case R.id.textView2:
 			current=2;
-			order=reversed+"price";
+			order=reversed[2]+"price";
+			query();
 			break;
 		
 		default:
@@ -340,18 +396,11 @@ public class ListFruitsActivity extends BaseActivity {
 		
 	}
 	
-	private void stopLoadMore() {
-		if (mListView.getPullLoading()) {
-			mListView.stopLoadMore();
-		}
-	}
-	private void stopRefresh() {
-		if (mListView.getPullRefreshing()) {
-			mListView.stopRefresh();
-		}
-	}
+	
+
+	//onActivityResult回调
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+ 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (resultCode) {
 		   case RESULT_OK:
 		    Bundle b=data.getExtras();
@@ -363,6 +412,10 @@ public class ListFruitsActivity extends BaseActivity {
 		    }
 		}
 	
+	
+	
+	
+	
 	//initMenu
 	private Spinner province,city;
 	private EditText lower;
@@ -371,6 +424,7 @@ public class ListFruitsActivity extends BaseActivity {
 	private ArrayList<String> clist=new ArrayList<String>();//子城市
 	private List<Cityinfo> province_list;
 	private HashMap<String, List<Cityinfo>> city_map;
+	private ArrayAdapter<String> cAdapter;
 	public void initShareMenu(){
 
 		//menu
@@ -392,43 +446,57 @@ public class ListFruitsActivity extends BaseActivity {
 				return false;
 			}
 		});
-		
+		popupwindow.setOnDismissListener(new OnDismissListener() {
+					
+			@Override
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				WindowManager.LayoutParams params=ListFruitsActivity.this.getWindow().getAttributes();  
+			    params.alpha=1f;  
+			    ListFruitsActivity.this.getWindow().setAttributes(params); 
+			}
+		});
 		//产地
 		//menu.findViewById()....
 		province=(Spinner) menu.findViewById(R.id.spinner1);
-		city=(Spinner) menu.findViewById(R.id.spinner2);
 		initSpinnerData();
-		ArrayAdapter<String> adapter2=new ArrayAdapter<String>(ListFruitsActivity.this, android.R.layout.simple_spinner_item,list);
-		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		province.setAdapter(adapter2);
+		ArrayAdapter<String> pAdapter=new ArrayAdapter<String>(ListFruitsActivity.this, android.R.layout.simple_spinner_item,list);
+		pAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		province.setAdapter(pAdapter);
 		province.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				provinceString=list.get(arg2);
+					int position, long arg3) {
+				ShowLog("position:"+position+"   size:"+list.size());
+				provinceString=position==0?"":list.get(position-1);
 				clist.clear();
-				clist=CitycodeUtil.getSingleton().getCity(city_map, province_list.get(arg2).getId());
-				clist.add("");
-				ArrayAdapter<String> adapter=new ArrayAdapter<String>
-				(ListFruitsActivity.this, android.R.layout.simple_spinner_item, clist);
-				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			    city.setAdapter(adapter);
-			    city.setOnItemSelectedListener(new OnItemSelectedListener() {
+				clist.add(0,"不限");
+				if (position!=0) {
+					clist.addAll(CitycodeUtil.getSingleton().getCity(city_map, province_list.get(position-1).getId()));
+				}
+				city.setSelection(0, true);
+				cAdapter.notifyDataSetChanged();
+			}
 
-					@Override
-					public void onItemSelected(AdapterView<?> arg0, View arg1,
-							int arg2, long arg3) {
-						// TODO Auto-generated method stub
-						cityString=clist.get(arg2);					}
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		city=(Spinner) menu.findViewById(R.id.spinner2);
+		cAdapter=new ArrayAdapter<String>
+		(ListFruitsActivity.this, android.R.layout.simple_spinner_item, clist);
+		cAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		city.setAdapter(cAdapter);
+	    city.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-					@Override
-					public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-		}
+	    	@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				cityString=position==0?"" :clist.get(position-1);					}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -436,6 +504,8 @@ public class ListFruitsActivity extends BaseActivity {
 				
 			}
 		});
+	    
+	    province.setSelection(0, true);
 		
 		//价格区间
 		lower=(EditText) menu.findViewById(R.id.low);
@@ -446,8 +516,8 @@ public class ListFruitsActivity extends BaseActivity {
 		
 			@Override
 			public void onClick(View arg0) {
-				provinceString="";
-				cityString="";
+				province.setSelection(0, true);
+				city.setSelection(0, true);
 				lower.setText("");
 				higher.setText("");
 			}
@@ -469,6 +539,25 @@ public class ListFruitsActivity extends BaseActivity {
 		String area_str = FileUtil.readAssets(ListFruitsActivity.this, "area.json");
 		province_list = parser.getJSONParserResult(area_str, "area0");
 		city_map = parser.getJSONParserResultArray(area_str, "area1");
-		list=CitycodeUtil.getSingleton().getProvince(province_list);
+		list.add(0,"不限");
+		list.addAll(CitycodeUtil.getSingleton().getProvince(province_list));
 	}
+
+
+	/** 
+	* @Title: openPopuWindow 
+	* @Description: TODO
+	* @param View 
+	* @return void
+	* @throws 
+	*/
+	private void openPopuWindow(View view) {
+		// TODO Auto-generated method stub
+		popupwindow.showAsDropDown(view);
+		WindowManager.LayoutParams params=ListFruitsActivity.this.getWindow().getAttributes();  
+	    params.alpha=0.5f;  
+	    ListFruitsActivity.this.getWindow().setAttributes(params); 
+	}
+
+	
 }

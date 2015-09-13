@@ -141,12 +141,6 @@
                 android:textColor="@color/text_color_gray"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/a"/>
-
             <com.get.fruit.view.MyGridView
                 android:id="@+id/home_gridView"
                 android:layout_width="match_parent"

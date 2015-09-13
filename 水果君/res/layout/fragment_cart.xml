@@ -1,83 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.get.fruit.view.listview.XListView
-        android:id="@+id/listView1"
+    
+
+    <TextView
+        android:id="@+id/listview_empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/line_bg"
+        android:gravity="center"
+        android:text="购物车空空如也..."
+        android:textColor="@color/text_color_gray"
+        android:textSize="20sp" />
 
+    <com.get.fruit.view.listview.XListView
+        android:id="@+id/cart_listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/listview_empty"
+        android:layout_above="@+id/cart_buttom" >
     </com.get.fruit.view.listview.XListView>
-
-    <FrameLayout
+    
+    <LinearLayout
+        android:id="@+id/cart_buttom"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="6dp"
         android:background="#B3B6AE" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <RadioButton
+            <CheckBox
                 android:id="@+id/cart_all_check"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="全选"
-                android:textColor="@color/base_color_white"
-                android:textSize="18sp" />
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/checkbox_selector"
+                android:button="@null" />
 
             <TextView
-                android:id="@+id/textView0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="18dp"
+                android:text="全选"
+                android:textColor="@color/base_color_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="合计"
                 android:textColor="@color/base_color_white"
                 android:textSize="18sp" />
-            
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥"
-                android:textColor="@color/base_color_red"
-                android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/base_color_red"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/totalprice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="55.0"
-                android:textColor="@color/base_color_red"
-                android:textSize="26sp" />
-
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/cart_totalprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:maxLength="4"
+                    android:textColor="@color/base_color_red"
+                    android:textSize="26sp" />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/gopay"
-                android:layout_width="match_parent"
+                android:id="@+id/cart_gopay"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="3dp"
-                android:gravity="center"
-                android:textColor="@color/base_color_white"
-                android:textSize="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0.1"
                 android:background="@drawable/button_bg"
-                android:text="去结算" />
-
-        </LinearLayout>
-
-    </FrameLayout>
+                android:gravity="center"
+                android:text="去结算"
+                android:textColor="@color/base_color_white"
+                android:textSize="24dp" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 import com.get.fruit.R;
 import com.get.fruit.activity.BaseFragment;
+import com.get.fruit.adapter.util.QuickAdapter;
+import com.get.fruit.util.StringUtils;
 
 public class CategoryFragment extends BaseFragment {
 
@@ -27,7 +30,19 @@ public class CategoryFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		//initView();
+		initView();
 	}
+
+	/** 
+	* @Title: initView 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void initView() {
+		// TODO Auto-generated method stub
+	}
+	
 	
 }

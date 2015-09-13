@@ -80,7 +80,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
         android:orientation="vertical" >
@@ -90,7 +90,7 @@
         <com.get.fruit.view.listview.XListView
 	        android:id="@+id/xListView1"
 	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
+	        android:layout_height="fill_parent"
 	        android:headerDividersEnabled="false"
 	        android:divider="@color/base_color_white"
 	        android:dividerHeight="10dp" />

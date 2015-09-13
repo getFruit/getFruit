@@ -20,6 +20,7 @@
     <color name="line_color_gray">#A9AAA6</color>
     <color name="line_color_black">#AAAAAA</color>
     <color name="bg_color_gray">#F1F1F1</color>
+    <color name="bg_color_gray_2">#F3EFED</color>
     <color name="bg_color_gray_unact">#88000000</color>
     <color name="bg_color_black">#464646</color>
     <color name="text_color_gray">#666666</color><!-- 文字颜色 -->

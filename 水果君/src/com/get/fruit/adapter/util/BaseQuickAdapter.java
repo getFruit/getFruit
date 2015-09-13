@@ -27,6 +27,8 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.get.fruit.App;
+
 /**
  * Abstraction class of a BaseAdapter in which you only need
  * to provide the convert() implementation.<br/>
@@ -96,19 +98,29 @@ public abstract class BaseQuickAdapter<T, H extends BaseAdapterHelper> extends B
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+    	/*if (parent.getChildCount()==position) {
+			
+    		final H helper = getAdapterHelper(position, convertView, parent);
+        	T item = getItem(position);
+        	convert(helper, item);
+        	helper.setAssociatedObject(item);
+        	return helper.getView();
+        }else {
+			return convertView;
+		}*/
         if (getItemViewType(position) == 0) {
-            final H helper = getAdapterHelper(position, convertView, parent);
-            T item = getItem(position);
-            convert(helper, item);
-            helper.setAssociatedObject(item);
-            return helper.getView();
+        	final H helper = getAdapterHelper(position, convertView, parent);
+        	T item = getItem(position);
+        	convert(helper, item);
+        	helper.setAssociatedObject(item);
+        	return helper.getView();
         }
-
         return createIndeterminateProgressView(convertView, parent);
     }
 
     private View createIndeterminateProgressView(View convertView, ViewGroup parent) {
         if (convertView == null) {
+        	App.ShowLog("convertView == null");
             FrameLayout container = new FrameLayout(context);
             container.setForegroundGravity(Gravity.CENTER);
             ProgressBar progress = new ProgressBar(context);

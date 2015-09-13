@@ -21,9 +21,11 @@ public class Fruit extends BmobObject implements Serializable {
 	private float price;//价格
 	private double count;//数量
 	private Integer paynum;//付款人数（直接写入实体，减少查询）
+	private Integer likesNumber;//收藏人数
 	private BmobRelation likes;//收藏的用户
 	private BmobFile picture;//主图(filename)
 	private String[] pictures;//附图（可选）
+	private Boolean overdue;//是否过期
 	
 	
 	
@@ -228,6 +230,52 @@ public class Fruit extends BmobObject implements Serializable {
 	
 	
 	
+	public Integer getLikesNumber() {
+		return likesNumber;
+	}
+
+
+
+
+	public void setLikesNumber(Integer likesNumber) {
+		this.likesNumber = likesNumber;
+	}
+
+
+
+
+	
+
+
+
+
+
+
+
+
+	public Boolean getOverdue() {
+		return overdue;
+	}
+
+
+
+
+	public void setOverdue(Boolean overdue) {
+		this.overdue = overdue;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public enum Season{
 		
 		春天, 夏天, 秋天, 冬天

@@ -19,6 +19,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 import cn.bmob.im.BmobUserManager;
+import cn.bmob.push.a.is;
 
 import com.get.fruit.util.CommonUtils;
 
@@ -150,6 +151,54 @@ public abstract class BaseFragment extends Fragment {
 	 * @throws
 	 */
 	public void ShowLog(String msg) {
-		Log.i("life", msg);
+		Log.i("fruit", msg);
 	}
+	
+	
+	
+	
+	
+	
+	 /** Fragment当前状态是否可见 */
+	
+    protected boolean isVisible;
+     
+     
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if(getUserVisibleHint()) {
+            isVisible = true;
+            onInvisible();
+        } else {
+            isVisible = false;
+            onVisible();
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+     
+     
+    /**
+     * 可见
+     */
+    protected void onVisible() {
+        //lazyLoad();     
+    }
+     
+     
+    /**
+     * 不可见
+     */
+    protected void onInvisible() {
+         
+         
+    }
+
+     
+    /** 
+     * 延迟加载
+     * 子类必须重写此方法
+     */
+    //protected abstract void lazyLoad();
+
+
 }

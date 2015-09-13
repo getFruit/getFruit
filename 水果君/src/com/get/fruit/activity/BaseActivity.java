@@ -1,5 +1,7 @@
 package com.get.fruit.activity;
 
+import java.io.Serializable;
+
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
@@ -198,6 +200,12 @@ public class BaseActivity extends FragmentActivity {
 		this.startActivity(intent);
 	}
 
+	public void startAnimActivityWithData(Class<?> cla,String key, Serializable value) {
+		Intent intent=new Intent(this, cla);
+		intent.putExtra(key, value);
+		this.startActivity(intent);
+	}
+	
 	public void changeFonts(ViewGroup root,Activity activity){
 		ShowLog("set changeFonts()");
 		Typeface tf=Typeface.createFromAsset(activity.getAssets(), "fonts/DroidSansFallback.ttf");
@@ -223,7 +231,7 @@ public class BaseActivity extends FragmentActivity {
 	
 	
 	// 按钮模拟心脏跳动
-		public void playHeartbeatAnimation(final View imageView) {
+	public void playHeartbeatAnimation(final View imageView) {
 			AnimationSet animationSet = new AnimationSet(true);
 			animationSet.addAnimation(new ScaleAnimation(1.0f, 0.5f, 1.0f, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
@@ -266,5 +274,63 @@ public class BaseActivity extends FragmentActivity {
 		}
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*	// 按钮模拟心脏跳动
+	public void playHeartbeatAnimation(final View imageView) {
+			if (animationSet==null) {
+				 initAnimation();
+			}
+			// 实现心跳的View
+			imageView.startAnimation(animationSet);
+		}
+
+	AnimationSet animationSet =null;
+	public AnimationSet initAnimation() {
+		animationSet = new AnimationSet(true);
+		animationSet.addAnimation(new ScaleAnimation(1.0f, 0.5f, 1.0f, 0.5f,
+				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+				0.5f));
+		animationSet.addAnimation(new AlphaAnimation(1.0f, 0.4f));
+
+		animationSet.setDuration(200);
+		animationSet.setInterpolator(new AccelerateInterpolator());
+		animationSet.setFillAfter(true);
+
+		animationSet.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				AnimationSet animationSet = new AnimationSet(true);
+				animationSet.addAnimation(new ScaleAnimation(0.5f, 1.0f, 0.5f,
+						1.0f, Animation.RELATIVE_TO_SELF, 0.5f,
+						Animation.RELATIVE_TO_SELF, 0.5f));
+				animationSet.addAnimation(new AlphaAnimation(0.4f, 1.0f));
+
+				animationSet.setDuration(600);
+				animationSet.setInterpolator(new DecelerateInterpolator());
+				animationSet.setFillAfter(false);
+
+				// 实现心跳的View
+				//imageView.startAnimation(animationSet);
+			}
+		});
+		return animationSet;
+	}*/
 	
 }

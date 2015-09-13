@@ -98,7 +98,7 @@ public class HomeFragment extends BaseFragment{
 			{
 				ImageView imageView = new ImageView(getActivity());
 				imageView.setBackgroundColor(0xff0000);
-				imageView.setScaleType(ImageView.ScaleType.CENTER);
+				imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 				imageView.setLayoutParams(new ImageSwitcher.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 				return imageView;
@@ -180,7 +180,8 @@ public class HomeFragment extends BaseFragment{
 				if(!(CollectionUtils.isNotNull(arg0)&&arg0.size()==4))
 					return;
 				ads=arg0;
-				downloadPics();
+				//downloadPics();
+				getDrawables();
 			}
 			@Override
 			public void onError(int arg0, String arg1) {
@@ -192,7 +193,7 @@ public class HomeFragment extends BaseFragment{
 	
 	//œ¬‘ÿÕº∆¨
 	public void downloadPics(){
-	
+		
 		for (int i = 0; i < ads.size(); i++) {
 			
 			BmobProFile.getInstance(getActivity()).download(ads.get(i).getPic().getFilename(), new DownloadListener() {
@@ -217,7 +218,30 @@ public class HomeFragment extends BaseFragment{
 		        }
 		    });
 		}
-		
+	}
+	
+	public void getDrawables(){
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				adpics.clear();
+				for(HomeAD ad:ads){
+					ImageView imageView=new ImageView(getActivity());
+					ad.getPic().loadImage(getActivity(), imageView);
+					imageView.setDrawingCacheEnabled(true);
+					adpics.add(imageView.getDrawable());
+					imageView.setDrawingCacheEnabled(false);
+					try {
+						Thread.sleep(2500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 	
 	/** 
@@ -411,6 +435,4 @@ public class HomeFragment extends BaseFragment{
 	 }
 	
 	
-	
-	 
 }
