@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="130dp"
+    android:background="@color/bg_color_gray"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.get.fruit">
+    
+     <com.get.fruit.view.RoundAngleImageView
+         android:id="@+id/list_item_image"
+         android:layout_width="88dp"
+         android:layout_height="88dp"
+         app:roundWidth="10dp"
+         app:roundHeight="10dp"
+         android:layout_gravity="center"
+         android:layout_marginLeft="20dp"
+         android:scaleType="fitXY"
+         android:src="@drawable/test_cart" />
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/list_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="水果大杂烩"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/list_item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天津，塘沽"
+                android:textColor="@color/text_color_gray"
+                android:textSize="9sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/list_item_functions"
+            android:layout_width="111dp"
+            android:layout_height="30dp"
+            android:lines="2"
+            android:text="美容养颜，去火养生 同飞祛痰"
+            android:textColor="@color/text_color_gray"
+            android:textSize="11sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/list_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginRight="8dp"
+                android:text="￥ 00.0"
+                android:textColor="@color/base_color_red"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/list_item_buynum"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="000"
+                android:textColor="@color/text_color_gray"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="人付款"
+                android:textColor="@color/text_color_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/list_addto"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/button_bg"
+        android:padding="4dp"
+        android:text="加入购物车"
+        android:textColor="@color/base_color_white"
+        android:textSize="14sp" />
+
+</LinearLayout>

@@ -21,6 +21,8 @@ import android.widget.Toast;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.push.a.is;
 
+import com.get.fruit.App;
+import com.get.fruit.bean.User;
 import com.get.fruit.util.CommonUtils;
 
 /**
@@ -35,6 +37,7 @@ public abstract class BaseFragment extends Fragment {
 	private Handler handler = new Handler();
 
 	protected BmobUserManager userManager;
+	 protected User me;
 
 	public void runOnWorkThread(Runnable action) {
 		new Thread(action).start();
@@ -50,6 +53,7 @@ public abstract class BaseFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		userManager = BmobUserManager.getInstance(getActivity());
+		me=App.mInstance.getCurrentUser();
 		mInflater = LayoutInflater.from(getActivity());
 	}
 

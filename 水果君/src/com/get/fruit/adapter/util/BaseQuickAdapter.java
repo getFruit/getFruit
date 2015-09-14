@@ -167,6 +167,11 @@ public abstract class BaseQuickAdapter<T, H extends BaseAdapterHelper> extends B
         data.remove(index);
         notifyDataSetChanged();
     }
+    
+    public void removeAll(List<T> elem) {
+    	data.removeAll(elem);
+    	notifyDataSetChanged();
+    }
 
     public void replaceAll(List<T> elem) {
         data.clear();

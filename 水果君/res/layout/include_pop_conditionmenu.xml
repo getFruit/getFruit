@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    android:layout_height="200dp"
+    android:background="@color/base_color_all_transparent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/conditionmenu"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="产地"
+            android:textColor="@color/base_color_blue"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="50dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:background="@color/bg_color_gray_2"
+                android:layout_weight="0.1" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="20dp"
+                android:layout_height="36dp" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="36dp"
+                android:background="@color/bg_color_gray_2"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0.1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="价格区间"
+            android:textColor="@color/base_color_blue"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/low"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_shape_rectangle"
+                android:ems="4"
+                android:gravity="center"
+                android:inputType="number" >
+
+                <requestFocus />
+            </EditText>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/line_color_black" />
+
+            <EditText
+                android:id="@+id/high"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_shape_rectangle"
+                android:ems="4"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="清空数据"
+            android:clickable="true"
+            android:textColor="@color/base_color_blue"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

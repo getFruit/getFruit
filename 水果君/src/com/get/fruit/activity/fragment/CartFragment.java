@@ -1,9 +1,9 @@
 package com.get.fruit.activity.fragment;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.R.integer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,18 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-import com.baidu.platform.comapi.map.u;
 import com.get.fruit.R;
 import com.get.fruit.activity.BaseFragment;
 import com.get.fruit.activity.DetailActivity;
@@ -47,6 +46,7 @@ public class CartFragment extends BaseFragment {
 	private TextView totalPrice;
 	private TextView emptyView;
 	private CheckBox checkAll;
+	private onRightImageButtonClickListener mRightImageButtonClickListener=null;
 	List<Integer> checkedItems=new LinkedList<Integer>();
 	List<CartItem> allItems=new LinkedList<CartItem>();
 
@@ -54,14 +54,12 @@ public class CartFragment extends BaseFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		ShowLog("onCreate.....cart");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		ShowLog("onCreateView....inflater>.cart");
 		return inflater.inflate(R.layout.fragment_cart, container, false);
 	}
 
@@ -69,7 +67,6 @@ public class CartFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		ShowLog("onActivityCreated.....cart  to>initview");
 		initView();
 	}
 	
@@ -96,6 +93,59 @@ public class CartFragment extends BaseFragment {
 	}
 
 	/** 
+	* @Title: setRightButtonListener 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void setRightButtonListener() {
+		ShowLog("setRightButtonListener......");
+		if (mRightImageButtonClickListener==null) {
+			mRightImageButtonClickListener=new onRightImageButtonClickListener() {
+				@Override
+				public void onClick() {
+					// TODO Auto-generated method stub
+					if (checkedItems.size()<=0) {
+						ShowToast("ÇëÑ¡Ôñ£¡");
+						return;
+					}
+					final List deleteItems=new ArrayList<CartItem>();
+					for (int i = 0; i < checkedItems.size(); i++) {
+						
+						deleteItems.add(allItems.get(checkedItems.get(i)));
+					}
+					
+					new CartItem().deleteBatch(getActivity(), deleteItems, new DeleteListener() {
+						
+						@Override
+						public void onSuccess() {
+							// TODO Auto-generated method stub
+							allItems.removeAll(deleteItems);
+							/*for (int i = 0; i < checkedItems.size(); i++) {
+								mQuickAdapter.remove(checkedItems.get(i));
+							}*/
+							mQuickAdapter.removeAll(deleteItems);
+							checkedItems.clear();
+							deleteItems.clear();
+						}
+						
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							// TODO Auto-generated method stub
+							deleteItems.clear();
+							ShowToast("É¾³ýÊ§°Ü£¬ÉÔºóÔÙÊÔ");
+						}
+					} );
+				}
+			};
+		}
+		callBack.getHeaderLayout().setTitleAndRightButton("¹ºÎï³µ",-1,"É¾³ý", mRightImageButtonClickListener);
+	}
+
+	
+	
+	/** 
 	* @Title: loadData 
 	* @Description: TODO
 	* @param 
@@ -104,10 +154,10 @@ public class CartFragment extends BaseFragment {
 	*/
 	private void loadData() {
 		// TODO Auto-generated method stub
-		ShowLog("loadData.....cart");
+		ShowLog("loadData........cart");
 		BmobQuery<CartItem> query=new BmobQuery<CartItem>();
 		query.include("fruit");
-		query.addWhereEqualTo("mine", BmobChatUser.getCurrentUser(getActivity()).getObjectId());
+		query.addWhereEqualTo("mine",me);
 		query.findObjects(getActivity(), new FindListener<CartItem>() {
 			
 			@Override
@@ -127,6 +177,8 @@ public class CartFragment extends BaseFragment {
 				}
 				arg0.clear();
 				stopRefresh();
+				emptyView.setVisibility(View.VISIBLE);
+				emptyView.setText("¹ºÎï³µ¿Õ¿ÕµÄ");
 			}
 			
 			@Override
@@ -278,7 +330,6 @@ public class CartFragment extends BaseFragment {
 						});
 					}
 				});
-				
 				final CheckBox checkBox=helper.getView(R.id.cart_item_check);
 				helper.setOnClickListener(R.id.cart_item_check, new OnClickListener() {
 					
@@ -290,7 +341,7 @@ public class CartFragment extends BaseFragment {
 							checkedItems.remove((Integer)helper.getPosition());
 						}
 						setTotal();
-						mQuickAdapter.notifyDataSetChanged();
+						//mQuickAdapter.notifyDataSetChanged();
 					}
 				});
 			}
@@ -344,6 +395,7 @@ public class CartFragment extends BaseFragment {
 		isVisible=true;
 		ShowLog("onVisible....cart");
 
+		setRightButtonListener();
 		if (inited && !loaded) {
 			mListView.pullRefreshing();
 			if (!isNetConnected()) {
@@ -359,6 +411,23 @@ public class CartFragment extends BaseFragment {
 	protected void onInvisible() {
 		isVisible=false;
 	}
+
+	
+	/*static boolean first=true;
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		ShowLog("onstart.....");
+		if (loaded&&!first) {
+			
+			ShowLog("onstart.....setRightButtonListener");
+			setRightButtonListener();
+		}
+		first=false;
+		super.onStart();
+		
+	}*/
 	
 
+	
 }

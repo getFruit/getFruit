@@ -1,6 +1,7 @@
 package com.get.fruit.activity;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		@Override
 		public void onClick() {
 			// TODO Auto-generated method stub
-			setSelect(currentSelect);
+			changePage(currentSelect);
 		}
 	};
 	private onRightImageButtonClickListener mRightButtonSaerch=new onRightImageButtonClickListener() {
@@ -62,14 +63,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			startAnimActivity(ListFruitsActivity.class);
 		}
 	};
-	private onRightImageButtonClickListener deleteListener=new onRightImageButtonClickListener() {
-		
-		@Override
-		public void onClick() {
-			// TODO Auto-generated method stub
-			ShowToast("delete");
-		}
-	};
+	private onRightImageButtonClickListener deleteListener=null;
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,7 +82,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		initView();
 		initEvent();
 	}
@@ -161,39 +154,46 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 
 					@Override
 					public void onPageSelected(int position) {
-						setSelect(mViewPager.getCurrentItem());
+						ShowLog("onPageSelected  " + position);
+						//setSelect(mViewPager.getCurrentItem());
+
+						setSelect(position);
 					}
+
+					
 				});
 	}
 
-	public void setSelect(int currentItem) {
-		// TODO Auto-generated method stub
-		ShowLog("setSelect  " + currentItem);
-		mViewPager.setCurrentItem(currentItem);
-
+	public void setSelect(int position) {
+		ShowLog("setSelect");
 		for (ImageButton b : mButtons) {
 			b.setSelected(false);
 		}
-		mButtons[currentItem].setSelected(true);
-		mHeaderLayout.setRightButtonAndText(R.drawable.base_action_bar_search_selector, "");
-		mHeaderLayout.setOnRightImageButtonClickListener(mRightButtonSaerch);
-		switch (currentItem) {
+		mButtons[position].setSelected(true);
+		
+		switch (position) {
 		case 0:
 			mHeaderLayout.setTitleAndLeftImageButton("水果君",
 					R.drawable.base_action_bar_addrees_selector, address,
 					homeLeftListener, 4);
+			mHeaderLayout.setRightButtonAndText(R.drawable.base_action_bar_search_selector, "");
+			mHeaderLayout.setOnRightImageButtonClickListener(mRightButtonSaerch);
 			
 			break;
 		case 1:
 			mHeaderLayout.setTitleAndLeftImageButton("分类",
 					R.drawable.base_action_bar_back_bg_selector, null,
 					baseLeftListener, 1);
+			mHeaderLayout.setRightButtonAndText(R.drawable.base_action_bar_search_selector, "");
+			mHeaderLayout.setOnRightImageButtonClickListener(mRightButtonSaerch);
 			break;
 		case 2:
 			ShowLog("person");
 			mHeaderLayout.setTitleAndLeftImageButton("个人中心",
 					R.drawable.base_action_bar_back_bg_selector, null,
 					baseLeftListener, 1);
+			mHeaderLayout.setRightButtonAndText(R.drawable.base_action_bar_search_selector, "");
+			mHeaderLayout.setOnRightImageButtonClickListener(mRightButtonSaerch);
 			
 			break;
 		case 3:
@@ -201,17 +201,22 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			mHeaderLayout.setTitleAndLeftImageButton("购物车",
 					R.drawable.base_action_bar_back_bg_selector, null,
 					baseLeftListener, 1);
-			mHeaderLayout.setTitleAndRightButton("购物车",-1,"删除", deleteListener);
 			break;
 		case 4:
 			mHeaderLayout.setTitleAndLeftImageButton("果园",
 					R.drawable.base_action_bar_back_bg_selector, null,
 					baseLeftListener, 1);
+			mHeaderLayout.setRightButtonAndText(R.drawable.base_action_bar_search_selector, "");
+			mHeaderLayout.setOnRightImageButtonClickListener(mRightButtonSaerch);
 			break;
 		default:
 			break;
 		}
-
+	}
+	public void changePage(int currentItem) {
+		// TODO Auto-generated method stub
+		ShowLog("changePage  " + currentItem);
+		mViewPager.setCurrentItem(currentItem);
 	}
 
 	@Override
@@ -219,19 +224,19 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.ib_home:
-			setSelect(0);
+			changePage(0);
 			break;
 		case R.id.ib_category:
-			setSelect(1);
+			changePage(1);
 			break;
 		case R.id.ib_person:
-			setSelect(2);
+			changePage(2);
 			break;
 		case R.id.ib_cart:
-			setSelect(3);
+			changePage(3);
 			break;
 		case R.id.ib_garden:
-			setSelect(4);
+			changePage(4);
 			break;
 
 		default:

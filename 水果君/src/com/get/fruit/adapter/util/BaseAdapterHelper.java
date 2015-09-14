@@ -40,7 +40,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import cn.bmob.v3.datatype.BmobFile;
 
-import com.get.fruit.App;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -107,7 +106,6 @@ public class BaseAdapterHelper {
 	static BaseAdapterHelper get(Context context, View convertView,
 			ViewGroup parent, int layoutId, int position) {
 		if (convertView == null) {
-			App.ShowLog("nnnnew view   ="+ position);
 			return new BaseAdapterHelper(context, parent, layoutId, position);
 		}
 
@@ -115,7 +113,6 @@ public class BaseAdapterHelper {
 		BaseAdapterHelper existingHelper = (BaseAdapterHelper) convertView
 				.getTag();
 		existingHelper.position = position;
-		App.ShowLog("-------------re view  position ="+ position);
 		return existingHelper;
 	}
 

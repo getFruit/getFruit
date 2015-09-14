@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager.Query;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -64,8 +65,7 @@ public class ListFruitsActivity extends BaseActivity {
 	private TextView[] tabs;
 	private Intent intent;
 	private PopupWindow popupwindow;
-	
-	
+	private List<CartItem> myyCartItems;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -159,6 +159,7 @@ public class ListFruitsActivity extends BaseActivity {
 		mListView=(XListView) findViewById(R.id.xListView1);
 		mqQuickAdapter=new QuickAdapter<Fruit>(ListFruitsActivity.this,R.layout.item_listfruit){
 			
+			@SuppressLint("ResourceAsColor")
 			@Override
 			protected void convert(final BaseAdapterHelper helper, final Fruit item) {
 				// TODO Auto-generated method stub
@@ -180,31 +181,50 @@ public class ListFruitsActivity extends BaseActivity {
 					helper.setImageBitmapFromBmobFile(R.id.list_item_image, item.getPicture());
 				}
 				
-				helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
+				if (myyCartItems.contains(item)) {
+					helper.setText(R.id.list_addto, "查看购物车");
+					helper.setBackgroundColor(R.id.list_addto, R.color.red_button_disable);
+					helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
+						
+						@Override
+						public void onClick(final View arg0) {
+							// TODO Auto-generated method stub
+							startAnimActivityWithData(MainActivity.class, "to", 3);
+							}
+					});
 					
-					@Override
-					public void onClick(final View arg0) {
-						// TODO Auto-generated method stub
-							CartItem cartItem=new CartItem();
-							cartItem.setMine(App.mInstance.getCurrentUser());
-							cartItem.setFruit(item);
-							cartItem.save(ListFruitsActivity.this, new SaveListener() {
+				}else {
+					helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
+						
+						@Override
+						public void onClick(final View arg0) {
+							// TODO Auto-generated method stub
+								final CartItem cartItem=new CartItem();
+								BmobQuery<CartItem> query=new BmobQuery<CartItem>();
 								
-								@Override
-								public void onSuccess() {
-									// TODO Auto-generated method stub
-									arg0.setClickable(false);
-								}
-								
-								@Override
-								public void onFailure(int arg0, String arg1) {
-									// TODO Auto-generated method stub
-									ShowToast("添加失败");
-								}
-							});
-						}
+								cartItem.setMine(me);
+								cartItem.setFruit(item);
+								cartItem.save(ListFruitsActivity.this, new SaveListener() {
+									
+									@Override
+									public void onSuccess() {
 
-				});
+										helper.
+										myyCartItems.add(cartItem);
+										mqQuickAdapter.notifyDataSetChanged();
+									}
+									
+									@Override
+									public void onFailure(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+										ShowToast("添加失败");
+									}
+								});
+							}
+
+					});
+					
+				}
 				
 				helper.setOnClickListener(R.id.list_item_image, new OnClickListener() {
 					
@@ -305,6 +325,7 @@ public class ListFruitsActivity extends BaseActivity {
 					mListView.setPullLoadEnable(arg0.size() >=limit);
 					currentPage+=1;
 					arg0.clear();
+					
 				}else {
 					
 					ShowToast("暂无数据!");
@@ -326,7 +347,28 @@ public class ListFruitsActivity extends BaseActivity {
 		
 	}
 	
-	
+	public void query2(){
+		BmobQuery<CartItem> query=new BmobQuery<CartItem>();
+		query.include("fruit");
+		query.addWhereEqualTo("mine",me);
+		query.findObjects(this, new FindListener<CartItem>() {
+			
+			@Override
+			public void onSuccess(List<CartItem> arg0) {
+				// TODO Auto-generated method stub
+				if(CollectionUtils.isNotNull(arg0)){
+					myyCartItems=arg0;
+				}
+			}
+			
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				ShowLog("数据获取错误" +arg0+ arg1);
+			}
+		});
+	}
+		
 	
 	static int current=3;
 	static String[] reversed=new String[]{"-","-",""}; 
@@ -396,7 +438,6 @@ public class ListFruitsActivity extends BaseActivity {
 		
 	}
 	
-	
 
 	//onActivityResult回调
 	@Override
@@ -416,6 +457,8 @@ public class ListFruitsActivity extends BaseActivity {
 	
 	
 	
+	
+	
 	//initMenu
 	private Spinner province,city;
 	private EditText lower;
@@ -425,6 +468,7 @@ public class ListFruitsActivity extends BaseActivity {
 	private List<Cityinfo> province_list;
 	private HashMap<String, List<Cityinfo>> city_map;
 	private ArrayAdapter<String> cAdapter;
+	
 	public void initShareMenu(){
 
 		//menu
@@ -525,6 +569,7 @@ public class ListFruitsActivity extends BaseActivity {
 		
 	}
 
+	
 	/** 
 	* @Title: initSpinnerData 
 	* @Description: TODO

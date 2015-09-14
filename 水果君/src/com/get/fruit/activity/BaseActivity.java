@@ -29,6 +29,7 @@ import cn.bmob.im.util.BmobLog;
 
 import com.get.fruit.App;
 import com.get.fruit.R;
+import com.get.fruit.bean.User;
 import com.get.fruit.util.CommonUtils;
 import com.get.fruit.view.HeaderLayout;
 import com.get.fruit.view.HeaderLayout.HeaderStyle;
@@ -47,7 +48,7 @@ public class BaseActivity extends FragmentActivity {
 
 	BmobUserManager userManager;
 	BmobChatManager manager;
-	
+	User me;
 	App mApplication;
 	protected HeaderLayout mHeaderLayout;
 	
@@ -61,6 +62,7 @@ public class BaseActivity extends FragmentActivity {
 		userManager = BmobUserManager.getInstance(this);
 		manager = BmobChatManager.getInstance(this);
 		mApplication = App.getInstance();
+		me=mApplication.getCurrentUser();
 		DisplayMetrics metric = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metric);
 		mScreenWidth = metric.widthPixels;

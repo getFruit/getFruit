@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_layout_imagebuttonlayout"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/base_color_all_transparent"
+    android:orientation="vertical"
+    android:padding="4dp" >
+
+
+	<SearchView
+	    android:id="@+id/middle_search"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:iconifiedByDefault="true"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete"
+        android:background="@drawable/shape_base" >
+	</SearchView>
+
+</LinearLayout>
