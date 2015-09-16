@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager.LayoutParams;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +33,7 @@ import com.get.fruit.bean.HomeAD;
 import com.get.fruit.util.CollectionUtils;
 import com.get.fruit.util.TimeUtil;
 import com.get.fruit.view.MyGridView;
+import com.get.fruit.view.MyImageSwitcher;
 import com.get.fruit.view.Rotate3D;
 
 public class HomeFragment extends BaseFragment{
@@ -43,7 +43,7 @@ public class HomeFragment extends BaseFragment{
 	
 	List<Drawable> adpics=new ArrayList<Drawable>();
 	ImageView[] views = new ImageView[4];
-	ImageSwitcher imswitcher;
+	MyImageSwitcher imswitcher;
 	GestureDetector mGestureDetector;
 	List<HomeAD> ads=new ArrayList<HomeAD>();
 	int i=0;
@@ -52,7 +52,7 @@ public class HomeFragment extends BaseFragment{
 	private MyGridView mGridView;
 	private QuickAdapter<HomeAD> mAdapter;
 	private HomeAD[] dataAds;
-	
+	List<String> urls=new ArrayList<>();
 	
 	
 	ImageView imageView;
@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment{
 	*/
 	private void initView() {
 		//ÂÖ²¥Í¼
-		imswitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher1);
+		imswitcher = (MyImageSwitcher) findViewById(R.id.detail_imageSwitcher1);
 		imswitcher.setFactory(new ViewFactory()
 		{
 			@Override
@@ -180,8 +180,8 @@ public class HomeFragment extends BaseFragment{
 				if(!(CollectionUtils.isNotNull(arg0)&&arg0.size()==4))
 					return;
 				ads=arg0;
-				//downloadPics();
-				getDrawables();
+				downloadPics();
+				//getDrawables();
 			}
 			@Override
 			public void onError(int arg0, String arg1) {
@@ -195,7 +195,6 @@ public class HomeFragment extends BaseFragment{
 	public void downloadPics(){
 		
 		for (int i = 0; i < ads.size(); i++) {
-			
 			BmobProFile.getInstance(getActivity()).download(ads.get(i).getPic().getFilename(), new DownloadListener() {
 	
 		        @Override
@@ -221,27 +220,12 @@ public class HomeFragment extends BaseFragment{
 	}
 	
 	public void getDrawables(){
-		new Thread(new Runnable() {
+		adpics.clear();
+		for(HomeAD ad:ads){
+			urls.add(ad.getPic().getFileUrl(getActivity()));
+			ShowLog(ad.getPic().getFileUrl(getActivity()));
 			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				adpics.clear();
-				for(HomeAD ad:ads){
-					ImageView imageView=new ImageView(getActivity());
-					ad.getPic().loadImage(getActivity(), imageView);
-					imageView.setDrawingCacheEnabled(true);
-					adpics.add(imageView.getDrawable());
-					imageView.setDrawingCacheEnabled(false);
-					try {
-						Thread.sleep(2500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		}
 	}
 	
 	/** 
@@ -310,7 +294,7 @@ public class HomeFragment extends BaseFragment{
 		 rdin.setFillAfter(true);
 		 imswitcher.setInAnimation(rdin);   
 		 Rotate3D rdout = new Rotate3D(direction*(-15),direction*(-90),0,halfWidth,halfHeight);
-		 
+		 ShowLog("sssssss");
 		 rdout.setDuration(duration);    
 		 rdout.setFillAfter(true);
 		 imswitcher.setOutAnimation(rdout);
@@ -323,7 +307,8 @@ public class HomeFragment extends BaseFragment{
 		{
 			setDotState(p);
 			if (adpics.size()>p) {
-				imswitcher.setImageDrawable(adpics.get(p));
+				imswitcher.setImageFromBmobFile(ads.get(p).getPic());
+				ShowLog("sssssssbbbbbbb");
 			}
 		
 		}else
@@ -332,7 +317,7 @@ public class HomeFragment extends BaseFragment{
 		int	k=4+p;
 		setDotState(k);
 		if(adpics.size()>k){
-			imswitcher.setImageDrawable(adpics.get(k));
+			imswitcher.setImageFromBmobFile(ads.get(p).getPic());
 		}
 			
 		}

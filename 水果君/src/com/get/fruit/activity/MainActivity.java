@@ -282,11 +282,11 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		playHeartbeatAnimation(arg0);
 		switch (arg0.getId()) {
-		case R.id.imageButton1:
+		case R.id.detail_imageButton1:
 
 			break;
 
-		case R.id.imageButton2:
+		case R.id.detail_imageButton2:
 
 			break;
 

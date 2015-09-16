@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
@@ -65,7 +66,7 @@ public class ListFruitsActivity extends BaseActivity {
 	private TextView[] tabs;
 	private Intent intent;
 	private PopupWindow popupwindow;
-	private List<CartItem> myyCartItems;
+	private List<CartItem> myyCartItems=new ArrayList<CartItem>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -184,47 +185,43 @@ public class ListFruitsActivity extends BaseActivity {
 				if (myyCartItems.contains(item)) {
 					helper.setText(R.id.list_addto, "查看购物车");
 					helper.setBackgroundColor(R.id.list_addto, R.color.red_button_disable);
-					helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
-						
-						@Override
-						public void onClick(final View arg0) {
-							// TODO Auto-generated method stub
-							startAnimActivityWithData(MainActivity.class, "to", 3);
-							}
-					});
-					
-				}else {
-					helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
-						
-						@Override
-						public void onClick(final View arg0) {
-							// TODO Auto-generated method stub
-								final CartItem cartItem=new CartItem();
-								BmobQuery<CartItem> query=new BmobQuery<CartItem>();
-								
-								cartItem.setMine(me);
-								cartItem.setFruit(item);
-								cartItem.save(ListFruitsActivity.this, new SaveListener() {
-									
-									@Override
-									public void onSuccess() {
-
-										helper.
-										myyCartItems.add(cartItem);
-										mqQuickAdapter.notifyDataSetChanged();
-									}
-									
-									@Override
-									public void onFailure(int arg0, String arg1) {
-										// TODO Auto-generated method stub
-										ShowToast("添加失败");
-									}
-								});
-							}
-
-					});
-					
 				}
+				final Button addto=helper.getView(R.id.list_addto);
+				helper.setOnClickListener(R.id.list_addto, new OnClickListener() {
+						
+					@Override
+					public void onClick(final View arg0) {
+						// TODO Auto-generated method stub
+						
+						if (addto.getText().equals("查看购物车")) {
+							startAnimActivityToFragment(MainActivity.class, 3);
+						}else{
+							final CartItem cartItem=new CartItem();
+							BmobQuery<CartItem> query=new BmobQuery<CartItem>();
+							
+							cartItem.setMine(me);
+							cartItem.setCount(1);
+							cartItem.setFruit(item);
+							cartItem.save(ListFruitsActivity.this, new SaveListener() {
+								
+								@Override
+								public void onSuccess() {
+	
+									//helper.
+									myyCartItems.add(cartItem);
+									addto.setText("查看购物车");								}
+								
+								@Override
+								public void onFailure(int arg0, String arg1) {
+									// TODO Auto-generated method stub
+									ShowToast("添加失败");
+								}
+							});
+						}
+					}
+	
+				});
+					
 				
 				helper.setOnClickListener(R.id.list_item_image, new OnClickListener() {
 					
@@ -357,7 +354,9 @@ public class ListFruitsActivity extends BaseActivity {
 			public void onSuccess(List<CartItem> arg0) {
 				// TODO Auto-generated method stub
 				if(CollectionUtils.isNotNull(arg0)){
-					myyCartItems=arg0;
+					myyCartItems.clear();
+					myyCartItems.addAll(arg0);
+					arg0.clear();
 				}
 			}
 			
@@ -477,7 +476,6 @@ public class ListFruitsActivity extends BaseActivity {
 		popupwindow.setAnimationStyle(R.style.AnimationFade);
 		popupwindow.setFocusable(true);  
 		popupwindow.setOutsideTouchable(true);  
-        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响背景  
 		popupwindow.setBackgroundDrawable(new BitmapDrawable());  
 		menu.setOnTouchListener(new OnTouchListener() {
 			

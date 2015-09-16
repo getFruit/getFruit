@@ -24,12 +24,12 @@
                 android:layout_marginRight="2dp"
                 android:orientation="vertical" >
 
-                <ImageSwitcher
-                    android:id="@+id/imageSwitcher1"
+                <com.get.fruit.view.MyImageSwitcher
+                    android:id="@+id/detail_imageSwitcher1"
                     android:layout_width="match_parent"
                     android:layout_height="116dip"
                     android:background="#ebeaea" >
-                </ImageSwitcher>
+                </com.get.fruit.view.MyImageSwitcher>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                 android:onClick="homeIBClick" >
 
                 <ImageButton
-                    android:id="@+id/imageButton1"
+                    android:id="@+id/detail_imageButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -93,7 +93,7 @@
                     android:src="@drawable/home_recommend" />
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/detail_imageButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

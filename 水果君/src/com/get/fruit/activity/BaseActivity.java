@@ -1,6 +1,7 @@
 package com.get.fruit.activity;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import android.R.integer;
 import android.app.Activity;
@@ -205,6 +206,11 @@ public class BaseActivity extends FragmentActivity {
 	public void startAnimActivityWithData(Class<?> cla,String key, Serializable value) {
 		Intent intent=new Intent(this, cla);
 		intent.putExtra(key, value);
+		this.startActivity(intent);
+	}
+	public void startAnimActivityToFragment(Class<?> cla,int to) {
+		Intent intent=new Intent(this, cla);
+		intent.putExtra("to", to);
 		this.startActivity(intent);
 	}
 	

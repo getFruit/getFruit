@@ -7,8 +7,9 @@
     <include
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
+
     <ImageSwitcher
-        android:id="@+id/imageSwitcher1"
+        android:id="@+id/detail_imageSwitcher1"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_below="@+id/common_actionbar"
@@ -16,32 +17,33 @@
     </ImageSwitcher>
 
     <TextView
-        android:id="@+id/detail_item_name"
+        android:id="@+id/detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imageSwitcher1"
+        android:layout_below="@+id/detail_imageSwitcher1"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:text="水果大杂烩"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/detail_item_price"
+        android:id="@+id/detail_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/detail_item_name"
-        android:layout_below="@+id/detail_item_name"
+        android:layout_alignRight="@+id/detail_name"
+        android:layout_below="@+id/detail_name"
         android:text="55.0"
         android:textColor="@color/base_color_red"
         android:textSize="30sp" />
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/detail_item_price"
-        android:layout_alignBottom="@+id/detail_item_price"
-        android:layout_toLeftOf="@+id/detail_item_price"
+        android:layout_alignBaseline="@+id/detail_price"
+        android:layout_alignBottom="@+id/detail_price"
+        android:layout_toLeftOf="@+id/detail_price"
         android:text="￥"
         android:textColor="@color/base_color_red"
         android:textSize="18sp" />
@@ -49,10 +51,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/detail_item_price"
-        android:layout_alignBottom="@+id/detail_item_price"
+        android:layout_alignBaseline="@+id/detail_price"
+        android:layout_alignBottom="@+id/detail_price"
         android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@+id/detail_item_price"
+        android:layout_toRightOf="@+id/detail_price"
         android:text="/斤"
         android:textSize="18sp" />
 
@@ -61,13 +63,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_line_width_1"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/detail_item_price"
+        android:layout_below="@+id/detail_price"
         android:layout_marginTop="10dp"
         android:background="@color/line_color_gray"
         android:orientation="vertical" >
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView2"
         style="@style/Smile.TextView._Gray"
         android:layout_width="match_parent"
         android:layout_height="36dp"
@@ -94,56 +97,104 @@
             android:layout_width="110dp"
             android:layout_height="36dp"
             android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:background="@drawable/rectangle_white_border_sharpe"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp" >
+            android:layout_marginRight="40dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/rectangle_white_border_sharpe" >
 
             <ImageButton
-                android:id="@+id/imageButton1"
+                android:id="@+id/detail_imageButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-            	android:layout_gravity="center"
-            	android:layout_weight="0.1"
+                android:layout_gravity="center"
+                android:layout_weight="0.1"
                 android:background="@color/base_color_all_transparent"
                 android:src="@drawable/details_delete" />
 
             <EditText
-                android:id="@+id/editText1"
-            	android:layout_weight="0.2"
-            	android:layout_gravity="center"
-		        android:background="@drawable/edittext_shape_rectangle"
-		        android:inputType="number"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <requestFocus />
-            </EditText>
-
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-            	android:layout_weight="0.1"
-            	android:layout_gravity="center"
+                android:id="@+id/detail_editText_count"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.2"
+                android:background="@drawable/edittext_shape_rectangle"
+                android:inputType="number" >
+
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/detail_imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.1"
                 android:background="@color/base_color_all_transparent"
                 android:src="@drawable/detailes_append" />
-
         </LinearLayout>
-        
+
         <Button
             android:id="@+id/detail_addtocart"
             android:layout_width="100dp"
             android:layout_height="38dp"
-            android:layout_weight="0.5"
             android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.5"
             android:background="@drawable/button_bg"
             android:text="加入购物车"
-            android:layout_marginRight="20dp"
             android:textColor="@color/base_color_white"
             android:textSize="16sp" />
-
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="46dp"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/detail_count"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:textSize="18sp"
+	        android:textColor="@color/text_color_gray"
+	        android:text="库存：" />
+
+        <TextView
+            android:id="@+id/detail_origin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:text="产地："
+            android:textColor="@color/text_color_gray"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/detail_describe"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:textSize="18sp"
+	        android:textColor="@color/text_color_gray"
+	        android:text="水果介绍：" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/detail_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/linearLayout1"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/detail_name"
+        android:gravity=""
+        android:text="55.0"
+        android:textColor="@color/base_color_red"
+        android:textSize="40sp" />
 
 </RelativeLayout>
