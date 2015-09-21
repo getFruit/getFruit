@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.get.fruit.R;
-import com.get.fruit.bean.Cityinfo;
 import com.get.fruit.util.CitycodeUtil;
 import com.get.fruit.util.FileUtil;
 import com.get.fruit.view.citypicker.ScrollerNumberPicker.OnSelectListener;

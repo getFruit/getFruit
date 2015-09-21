@@ -6,12 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.widget.EditText;
 public class StringUtils {
 
 	public final static boolean isValidEmail(CharSequence target) {
@@ -24,6 +24,12 @@ public class StringUtils {
 	}
 
 	
+	public static boolean inputValidate(EditText view,String regString){
+		String input=view.getText().toString();
+		if( isEmpty(input)) return false;
+		return matches(input, regString);
+		
+	}
 	/**
 	 * 规范内容长度
 	 * 
@@ -31,7 +37,7 @@ public class StringUtils {
 	 *            输入的字符
 	 * @return
 	 */
-	public static int getWordCountRegex(String s) {
+ 	public static int getWordCountRegex(String s) {
 		s = s.replaceAll("[^\\x00-\\xff]", "**");
 		int length = s.length();
 		return length;

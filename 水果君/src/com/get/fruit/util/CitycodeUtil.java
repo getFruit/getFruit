@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.get.fruit.bean.Cityinfo;
+import com.get.fruit.view.citypicker.Cityinfo;
 
 import android.content.Context;
 

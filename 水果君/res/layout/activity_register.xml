@@ -94,7 +94,7 @@
             android:id="@+id/editText_username"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:hint="   用户名 (2-20位)"
+            android:hint="   用户名 (3-20位)"
             android:maxLength="20" />
 
         <EditText

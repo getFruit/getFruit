@@ -1,4 +1,4 @@
-package com.get.fruit.bean;
+package com.get.fruit.view.citypicker;
 
 import java.io.Serializable;
 

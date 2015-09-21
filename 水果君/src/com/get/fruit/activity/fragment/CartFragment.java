@@ -40,13 +40,13 @@ public class CartFragment extends BaseFragment {
 	static boolean inited=false;
 	static boolean loaded=false;
 	private CartCallBack callBack;
+	private Button gopay;
+	private CheckBox checkAll;
+	private TextView totalPrice;
+	private onRightImageButtonClickListener mRightImageButtonClickListener=null;
 	private XListView mListView;
 	private QuickAdapter<CartItem> mQuickAdapter;
-	private Button gopay;
-	private TextView totalPrice;
 	private TextView emptyView;
-	private CheckBox checkAll;
-	private onRightImageButtonClickListener mRightImageButtonClickListener=null;
 	List<Integer> checkedItems=new LinkedList<Integer>();
 	List<CartItem> allItems=new LinkedList<CartItem>();
 

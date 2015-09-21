@@ -1,50 +1,67 @@
 package com.get.fruit.activity;
 
 
-import android.R.integer;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.SuppressLint;
-import android.app.DownloadManager.Query;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.view.PagerAdapter;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.PopupWindow.OnDismissListener;
-
+import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
+import com.bmob.BmobProFile;
+import com.bmob.btp.callback.DownloadListener;
 import com.get.fruit.R;
+import com.get.fruit.adapter.ZoomOutPageTransformer;
 import com.get.fruit.bean.CartItem;
 import com.get.fruit.bean.Fruit;
+import com.get.fruit.bean.User;
 import com.get.fruit.util.PixelUtil;
 import com.get.fruit.view.HeaderLayout.onRightImageButtonClickListener;
+import com.get.fruit.view.MyViewPager;
+import com.get.fruit.view.ZoomImageView;
 
 public class DetailActivity extends BaseActivity {
 
 	private Fruit fruit;
+	private List<String> pics=new ArrayList<>();
 	private PopupWindow popupwindow;
-
 	private EditText counEditText;
 	private TextView  count,origin,describe,price,total,name;
 	private ImageButton dec,inc;
 	private Button addtocart;
+	
+	private MyViewPager mViewPager;
+	private int[] mImage = new int[]{R.drawable.aa,R.drawable.bb,R.drawable.cc};
+	private ImageView[] mImageViews = new ImageView[mImage.length];
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+		fruit=(Fruit) getIntent().getSerializableExtra("fruit");
 		initView();
 		initEvent();
+		query(fruit);
 	}
 
 
@@ -57,7 +74,7 @@ public class DetailActivity extends BaseActivity {
 	*/
 	private void initView() {
 		// TODO Auto-generated method stub
-		initTopBarForBoth("œÍ«È", R.drawable.base_action_bar_back_login_selector, null, new OnLeftClickListenerFinishMe(), R.drawable.details_menu, null, new onRightImageButtonClickListener() {
+		initTopBarForBoth("ËØ¶ÊÉÖ", R.drawable.base_action_bar_back_login_selector, null, new OnLeftClickListenerFinishMe(), R.drawable.details_menu, null, new onRightImageButtonClickListener() {
 			
 			@SuppressLint("NewApi")
 			@Override
@@ -74,7 +91,6 @@ public class DetailActivity extends BaseActivity {
 				}
 			}
 		}, 1);
-	
 		count=(TextView) findViewById(R.id.detail_count);
 		origin=(TextView) findViewById(R.id.detail_origin);
 		describe=(TextView) findViewById(R.id.detail_describe);
@@ -85,8 +101,61 @@ public class DetailActivity extends BaseActivity {
 		dec=(ImageButton) findViewById(R.id.detail_imageButton1);
 		inc=(ImageButton) findViewById(R.id.detail_imageButton2);
 		addtocart=(Button) findViewById(R.id.detail_addtocart);
+		
+		initPicViewer();
 	}
 	
+
+	/** 
+	* @Title: initPicViewer 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void initPicViewer() {
+		mViewPager = (MyViewPager) findViewById(R.id.detail_imageSwitcher1);
+        //mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        //mViewPager.setPageTransformer(true, new RotatePageDownTransformer());
+        mViewPager.setAdapter(new PagerAdapter() {
+			
+        	@Override
+        	public Object instantiateItem(ViewGroup container, int position) {
+        		ZoomImageView imageView = new ZoomImageView(getApplicationContext());
+        		position %= mImageViews.length;
+        		imageView.setImageResource(mImage[position]);
+        		container.addView(imageView);
+        		mImageViews[position] = imageView;
+        		mViewPager.setViewFromPosition(position, imageView);
+        		mViewPager.getImageViewsLength(mImageViews);
+        		return imageView;
+        	}
+        	
+        	@Override
+        	public void destroyItem(ViewGroup container, int position,
+        			Object object) {
+        		
+        		//container.removeView(mImageViews[position]);
+        		
+        		mViewPager.removeViewFromPOsition(position);
+        	}
+        	
+			@Override
+			public boolean isViewFromObject(View arg0, Object arg1) {
+				
+				return arg0 == arg1;
+			}
+			
+			@Override
+			public int getCount() {
+				//return mImageViews.length;
+				return Integer.MAX_VALUE;
+			}
+		});
+        
+	}
+
 
 	/** 
 	* @Title: initEvent 
@@ -107,6 +176,7 @@ public class DetailActivity extends BaseActivity {
 					return;
 				}
 				count.setText(c+"");
+				total.setText(c*fruit.getPrice()+"");
 			}
 		});
 		inc.setOnClickListener(new OnClickListener() {
@@ -114,11 +184,12 @@ public class DetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				int c=Integer.valueOf((String) count.getText());
-				if (c==fruit.getCount()) {
+				int c=Integer.valueOf((String) count.getText())+1;
+				if (c>fruit.getCount()) {
 					return;
 				}
 				count.setText(c+"");
+				total.setText(c*fruit.getPrice()+"");
 			}
 		});
 		addtocart.setOnClickListener(new OnClickListener() {
@@ -126,12 +197,12 @@ public class DetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (addtocart.getText().equals("≤Èø¥π∫ŒÔ≥µ")) {
+				if (addtocart.getText().equals("Êü•ÁúãË¥≠Áâ©ËΩ¶")) {
 					startAnimActivityToFragment(MainActivity.class, 3);
 				}
 				int c=Integer.valueOf((String) count.getText());
 				if (c==0) {
-					ShowToast("«Î—°‘Ò ˝¡ø");
+					ShowToast("ËØ∑ÈÄâÊã©Êï∞Èáè");
 					return;
 				}
 				final CartItem cartItem=new CartItem();
@@ -144,12 +215,12 @@ public class DetailActivity extends BaseActivity {
 					
 					@Override
 					public void onSuccess() {
-						addtocart.setText("≤Èø¥π∫ŒÔ≥µ");
+						addtocart.setText("Êü•ÁúãË¥≠Áâ©ËΩ¶");
 					}
 					@Override
 					public void onFailure(int arg0, String arg1) {
 						// TODO Auto-generated method stub
-						ShowToast("ÃÌº” ß∞‹");
+						ShowToast("Ê∑ªÂä†Â§±Ë¥•");
 					}
 				});
 			}
@@ -163,6 +234,7 @@ public class DetailActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		Intent intent=getIntent();
 		fruit=(Fruit) intent.getSerializableExtra("fruit");
+		ShowLog(fruit.getName());
 		query(fruit);
 		super.onResume();
 	}
@@ -191,15 +263,51 @@ public class DetailActivity extends BaseActivity {
 			public void onSuccess(Fruit arg0) {
 				// TODO Auto-generated method stub
 				fruit=arg0;
+				downloadPics();
+				setView();
 			}
 		});
 	}
 
-	public void setView(){
+	//‰∏ãËΩΩÂõæÁâá
+	public void downloadPics(){
+			String[] pcs=fruit.getPictures();
+			pics.clear();
+			for (int i = 0; i < pcs.length; i++) {
+				BmobProFile.getInstance(this).download(pcs[i], new DownloadListener() {
 		
+			        @Override
+			        public void onSuccess(String fullPath) {
+			            // TODO Auto-generated method stub
+			            ShowLog("‰∏ãËΩΩÊàêÂäüÔºö"+fullPath);
+			            pics.add(fullPath);
+			        }
+		
+			        @Override
+			        public void onProgress(String localPath, int percent) {
+			            // TODO Auto-generated method stub
+			        	ShowLog("download-->onProgress :"+percent);
+			        }
+		
+			        @Override
+			        public void onError(int statuscode, String errormsg) {
+			            // TODO Auto-generated method stub
+			        	ShowLog("‰∏ãËΩΩÂá∫ÈîôÔºö"+statuscode +"--"+errormsg);
+			        }
+			    });
+			}
+		}
+		
+	public void setView(){
+		count.setText(fruit.getCount()+"");
+		origin.setText(fruit.getOrigin());
+		describe.setText(fruit.getDescribe());
+		price.setText(fruit.getPrice()+"");
+		total.setText(fruit.getPrice()+"");
+		name.setText(fruit.getName());
 	}
 
-	//∑÷œÌ≤Àµ•
+	//ÂàÜ‰∫´ËèúÂçï
 	OnClickListener menuItemClick;
 	public void initShareMenu(){
 
@@ -207,18 +315,40 @@ public class DetailActivity extends BaseActivity {
 			
 			boolean collected=false;
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(final View arg0) {
 				// TODO Auto-generated method stub
 				switch (arg0.getId()) {
 				case R.id.comment:
 					
 					break;
 				case R.id.collect:
-					arg0.setSelected(!collected);
-					collected=!collected;
+					if (fruit==null) {
+						return;
+					}
+					Fruit temp=new Fruit();
+					temp.setObjectId(fruit.getObjectId());
+					BmobRelation relation = new BmobRelation();
+					User user=new User();
+					user.setObjectId(me.getObjectId());
+					relation.add(user);
+					temp.setLikes(relation);
+					temp.update(DetailActivity.this, new UpdateListener() {
+
+					    @Override
+					    public void onSuccess() {
+					    	arg0.setSelected(!collected);
+							collected=!collected;
+					    }
+
+					    @Override
+					    public void onFailure(int arg0, String arg1) {
+					        // TODO Auto-generated method stub
+					        ShowToast("Êî∂ËóèÂ§±Ë¥•");
+					    }
+					});
 					break;
 				case R.id.share:
-					
+					//here
 					break;
 
 				default:

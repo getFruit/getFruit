@@ -24,7 +24,9 @@ import cn.bmob.im.util.BmobJsonUtil;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.listener.FindListener;
 
+import com.get.fruit.R;
 import com.get.fruit.util.CommonUtils;
+import com.get.fruit.R.drawable;
 import com.get.fruit.activity.MainActivity;
 
 

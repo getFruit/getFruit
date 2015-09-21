@@ -10,30 +10,30 @@ public class ImageLoadOptions {
 
 	public static DisplayImageOptions getOptions() {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				// // 璁剧疆鍥剧墖鍦ㄤ笅杞芥湡闂存樉绀虹殑鍥剧墖
+				// // 设置图片在下载期间显示的图片
 				// .showImageOnLoading(R.drawable.small_image_holder_listpage)
-				// // 璁剧疆鍥剧墖Uri涓虹┖鎴栨槸閿欒鐨勬椂鍊欐樉绀虹殑鍥剧墖
+				// // 设置图片Uri为空或是错误的时候显示的图片
 				// .showImageForEmptyUri(R.drawable.small_image_holder_listpage)
-				// // 璁剧疆鍥剧墖鍔犺浇/瑙ｇ爜杩囩▼涓敊璇椂鍊欐樉绀虹殑鍥剧墖
+				// // 设置图片加载/解码过程中错误时候显示的图片
 				// .showImageOnFail(R.drawable.small_image_holder_listpage)
 				.cacheInMemory(true)
-				// 璁剧疆涓嬭浇鐨勫浘鐗囨槸鍚︾紦瀛樺湪鍐呭瓨涓?
+				// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc(true)
-				// 璁剧疆涓嬭浇鐨勫浘鐗囨槸鍚︾紦瀛樺湪SD鍗′腑
+				// 设置下载的图片是否缓存在SD卡中
 				.considerExifParams(true)
-				.imageScaleType(ImageScaleType.EXACTLY)// 璁剧疆鍥剧墖浠ュ浣曠殑缂栫爜鏂瑰紡鏄剧ず
-				.bitmapConfig(Bitmap.Config.RGB_565)// 璁剧疆鍥剧墖鐨勮В鐮佺被鍨?
+				.imageScaleType(ImageScaleType.EXACTLY)// 设置图片以如何的编码方式显示
+				.bitmapConfig(Bitmap.Config.RGB_565)// 设置图片的解码类型
 				// .decodingOptions(android.graphics.BitmapFactory.Options
-				// decodingOptions)//璁剧疆鍥剧墖鐨勮В鐮侀厤缃?
+				// decodingOptions)//设置图片的解码配置
 				.considerExifParams(true)
-				// 璁剧疆鍥剧墖涓嬭浇鍓嶇殑寤惰繜
+				// 设置图片下载前的延迟
 				// .delayBeforeLoading(int delayInMillis)//int
-				// delayInMillis涓轰綘璁剧疆鐨勫欢杩熸椂闂?
-				// 璁剧疆鍥剧墖鍔犲叆缂撳瓨鍓嶏紝瀵筨itmap杩涜璁剧疆
-				// 銆俻reProcessor(BitmapProcessor preProcessor)
-				.resetViewBeforeLoading(true)// 璁剧疆鍥剧墖鍦ㄤ笅杞藉墠鏄惁閲嶇疆锛屽浣?
-				// .displayer(new RoundedBitmapDisplayer(20))//鏄惁璁剧疆涓哄渾瑙掞紝寮у害涓哄灏?
-				.displayer(new FadeInBitmapDisplayer(100))// 娣″叆
+				// delayInMillis为你设置的延迟时间
+				// 设置图片加入缓存前，对bitmap进行设置
+				// 。preProcessor(BitmapProcessor preProcessor)
+				.resetViewBeforeLoading(true)// 设置图片在下载前是否重置，复位
+				// .displayer(new RoundedBitmapDisplayer(20))//是否设置为圆角，弧度为多少
+				.displayer(new FadeInBitmapDisplayer(100))// 淡入
 				.build();
 
 		return options;

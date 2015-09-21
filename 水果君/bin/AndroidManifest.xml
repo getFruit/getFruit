@@ -211,11 +211,29 @@
         </activity>
         <activity
             android:name=".activity.DetailActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_detail" >
+            
         </activity>
         <activity
-            android:name="com.get.fruit.activity.CategorySelectActivity"
+            android:name=".activity.CategorySelectActivity"
             android:label="@string/title_activity_category_select" >
+        </activity>
+        <activity
+            android:name=".activity.MessengerActivity"
+            android:label="@string/title_activity_messenger" >
+        </activity>
+        <activity
+            android:name="com.get.fruit.activity.OrderListActivity"
+            android:label="@string/title_activity_order_list" >
+        </activity>
+        <activity
+            android:name="com.get.fruit.activity.HarvestActivity"
+            android:label="@string/title_activity_harvest" >
+        </activity>
+        <activity
+            android:name="com.get.fruit.activity.CollectionActivity"
+            android:label="@string/title_activity_collection" >
         </activity>
     </application>
 

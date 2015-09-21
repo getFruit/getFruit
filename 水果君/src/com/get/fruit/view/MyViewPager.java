@@ -1,47 +1,77 @@
 package com.get.fruit.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 
 public class MyViewPager extends ViewPager {
+	private View mLeft;
+	private View mRight;
+	private static final float MIN_SCALE = 0.6F;
+	private float mScale;
+	private float mTrans;
+	private int mLength;
+	private Map<Integer, View> mChildren = new HashMap<Integer, View>();
+	
+	public void setViewFromPosition(int position, View view){
+		
+		mChildren.put(position, view);
+	}
+	
+	public void removeViewFromPOsition(int position){
+		
+		mChildren.remove(position);
+	}
+	
+	public void getImageViewsLength(ImageView[] imageView){
+		mLength = imageView.length;
+	}
 
-        private Context context;
-        private boolean willIntercept = true;
-        
-        public MyViewPager(Context context) {
-                super(context);
-                this.context = context;
-        }
-        
-        public MyViewPager(Context context, AttributeSet attrs) {
-                super(context, attrs);
-                this.context = context;
-        }
+	public MyViewPager(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		
+	}
+	
+	
+	public MyViewPager(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
 
-        
-        
-        @Override
-        public boolean onInterceptTouchEvent(MotionEvent arg0) {
-                if(willIntercept){
-                        //这个地方直接返回true会很卡
-                        return super.onInterceptTouchEvent(arg0);
-                }else{
-                        return false;
-                }
-                
-        }
+	@Override
+	protected void onPageScrolled(int position, float offset, int offsetPixels) {
+		
+		mLeft = mChildren.get(position%mLength);
+		mRight = mChildren.get((position + 1)%mLength);
+		
+		animStack(mLeft,mRight,offset,offsetPixels);
+		super.onPageScrolled(position, offset, offsetPixels);
+	}
 
-        /**
-         * 设置ViewPager是否拦截点击事件
-         * @param value if true, ViewPager拦截点击事件
-         * if false, ViewPager将不能滑动，ViewPager的子View可以获得点击事件
-         * 主要受影响的点击事件为横向滑动
-         */
-        public void setTouchIntercept(boolean value){
-                willIntercept = value;
-        }
-        
+	@SuppressLint("NewApi") private void animStack(View left, View right, float offset,
+			int offsetPixels) {
+		
+		if(right != null){
+			//从0~1页，offset从0~1
+			mScale = (1 - MIN_SCALE)*offset + MIN_SCALE;
+			//offsetPixels从0~宽度
+			mTrans = -getWidth() - getPageMargin() + offsetPixels;
+			
+			right.setScaleX(mScale);
+			right.setScaleY(mScale);
+			right.setTranslationX(mTrans);
+		}
+		
+		if(left != null){
+			left.bringToFront();
+		}
+		
+	}
 
 }

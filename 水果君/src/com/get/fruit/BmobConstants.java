@@ -35,8 +35,10 @@ public class BmobConstants {
 	public static final int REQUESTCODE_TAKE_LOCATION = 0x000004;//位置选择
 	
 	
-	public static final int REQUESTCODE_FROM_ADDFRUIT_FORADDRESS = 0x000006;//商品上传分类调用
-	public static final int REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY = 0x000004;//商品上传分类调用
+	public static final int REQUESTCODE_FROM_ADDFRUIT_FORADDRESS = 0x000006;//商品上传位置选择调用
+	public static final int REQUESTCODE_FROM_ADDFRUIT_FORCATEGORY = 0x000007;//商品上传分类调用
+	public static final int REQUESTCODE_FROM_MAINACTIVITY_FORADDRESS = 0x000008;//
+	public static final int REQUESTCODE_FROM_FRAGMENT_FORADDRESS = 0x000009;//
 	
 	public static final String EXTRA_STRING = "extra_string";
 	

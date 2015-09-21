@@ -277,6 +277,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
+		ShowLog("MainAc >> request: "+requestCode+"   result: "+resultCode);
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {

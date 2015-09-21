@@ -89,6 +89,59 @@ public class HomeFragment extends BaseFragment{
 	* @throws 
 	*/
 	private void initView() {
+		initImageSwitcher();
+		
+		initGridView();
+		
+		initButtons();
+	}
+
+	/** 
+	* @Title: initButtons 
+	* @Description: TODO
+	* @param 
+	* @return void
+	* @throws 
+	*/
+	private void initButtons() {
+		// TODO Auto-generated method stub
+		//°´Å¥
+				ImageView v1 = (ImageView) findViewById(R.id.View1);
+				ImageView v2 = (ImageView) findViewById(R.id.View2);
+				ImageView v3 = (ImageView) findViewById(R.id.View3);
+				ImageView v4 = (ImageView) findViewById(R.id.View4);
+				views[0]=v1;
+				views[1]=v2;
+				views[2]=v3;
+				views[3]=v4;
+				views[0].setSelected(true);
+	}
+
+	public void initGridView() {
+		//gridview
+		mGridView=(MyGridView) findViewById(R.id.home_gridView);
+		mAdapter=new QuickAdapter<HomeAD>(getActivity(), R.layout.item_home_gridview) {
+
+			@Override
+			protected void convert(BaseAdapterHelper helper, final HomeAD item) {
+				// TODO Auto-generated method stub
+				helper.setText(R.id.home_title, item.getName());
+				helper.setText(R.id.home_price, String.valueOf(item.getPrice()));
+				helper.setImageBitmapFromBmobFile(R.id.home_pic, item.getPic());
+				helper.setOnClickListener(R.id.home_pic , new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						startAnimActivityWithData(DetailActivity.class,"fruit",item.getFruit());
+					}
+				});
+			}
+		};
+		mGridView.setAdapter(mAdapter);
+	}
+
+	public void initImageSwitcher() {
 		//ÂÖ²¥Í¼
 		imswitcher = (MyImageSwitcher) findViewById(R.id.detail_imageSwitcher1);
 		imswitcher.setFactory(new ViewFactory()
@@ -119,42 +172,11 @@ public class HomeFragment extends BaseFragment{
 				return true;
 			}
 		});
-		//Æô¶¯ÂÖ²¥
+		/*//Æô¶¯ÂÖ²¥
 		DownloadTask dTask = new DownloadTask();   
 		dTask.execute(100);
-	
-		//°´Å¥
-		ImageView v1 = (ImageView) findViewById(R.id.View1);
-		ImageView v2 = (ImageView) findViewById(R.id.View2);
-		ImageView v3 = (ImageView) findViewById(R.id.View3);
-		ImageView v4 = (ImageView) findViewById(R.id.View4);
-		views[0]=v1;
-		views[1]=v2;
-		views[2]=v3;
-		views[3]=v4;
-		views[0].setSelected(true);
+	*/
 		
-		//gridview
-		mGridView=(MyGridView) findViewById(R.id.home_gridView);
-		mAdapter=new QuickAdapter<HomeAD>(getActivity(), R.layout.item_home_gridview) {
-
-			@Override
-			protected void convert(BaseAdapterHelper helper, final HomeAD item) {
-				// TODO Auto-generated method stub
-				helper.setText(R.id.home_title, item.getName());
-				helper.setText(R.id.home_price, String.valueOf(item.getPrice()));
-				helper.setImageBitmapFromBmobFile(R.id.home_pic, item.getPic());
-				helper.setOnClickListener(R.id.home_pic , new OnClickListener() {
-					
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-						startAnimActivityWithData(DetailActivity.class,"fruit",item.getFruit());
-					}
-				});
-			}
-		};
-		mGridView.setAdapter(mAdapter);
 	}
 	
 	
@@ -171,6 +193,7 @@ public class HomeFragment extends BaseFragment{
 		query.setMaxCacheAge(casheage);
 		query.addWhereEqualTo("top", true);
 		query.setLimit(adnum);
+		query.include("fruit");
 		query.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE);
 		query.findObjects(getActivity(), new FindListener<HomeAD>() {
 			
@@ -181,7 +204,6 @@ public class HomeFragment extends BaseFragment{
 					return;
 				ads=arg0;
 				downloadPics();
-				//getDrawables();
 			}
 			@Override
 			public void onError(int arg0, String arg1) {
@@ -195,6 +217,10 @@ public class HomeFragment extends BaseFragment{
 	public void downloadPics(){
 		
 		for (int i = 0; i < ads.size(); i++) {
+			
+			
+			ShowLog("down>>"+ads.get(i).getPic().getFilename());
+			
 			BmobProFile.getInstance(getActivity()).download(ads.get(i).getPic().getFilename(), new DownloadListener() {
 	
 		        @Override
@@ -219,14 +245,6 @@ public class HomeFragment extends BaseFragment{
 		}
 	}
 	
-	public void getDrawables(){
-		adpics.clear();
-		for(HomeAD ad:ads){
-			urls.add(ad.getPic().getFileUrl(getActivity()));
-			ShowLog(ad.getPic().getFileUrl(getActivity()));
-			
-		}
-	}
 	
 	/** 
 	 * @Title: loadData2 
@@ -307,7 +325,8 @@ public class HomeFragment extends BaseFragment{
 		{
 			setDotState(p);
 			if (adpics.size()>p) {
-				imswitcher.setImageFromBmobFile(ads.get(p).getPic());
+				imswitcher.setImageDrawable(adpics.get(p));
+				//imswitcher.setImageFromBmobFile(ads.get(p).getPic());
 				ShowLog("sssssssbbbbbbb");
 			}
 		
@@ -317,7 +336,8 @@ public class HomeFragment extends BaseFragment{
 		int	k=4+p;
 		setDotState(k);
 		if(adpics.size()>k){
-			imswitcher.setImageFromBmobFile(ads.get(p).getPic());
+			//imswitcher.setImageDrawable(adpics.get(k));
+			imswitcher.setImageFromBmobFile(ads.get(k).getPic());
 		}
 			
 		}

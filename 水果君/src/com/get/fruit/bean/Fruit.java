@@ -6,12 +6,11 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
 
-public class Fruit extends BmobObject implements Serializable {
+public class Fruit extends BmobObject {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 
 	private String number,name,describe,origin;//编号,描述,产地
 	private Category category;//种类名称
@@ -40,6 +39,16 @@ public class Fruit extends BmobObject implements Serializable {
 
 
 	
+	/**
+	 * 
+	 */
+	public Fruit() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
 	public String getName() {
 		return name;
 	}
@@ -190,12 +199,6 @@ public class Fruit extends BmobObject implements Serializable {
 		this.likes = likes;
 	}
 
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 	
 	public BmobFile getPicture() {
 		return picture;
@@ -240,15 +243,6 @@ public class Fruit extends BmobObject implements Serializable {
 	public void setLikesNumber(Integer likesNumber) {
 		this.likesNumber = likesNumber;
 	}
-
-
-
-
-	
-
-
-
-
 
 
 

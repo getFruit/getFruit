@@ -1,7 +1,6 @@
 package com.get.fruit.activity;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 
+import com.get.fruit.BmobConstants;
 import com.get.fruit.R;
 import com.get.fruit.activity.fragment.CartFragment;
 import com.get.fruit.activity.fragment.CartFragment.CartCallBack;
@@ -19,6 +18,7 @@ import com.get.fruit.activity.fragment.CategoryFragment;
 import com.get.fruit.activity.fragment.GardenFragment;
 import com.get.fruit.activity.fragment.HomeFragment;
 import com.get.fruit.activity.fragment.PersonFragment;
+import com.get.fruit.adapter.ZoomOutPageTransformer;
 import com.get.fruit.util.StringUtils;
 import com.get.fruit.view.HeaderLayout;
 import com.get.fruit.view.HeaderLayout.onLeftImageButtonClickListener;
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			ShowToast("暂时只支持天津地区，更多地区稍后支持！");
 			Intent intent = new Intent(MainActivity.this,
 					LocationActivity.class);
-			startAnimActivityForResult(intent);
+			startAnimActivityForResult(intent,BmobConstants.REQUESTCODE_FROM_MAINACTIVITY_FORADDRESS);
 		}
 	};
 	private onLeftImageButtonClickListener baseLeftListener = new onLeftImageButtonClickListener() {
@@ -67,13 +67,17 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (resultCode) {
-		case RESULT_OK:
+		ShowLog("MainAc >> request: "+requestCode+"   result: "+resultCode);
+		switch (requestCode) {
+		case BmobConstants.REQUESTCODE_FROM_MAINACTIVITY_FORADDRESS:
 			Bundle b = data.getExtras();
 			address = b.getString("address");
 			mHeaderLayout.setLeftText(address);
 			break;
+			
 		default:
+			ShowLog("default  onActivityResult");
+			fPerson.onActivityResult(requestCode, resultCode, data);
 			break;
 		}
 	}
@@ -266,7 +270,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 
-	// here
+	/*// here
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -276,7 +280,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		this.onClick(mButtons[to]);
 		super.onResume();
 	}
-
+*/
 	// homeFragment button 点击事件
 	public void homeIBClick(View arg0) {
 		// TODO Auto-generated method stub
@@ -370,48 +374,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 
-	public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-		private static final float MIN_SCALE = 0.85f;
-		private static final float MIN_ALPHA = 0.5f;
-
-		@Override
-		@SuppressLint("NewApi")
-		public void transformPage(View view, float position) {
-			int pageWidth = view.getWidth();
-			int pageHeight = view.getHeight();
-
-			if (position < -1) { // [-Infinity,-1)
-									// This page is way off-screen to the left.
-				view.setAlpha(0);
-
-			} else if (position <= 1) // a页滑动至b页 ； a页从 0.0 -1 ；b页从1 ~ 0.0
-			{ // [-1,1]
-				// Modify the default slide transition to shrink the page as
-				// well
-				float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
-				float vertMargin = pageHeight * (1 - scaleFactor) / 2;
-				float horzMargin = pageWidth * (1 - scaleFactor) / 2;
-				if (position < 0) {
-					view.setTranslationX(horzMargin - vertMargin / 2);
-				} else {
-					view.setTranslationX(-horzMargin + vertMargin / 2);
-				}
-
-				// Scale the page down (between MIN_SCALE and 1)
-				view.setScaleX(scaleFactor);
-				view.setScaleY(scaleFactor);
-
-				// Fade the page relative to its size.
-				view.setAlpha(MIN_ALPHA + (scaleFactor - MIN_SCALE)
-						/ (1 - MIN_SCALE) * (1 - MIN_ALPHA));
-
-			} else { // (1,+Infinity]
-						// This page is way off-screen to the right.
-				view.setAlpha(0);
-			}
-		}
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

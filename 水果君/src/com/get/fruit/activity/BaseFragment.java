@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +38,7 @@ public abstract class BaseFragment extends Fragment {
 	private Handler handler = new Handler();
 
 	protected BmobUserManager userManager;
-	 protected User me;
-
+	protected User me;
 	public void runOnWorkThread(Runnable action) {
 		new Thread(action).start();
 	}

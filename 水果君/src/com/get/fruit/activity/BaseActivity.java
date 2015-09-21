@@ -191,8 +191,8 @@ public class BaseActivity extends FragmentActivity {
 		}
 	}
 	
-	public void startAnimActivityForResult(Intent intent) {
-		this.startActivityForResult(intent, 0);
+	public void startAnimActivityForResult(Intent intent,int requstcode) {
+		this.startActivityForResult(intent, requstcode);
 	}
 	
 	public void startAnimActivity(Class<?> cla) {
