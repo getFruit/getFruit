@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.get.fruit">
+
+    <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+    
+    
+        <com.get.fruit.view.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        app:pstsIndicatorColor="@color/base_color_blue"
+        app:pstsShouldExpand="true"
+        app:pstsIndicatorHeight="4dp"
+        layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </com.get.fruit.view.PagerSlidingTabStrip>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabs">
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

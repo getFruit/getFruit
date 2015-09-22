@@ -53,6 +53,7 @@ public class HomeFragment extends BaseFragment{
 	private QuickAdapter<HomeAD> mAdapter;
 	private HomeAD[] dataAds;
 	List<String> urls=new ArrayList<>();
+	int[] res = new int[]{R.drawable.a,R.drawable.bb,R.drawable.cc,R.drawable.aa};
 	
 	
 	ImageView imageView;
@@ -172,10 +173,10 @@ public class HomeFragment extends BaseFragment{
 				return true;
 			}
 		});
-		/*//Æô¶¯ÂÖ²¥
+		//Æô¶¯ÂÖ²¥
 		DownloadTask dTask = new DownloadTask();   
 		dTask.execute(100);
-	*/
+	
 		
 	}
 	
@@ -305,14 +306,13 @@ public class HomeFragment extends BaseFragment{
 		float halfWidth=imswitcher.getWidth()/2.0f;  
 		 float halfHeight=imswitcher.getHeight()/2.0f;  
 		 int duration=500;  
-		 int depthz=0;//viewFlipper.getWidth()/2;  
+		 int depthz=0;
 		
 		 Rotate3D rdin = new Rotate3D(direction*75,0,0,halfWidth,halfHeight);
 		 rdin.setDuration(duration);    
 		 rdin.setFillAfter(true);
 		 imswitcher.setInAnimation(rdin);   
 		 Rotate3D rdout = new Rotate3D(direction*(-15),direction*(-90),0,halfWidth,halfHeight);
-		 ShowLog("sssssss");
 		 rdout.setDuration(duration);    
 		 rdout.setFillAfter(true);
 		 imswitcher.setOutAnimation(rdout);
@@ -324,9 +324,10 @@ public class HomeFragment extends BaseFragment{
 		if(p>=0)
 		{
 			setDotState(p);
-			if (adpics.size()>p) {
-				imswitcher.setImageDrawable(adpics.get(p));
+			if (res.length>p) {
+				//imswitcher.setImageDrawable(adpics.get(p));
 				//imswitcher.setImageFromBmobFile(ads.get(p).getPic());
+				imswitcher.setImageResource(res[p]);
 				ShowLog("sssssssbbbbbbb");
 			}
 		
@@ -335,9 +336,10 @@ public class HomeFragment extends BaseFragment{
 			
 		int	k=4+p;
 		setDotState(k);
-		if(adpics.size()>k){
+		if(res.length>k){
 			//imswitcher.setImageDrawable(adpics.get(k));
-			imswitcher.setImageFromBmobFile(ads.get(k).getPic());
+			//imswitcher.setImageFromBmobFile(ads.get(k).getPic());
+			imswitcher.setImageResource(res[k]);
 		}
 			
 		}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    
+
+    <TextView
+        android:id="@+id/listview_empty"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/line_bg"
+        android:gravity="center"
+        android:text="啥都木有买..."
+        android:textColor="@color/text_color_gray"
+        android:textSize="20sp" />
+
+    <com.get.fruit.view.listview.XListView
+        android:id="@+id/order_listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/listview_empty" >
+
+    </com.get.fruit.view.listview.XListView>
+
+</RelativeLayout>

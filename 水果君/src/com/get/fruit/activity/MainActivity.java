@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
+import cn.bmob.v3.update.BmobUpdateAgent;
+
+import com.get.fruit.App;
 import com.get.fruit.BmobConstants;
 import com.get.fruit.R;
 import com.get.fruit.activity.fragment.CartFragment;
@@ -85,9 +88,14 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ShowLog("BmobUpdateAgent.initAppVersion(this);");
+		BmobUpdateAgent.initAppVersion(this);
 		setContentView(R.layout.activity_main);
 		initView();
 		initEvent();
+		if (App.mInstance.getSpUtil().isAllowAutoUpdate()) {
+			BmobUpdateAgent.update(this);
+		}
 	}
 
 	/**
@@ -270,7 +278,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 
-	/*// here
+	// here
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -280,7 +288,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		this.onClick(mButtons[to]);
 		super.onResume();
 	}
-*/
+
 	// homeFragment button µã»÷ÊÂ¼þ
 	public void homeIBClick(View arg0) {
 		// TODO Auto-generated method stub

@@ -19,11 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.FindStatisticsListener;
 import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -125,6 +127,7 @@ public class DetailActivity extends BaseActivity {
         		ZoomImageView imageView = new ZoomImageView(getApplicationContext());
         		position %= mImageViews.length;
         		imageView.setImageResource(mImage[position]);
+        		imageView.setScaleType(ScaleType.FIT_XY);
         		container.addView(imageView);
         		mImageViews[position] = imageView;
         		mViewPager.setViewFromPosition(position, imageView);
@@ -171,11 +174,11 @@ public class DetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				int c=Integer.valueOf((String) count.getText())-1;
+				int c=Integer.valueOf(counEditText.getText().toString())-1;
 				if (c==0) {
 					return;
 				}
-				count.setText(c+"");
+				counEditText.setText(c+"");
 				total.setText(c*fruit.getPrice()+"");
 			}
 		});
@@ -184,11 +187,11 @@ public class DetailActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				int c=Integer.valueOf((String) count.getText())+1;
+				int c=Integer.valueOf(counEditText.getText().toString())+1;
 				if (c>fruit.getCount()) {
 					return;
 				}
-				count.setText(c+"");
+				counEditText.setText(c+"");
 				total.setText(c*fruit.getPrice()+"");
 			}
 		});
@@ -199,8 +202,9 @@ public class DetailActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				if (addtocart.getText().equals("查看购物车")) {
 					startAnimActivityToFragment(MainActivity.class, 3);
+					return;
 				}
-				int c=Integer.valueOf((String) count.getText());
+				int c=Integer.valueOf(counEditText.getText().toString());
 				if (c==0) {
 					ShowToast("请选择数量");
 					return;
@@ -267,12 +271,31 @@ public class DetailActivity extends BaseActivity {
 				setView();
 			}
 		});
+		
+		BmobQuery<CartItem> query2=new BmobQuery<CartItem>();
+		query2.addWhereEqualTo("fruit", fruit.getObjectId());
+		query2.addWhereEqualTo("mine", me.getObjectId());
+		query2.findStatistics(this, CartItem.class, new FindStatisticsListener() {
+			
+			@Override
+			public void onSuccess(Object arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	//下载图片
 	public void downloadPics(){
 			String[] pcs=fruit.getPictures();
 			pics.clear();
+			if(pcs==null||pcs.length==0)return;
 			for (int i = 0; i < pcs.length; i++) {
 				BmobProFile.getInstance(this).download(pcs[i], new DownloadListener() {
 		
@@ -305,6 +328,7 @@ public class DetailActivity extends BaseActivity {
 		price.setText(fruit.getPrice()+"");
 		total.setText(fruit.getPrice()+"");
 		name.setText(fruit.getName());
+		counEditText.setText(1+"");
 	}
 
 	//分享菜单
@@ -325,6 +349,7 @@ public class DetailActivity extends BaseActivity {
 					if (fruit==null) {
 						return;
 					}
+					//here
 					Fruit temp=new Fruit();
 					temp.setObjectId(fruit.getObjectId());
 					BmobRelation relation = new BmobRelation();

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical" >
+
+    <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+    
+        <TextView
+        android:id="@+id/listview_empty"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/line_bg"
+        android:gravity="center"
+        android:text="啥都木有..."
+        android:textColor="@color/text_color_gray"
+        android:textSize="20sp" />
+
+    <com.get.fruit.view.listview.XListView
+        android:id="@+id/collection_listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+
+    </com.get.fruit.view.listview.XListView>
+</LinearLayout>

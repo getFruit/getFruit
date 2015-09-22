@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/common_actionbar"
@@ -108,7 +107,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="0.1"
-                android:background="@color/base_color_all_transparent"
+                android:background="@color/base_color_half_transparent"
                 android:src="@drawable/details_delete" />
 
             <EditText
@@ -117,6 +116,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="0.2"
+                android:gravity="center"
+                android:focusable="false"
                 android:background="@drawable/edittext_shape_rectangle"
                 android:inputType="number" >
 
@@ -128,7 +129,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="0.1"
-                android:background="@color/base_color_all_transparent"
+                android:background="@color/base_color_half_transparent"
                 android:src="@drawable/detailes_append" />
 
         </LinearLayout>

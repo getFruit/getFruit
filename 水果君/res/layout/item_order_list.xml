@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="130dp"
+    android:background="@color/bg_color_gray"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal" xmlns:app="http://schemas.android.com/apk/res/com.get.fruit">
+    
+     <com.get.fruit.view.RoundAngleImageView
+         android:id="@+id/list_item_image"
+         android:layout_width="88dp"
+         android:layout_height="88dp"
+         android:layout_gravity="center"
+         android:layout_marginLeft="20dp"
+         android:layout_marginRight="10dp"
+         android:scaleType="fitXY"
+         android:src="@drawable/test_cart"
+         app:roundHeight="10dp"
+         app:roundWidth="10dp" />
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/list_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="水果大杂烩"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/list_item_functions"
+            android:layout_width="111dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="2dp"
+            android:lines="2"
+            android:text="2015-09-19 00:00:00"
+            android:textColor="@color/text_color_gray"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/list_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginRight="8dp"
+                android:text="￥ 00.0"
+                android:textColor="@color/base_color_red"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/list_addto"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/button_bg"
+        android:padding="4dp"
+        android:text="前往支付"
+        android:textColor="@color/base_color_white"
+        android:textSize="16sp" />
+
+</LinearLayout>

@@ -174,11 +174,12 @@ public class CartFragment extends BaseFragment {
 					
 				}else {
 					
+					emptyView.setVisibility(View.VISIBLE);
+					emptyView.setText("购物车空空的");
 				}
 				arg0.clear();
 				stopRefresh();
-				emptyView.setVisibility(View.VISIBLE);
-				emptyView.setText("购物车空空的");
+				
 			}
 			
 			@Override

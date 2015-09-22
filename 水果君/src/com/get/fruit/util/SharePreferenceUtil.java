@@ -21,6 +21,7 @@ public class SharePreferenceUtil {
 	private String SHARED_KEY_NOTIFY = "shared_key_notify";
 	private String SHARED_KEY_VOICE = "shared_key_sound";
 	private String SHARED_KEY_VIBRATE = "shared_key_vibrate";
+	private String SHARED_KEY_AUTOUPDATE = "shared_key_autoupdate";
 
 	
 	public boolean saveValue(String key, String value) {
@@ -47,6 +48,14 @@ public class SharePreferenceUtil {
 		return mSharedPreferences.getBoolean(SHARED_KEY_VOICE, true);
 	}
 
+	public void setAllowAutoUpdateEnable(boolean isChecked) {
+		editor.putBoolean(SHARED_KEY_AUTOUPDATE, isChecked);
+		editor.commit();
+	}
+	public boolean isAllowAutoUpdate() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_AUTOUPDATE, true);
+	}
+	
 	public void setAllowVoiceEnable(boolean isChecked) {
 		editor.putBoolean(SHARED_KEY_VOICE, isChecked);
 		editor.commit();
