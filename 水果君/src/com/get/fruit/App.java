@@ -83,6 +83,7 @@ public class App extends Application {
 		User user = BmobUser.getCurrentUser(mInstance, User.class);
 		if (user != null) {
 			return user;
+			//ffff
 		}
 		return null;
 	}
@@ -90,11 +91,11 @@ public class App extends Application {
 	public static FruitShop getMyshop() {
 		return myshop;
 	}
-
+/*-¡¢-**
 	
+	xxxxxxxxxxxxxxxx
 	
-	
-	
+	*/
 	
 	
 	
