@@ -88,8 +88,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ShowLog("BmobUpdateAgent.initAppVersion(this);");
-		BmobUpdateAgent.initAppVersion(this);
 		setContentView(R.layout.activity_main);
 		initView();
 		initEvent();

@@ -543,5 +543,13 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
 	
 }

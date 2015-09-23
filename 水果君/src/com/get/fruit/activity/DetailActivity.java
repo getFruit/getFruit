@@ -124,7 +124,7 @@ public class DetailActivity extends BaseActivity {
 			
         	@Override
         	public Object instantiateItem(ViewGroup container, int position) {
-        		ZoomImageView imageView = new ZoomImageView(getApplicationContext());
+        		ZoomImageView imageView = new ZoomImageView(DetailActivity.this);
         		position %= mImageViews.length;
         		imageView.setImageResource(mImage[position]);
         		imageView.setScaleType(ScaleType.FIT_XY);

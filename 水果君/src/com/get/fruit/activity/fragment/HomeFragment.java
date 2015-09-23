@@ -388,6 +388,9 @@ public class HomeFragment extends BaseFragment{
 			// TODO Auto-generated method stub
 			
           int p= i%4;
+          if (null==ads.get(p)||null==ads.get(p).getFruit()) {
+        	  return true;
+          }
 			
 			if(p>=0)
 			{
