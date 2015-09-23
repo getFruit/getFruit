@@ -91,11 +91,18 @@ public class App extends Application {
 		return myshop;
 	}
 
-	public static void setMyshop(FruitShop myshop) {
-		App.mInstance.getSpUtil();
-		App.myshop = myshop;
-	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//==========================
+		//	++++++++++++++++++++++++++++++++++
+			
 	/**
 	 * 初始化百度相关sdk initBaidumap
 	 * 
@@ -117,7 +124,7 @@ public class App extends Application {
 	 * 
 	 * @Title: initBaiduLocClient
 	 * @Description: TODO
-	 * @param
+	 * @param==============================================
 	 * @return void
 	 * @throws
 	 */
