@@ -56,5 +56,6 @@
     <string name="location_3">省市列表</string>
     <string name="location_tj">天津市</string>
     <string name="re_back">返回上一层</string>
+    <string name="title_activity_pay">app_name</string>
 
 </resources>

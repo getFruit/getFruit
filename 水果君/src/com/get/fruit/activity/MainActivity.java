@@ -73,8 +73,10 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		ShowLog("MainAc >> request: "+requestCode+"   result: "+resultCode);
 		switch (requestCode) {
 		case BmobConstants.REQUESTCODE_FROM_MAINACTIVITY_FORADDRESS:
-			Bundle b = data.getExtras();
-			address = b.getString("address");
+			address=data.getStringExtra("address");
+			if (StringUtils.isEmpty(address)) {
+				break;
+			}
 			mHeaderLayout.setLeftText(address);
 			break;
 			
@@ -117,7 +119,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		mButtons[2] = (ImageButton) findViewById(R.id.ib_person);
 		mButtons[3] = (ImageButton) findViewById(R.id.ib_cart);
 		mButtons[4] = (ImageButton) findViewById(R.id.ib_garden);
-
+		mButtons[0].setSelected(true);
 		fHome = new HomeFragment();
 		fCategory = new CategoryFragment();
 		fPerson = new PersonFragment();
@@ -283,7 +285,9 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		intent = getIntent();
 		to = intent.getIntExtra("to", 0);
 		ShowLog("onResume>>   to..." + to);
-		this.onClick(mButtons[to]);
+		if (to!=0) {
+			this.onClick(mButtons[to]);
+		}
 		super.onResume();
 	}
 
@@ -318,13 +322,43 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	}
 
 	// categoryFragment buttonµã»÷ÊÂ¼þ
-	public void iconClick(View v) {
-		playHeartbeatAnimation(v);
+	public void iconClick(final View v) {
+		/*Thread  play =new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				playHeartbeatAnimation(v);
+			}
+		});
+		try {
+			play.start();
+			play.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		
+		new Thread(){
+            public void run() {
+                while (true){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                        	playHeartbeatAnimation(v);
+                        }
+                    });
+                }
+            };
+        }.start();
 		String categoryBy = (String) v.getTag();
-		ShowToast("click: " + categoryBy);
 		if (!StringUtils.isEmpty(categoryBy)) {
-			startAnimActivityWithData(CategorySelectActivity.class,
-					"categoryBy", categoryBy);
+			startAnimActivityWithData(CategorySelectActivity.class,"categoryBy", categoryBy);
 		}
 	}
 	/*

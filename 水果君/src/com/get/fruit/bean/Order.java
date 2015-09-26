@@ -1,7 +1,5 @@
 package com.get.fruit.bean;
 
-import java.util.List;
-
 import cn.bmob.v3.BmobObject;
 
 public class Order extends BmobObject {
@@ -17,12 +15,12 @@ public class Order extends BmobObject {
     private Fruit fruit;
     private State state;//订单状态
     private SendWay sendway;//派送方式
-    private Float sum;//金额
+    private Double sum;//金额
     private PayWay payway;//支付方式
     private Boolean pay;//是否支付
     private UserAdress consignee;//收货人
     private String meggenger;//留言
-    
+    private String orderid;
     
     public  enum State{
     	
@@ -38,6 +36,19 @@ public class Order extends BmobObject {
     
     
     
+	public String getOrderid() {
+		return orderid;
+	}
+	public void setOrderid(String orderid) {
+		this.orderid = orderid;
+	}
+	public void setSum(Double sum) {
+		this.sum = sum;
+	}
+	
+	public Double getSum() {
+		return sum;
+	}
 	public User getUser() {
 		return user;
 	}
@@ -61,12 +72,6 @@ public class Order extends BmobObject {
 	}
 	public void setSendway(SendWay sendway) {
 		this.sendway = sendway;
-	}
-	public Float getSum() {
-		return sum;
-	}
-	public void setSum(Float sum) {
-		this.sum = sum;
 	}
 	public PayWay getPayway() {
 		return payway;

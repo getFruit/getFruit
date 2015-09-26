@@ -22,8 +22,8 @@ public class Fruit extends BmobObject {
 	private Integer paynum;//付款人数（直接写入实体，减少查询）
 	private Integer likesNumber;//收藏人数
 	private BmobRelation likes;//收藏的用户
-	private BmobFile picture;//主图(filename)
-	private String[] pictures;//附图（可选）
+	private BmobFile picture;//主图
+	private String[] pictures;//附图（可选）(url)
 	private Boolean overdue;//是否过期
 	
 	
@@ -272,16 +272,25 @@ public class Fruit extends BmobObject {
 
 	public enum Season{
 		
-		春天, 夏天, 秋天, 冬天
+		春天, 夏天, 秋天, 冬天;
+		public String categoryBy(){
+			return "季节";
+		}
 	}
 	
 	public enum Color{
 		
-		红, 黄, 蓝, 绿, 黑, 白, 紫, 橙
+		红, 黄, 蓝, 绿, 黑, 白, 紫, 橙;
+		public String categoryBy(){
+			return "颜色";
+		}
 	}
 	
 	public enum Origin{
-		南方 ,北方 ,西部 ,进口
+		南方 ,北方 ,西部 ,进口;
+		public String categoryBy(){
+			return "产地";
+		}
 	}
 
 }

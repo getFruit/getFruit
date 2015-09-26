@@ -67,14 +67,26 @@ public class ListFruitsActivity extends BaseActivity {
 	private Intent intent;
 	private PopupWindow popupwindow;
 	private List<CartItem> myyCartItems=new ArrayList<CartItem>();
+	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		intent=getIntent();
+		searchBy=intent.getStringExtra("searchBy");
+		searchValue=intent.getStringExtra("searchValue");
+		keyWord=intent.getStringExtra("keyWord");
+		ShowLog("searchBy："+searchBy+"   searchValue： "+searchValue+"   keyWord： "+keyWord);
+		mHeaderLayout.setLeftText(searchValue);
+		super.onResume();
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_listfruit);
-		intent=getIntent();
-		searchBy=intent.getStringExtra("searchBy");
-		keyWord=intent.getStringExtra("keyWord");
-		ShowLog("searchBy   "+searchBy+"   keyWord "+keyWord);
+		
 		initView();
 	}
 
@@ -85,9 +97,10 @@ public class ListFruitsActivity extends BaseActivity {
 	* @return void
 	* @throws 
 	*/
+	@SuppressLint("NewApi")
 	private void initView() {
 		// TODO Auto-generated method stub
-		initTopBarForMiddleView(null, R.drawable.base_action_bar_back_bg_selector, searchBy, new OnLeftClickListenerFinishMe(), R.drawable.base_action_bar_person_selector, null, new onRightImageButtonClickListener() {
+		initTopBarForMiddleView(null, R.drawable.base_action_bar_back_bg_selector, searchValue, new OnLeftClickListenerFinishMe(), R.drawable.base_action_bar_person_selector, null, new onRightImageButtonClickListener() {
 		
 			@Override
 			public void onClick() {

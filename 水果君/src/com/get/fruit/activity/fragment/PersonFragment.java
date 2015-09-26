@@ -29,6 +29,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.bmob.BmobProFile;
@@ -119,10 +120,13 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 	public void setAvatar() {
 		if (StringUtils.isEmpty(me.getAvatar())) {
 			avatar.setImageResource(R.drawable.person_icon);
-		}else {
-			//avatar.setImageDrawable(Drawable.createFromPath(path));
-			ImageLoader.getInstance().displayImage(path, avatar,ImageLoadOptions.getOptions());
+		}else if (isNetConnected()) {
+			ShowLog("ImageLoader ....."+me.getAvatar());
+			ImageLoader.getInstance().displayImage(me.getAvatar(), avatar,ImageLoadOptions.getOptions());
+		} else{
+			ImageLoader.getInstance().displayImage("file://"+path, avatar,ImageLoadOptions.getOptions());
 		}
+		
 	}
 	
 	
@@ -340,9 +344,12 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 						R.color.base_color_white));
 				layout_choose.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.pop_bg_press));
-				Intent intent = new Intent(Intent.ACTION_PICK, null);
+				/*Intent intent = new Intent(Intent.ACTION_PICK, null);
 				intent.setDataAndType(
 						MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+				*/
+				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		        intent.setType("image/*");
 				getActivity().startActivityForResult(intent,
 						BmobConstants.REQUESTCODE_TAKE_LOCAL);
 			}
@@ -478,7 +485,7 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 		if (extras != null) {
 			Bitmap bitmap = extras.getParcelable("data");
 			if (bitmap != null) {
-				String filename = new SimpleDateFormat("yyMMddHHmmss").format(new Date())+".jpg";
+				String filename = "myavatar.jpg";
 				PhotoUtil.saveBitmap(BmobConstants.MyTempDir, filename,bitmap, true);
 				ShowLog(BmobConstants.MyTempDir+filename);
 				path=BmobConstants.MyTempDir+filename;
@@ -486,6 +493,7 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 				if (isFromCamera && degree != 0) {
 					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
 				}
+				BmobRelation bmobRelation=new BmobRelation();
 				avatar.setImageBitmap(bitmap);
 				if (bitmap != null && bitmap.isRecycled()) {
 					bitmap.recycle();
@@ -506,8 +514,9 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 			@Override
 			public void onSuccess(String arg0, String arg1, BmobFile arg2) {
 				// TODO Auto-generated method stub
-				updateUserAvatar(arg1);
+				updateUserAvatar(arg2.getFileUrl(getActivity()));
 				ShowToast("头像上传成功");
+				ShowLog("头像    0: "+arg0+"   1:"+arg1+"   bf:"+arg2.getFilename()+"    getFileUrl: "+arg2.getFileUrl(getActivity())+"   url: "+arg2.getUrl());
 				
 			}
 			
@@ -527,12 +536,13 @@ public class PersonFragment extends BaseFragment implements OnClickListener{
 			public void onSuccess() {
 				// TODO Auto-generated method stub
 				ShowToast("头像更新成功！");
-				setAvatar();
+				//setAvatar();
 			}
 			@Override
 			public void onFailure(int code, String msg) {
 				// TODO Auto-generated method stub
 				ShowToast("头像更新失败：" + msg);
+				setAvatar();
 			}
 		});
 	}

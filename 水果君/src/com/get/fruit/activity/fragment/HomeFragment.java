@@ -80,7 +80,6 @@ public class HomeFragment extends BaseFragment{
 		loadData2();
 	}
 
-	
 
 	/** 
 	* @Title: initView 
@@ -220,7 +219,7 @@ public class HomeFragment extends BaseFragment{
 		for (int i = 0; i < ads.size(); i++) {
 			
 			
-			ShowLog("down>>"+ads.get(i).getPic().getFilename());
+			ShowLog("down>>"+ads.get(i).getPic().getFilename()+"    getFileUrl: "+ads.get(i).getPic().getFileUrl(getActivity())+"   url: "+ads.get(i).getPic().getUrl());
 			
 			BmobProFile.getInstance(getActivity()).download(ads.get(i).getPic().getFilename(), new DownloadListener() {
 	
@@ -277,7 +276,6 @@ public class HomeFragment extends BaseFragment{
 			}
 		});
 	}
-	
 	
 	
 	//改变圆点颜色

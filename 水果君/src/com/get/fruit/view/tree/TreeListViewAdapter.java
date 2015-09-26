@@ -93,7 +93,7 @@ public abstract class TreeListViewAdapter<T> extends BaseAdapter
 	}
 
 	@Override
-	public Object getItem(int position)
+	public Node getItem(int position)
 	{
 		return mVisibleNodes.get(position);
 	}

@@ -238,8 +238,10 @@ public class DetailActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		Intent intent=getIntent();
 		fruit=(Fruit) intent.getSerializableExtra("fruit");
-		ShowLog(fruit.getName());
-		query(fruit);
+		if (fruit!=null) {
+			setView();
+			//query(fruit);
+		}
 		super.onResume();
 	}
 	
@@ -254,7 +256,7 @@ public class DetailActivity extends BaseActivity {
 	private void query(Fruit fruit2) {
 		// TODO Auto-generated method stub
 		BmobQuery<Fruit> query=new BmobQuery<Fruit>();
-		query.include("Shop");
+		//query.include("Shop");
 		query.getObject(this, fruit2.getObjectId(), new GetListener<Fruit>() {
 			
 			@Override
