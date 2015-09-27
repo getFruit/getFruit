@@ -767,10 +767,6 @@ containing a value of this type.
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
     
-     <style name="AppBaseTheme" parent="android:Theme.Light"></style>
-    Application theme.
-    <style name="AppTheme" parent="AppBaseTheme">
-    </style> 
 
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
