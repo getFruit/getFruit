@@ -228,7 +228,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	public void changePage(int currentItem) {
 		// TODO Auto-generated method stub
 		ShowLog("changePage  " + currentItem);
-		mViewPager.setCurrentItem(currentItem);
+		mViewPager.setCurrentItem(currentItem,true);
 	}
 
 	@Override
@@ -274,7 +274,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(startMain);
 			System.exit(0);
-			// super.onBackPressed();
 		}
 	}
 
@@ -282,13 +281,14 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		super.onResume();
 		intent = getIntent();
 		to = intent.getIntExtra("to", 0);
-		ShowLog("onResume>>   to..." + to);
+		
+		ShowLog("onResume>>   to..." + to+"  "+intent.getStringExtra("fff")+"   "+intent.getSerializableExtra("iii")+"   ");
 		if (to!=0) {
 			this.onClick(mButtons[to]);
 		}
-		super.onResume();
 	}
 
 	// homeFragment button 点击事件
@@ -323,39 +323,14 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 
 	// categoryFragment button点击事件
 	public void iconClick(final View v) {
-		/*Thread  play =new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				playHeartbeatAnimation(v);
-			}
-		});
+		playHeartbeatAnimation(v);
 		try {
-			play.start();
-			play.join();
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
-		
-		new Thread(){
-            public void run() {
-                while (true){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                        	playHeartbeatAnimation(v);
-                        }
-                    });
-                }
-            };
-        }.start();
 		String categoryBy = (String) v.getTag();
 		if (!StringUtils.isEmpty(categoryBy)) {
 			startAnimActivityWithData(CategorySelectActivity.class,"categoryBy", categoryBy);

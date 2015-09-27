@@ -1,0 +1,259 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/view_grap_gray"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/order_edit_1"
+                android:textColor="@color/text_color_gray" />
+             <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_edit_2"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <TextView
+                android:id="@+id/order_edit_number"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:text=""
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+          
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_edit_3"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:text="￥0.0"
+                android:id="@+id/order_edit_price"
+                android:textColor="@color/text_color_orange"
+                android:textSize="14sp" />
+
+            
+
+        </LinearLayout>
+
+      
+      
+         <LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>  
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_edit_5"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/order_edit_method1"
+                android:onClick="send_method"
+                android:id="@+id/order_edit_method"
+                android:clickable="true"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+            
+
+        </LinearLayout> 
+         <LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>  
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_edit_6"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/order_edit_payment1"
+                android:onClick="select_payment"
+                android:id="@+id/order_edit_payment"
+                android:clickable="true"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+            
+
+        </LinearLayout> 
+         <LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>  
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_edit_7"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:text=""
+                android:id="@+id/order_edit_address"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+            
+
+        </LinearLayout> 
+         <LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>  
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/order_edit_8"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:text=""
+                android:id="@+id/order_edit_words"
+                android:onClick="order_words"
+                android:clickable="true"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+		
+            
+
+        </LinearLayout> 
+         <LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/> 
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:textSize="18sp"
+            android:text="@string/order_edit_9" 
+            android:background="@color/bg_color_green"
+            android:textColor="@color/base_color_white"
+            android:layout_gravity="center|center_horizontal"
+            android:onClick="submit_order"
+            />
+        </LinearLayout>
+        
+    </ScrollView>
+
+</LinearLayout>

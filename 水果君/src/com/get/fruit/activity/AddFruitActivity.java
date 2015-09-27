@@ -465,7 +465,7 @@ public class AddFruitActivity extends BaseActivity implements OnClickListener {
 		}
 		
 		try {
-			float price=Float.valueOf(addPriceEditText.getText().toString());
+			Double price=Double.valueOf(addPriceEditText.getText().toString());
 			double count =Double.valueOf(addCounEditText.getText().toString());
 			fruit.setPrice(price);
 			fruit.setCount(count);

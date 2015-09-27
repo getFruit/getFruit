@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+      android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+		<include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+      <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_1"
+                android:textColor="@color/text_color_gray"
+                android:id="@+id/address_select_test"
+                android:textSize="14sp" />
+      <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_1"
+                android:textColor="@color/text_color_gray"
+                android:id="@+id/address_select_test2"
+                android:textSize="14sp" />
+      <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_1"
+                android:textColor="@color/text_color_gray"
+                android:id="@+id/address_select_test3"
+                android:textSize="14sp" />
+      <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_1"
+                android:textColor="@color/text_color_gray"
+                android:id="@+id/address_select_test4"
+                android:textSize="14sp" />
+      <Button
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:textSize="18sp"
+            android:text="@string/address_5" 
+            android:background="@color/bg_color_green"
+            android:textColor="@color/base_color_white"
+            android:layout_gravity="center|center_horizontal"
+            android:onClick="getlocation"
+            />
+
+      <WebView
+          android:id="@+id/webview1"
+          android:layout_width="match_parent"
+          android:layout_height="0dip"
+          android:layout_weight="0.87" >
+</WebView>
+</LinearLayout>

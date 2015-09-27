@@ -23,6 +23,11 @@ import android.widget.ImageView.ScaleType;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
+import cn.bmob.social.share.core.BMShareListener;
+import cn.bmob.social.share.core.ErrorInfo;
+import cn.bmob.social.share.core.data.BMPlatform;
+import cn.bmob.social.share.core.data.ShareData;
+import cn.bmob.social.share.view.BMShare;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindStatisticsListener;
@@ -195,6 +200,7 @@ public class DetailActivity extends BaseActivity {
 				total.setText(c*fruit.getPrice()+"");
 			}
 		});
+		
 		addtocart.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -230,6 +236,8 @@ public class DetailActivity extends BaseActivity {
 			}
 		});
 	}
+	
+	
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.FragmentActivity#onResume()
 	 */
@@ -375,7 +383,8 @@ public class DetailActivity extends BaseActivity {
 					});
 					break;
 				case R.id.share:
-					//here
+					testShare();
+					popupwindow.dismiss();
 					break;
 
 				default:
@@ -426,6 +435,51 @@ public class DetailActivity extends BaseActivity {
 		
 	}
 	
+	private void testShare() {
+		// ShareDataÊ¹ÓÃÄÚÈÝ·ÖÏíÀàÐÍ·ÖÏíÀàÐÍ
+		ShareData shareData = new ShareData();
+		shareData.setTitle(fruit.getName());
+		shareData.setDescription("BmobÉç»á»¯·ÖÏí¹¦ÄÜ");
+		shareData.setText("BmobÌá¹©µÄ¶àÆ½Ì¨Éç»á»¯·ÖÏí¹¦ÄÜ£¬Ä¿Ç°Ö§³ÖQQ¡¢QQ¿Õ¼ä¡¢Î¢ÐÅ¡¢Î¢ÐÅÅóÓÑÈ¦¡¢ÌÚÑ¶Î¢²©¡¢ÐÂÀËÎ¢²©¡¢ÈËÈËÍøÆ½Ì¨µÄ·ÖÏí¹¦ÄÜ¡£ ");
+		shareData.setTarget_url("http://www.codenow.cn/");
+		shareData.setImageUrl("http://assets3.chuangyepu.com/system/startup_contents/logos/000/003/395/medium/data.jpeg");
+		
+		BMShareListener whiteViewListener = new BMShareListener() {
+
+			@Override
+			public void onSuccess() {
+					ShowLog("onSuccess");
+			}
+
+			@Override
+			public void onPreShare() {
+					ShowLog("onPreShare");
+			}
+
+			@Override
+			public void onError(ErrorInfo error) {
+					ShowLog("onError"+error.getErrorMessage());
+			}
+
+			@Override
+			public void onCancel() {
+					ShowLog("onCancel");
+			}
+
+		};
+		
+		BMShare share = new BMShare(this);
+		share.setShareData(shareData);
+		share.addListener(BMPlatform.PLATFORM_WECHAT, whiteViewListener);
+		share.addListener(BMPlatform.PLATFORM_WECHATMOMENTS, whiteViewListener);
+		share.addListener(BMPlatform.PLATFORM_SINAWEIBO, whiteViewListener);
+		share.addListener(BMPlatform.PLATFORM_RENN, whiteViewListener);
+		share.addListener(BMPlatform.PLATFORM_TENCENTWEIBO, whiteViewListener);
+		share.addListener(BMPlatform.PLATFORM_QQ, whiteViewListener);
+		share.addListener(BMPlatform.PLATFORM_QZONE, whiteViewListener);
+		share.show();
+		ShowLog("share");
+	}
 	
 	/** 
 	* @Title: openPopuWindow 

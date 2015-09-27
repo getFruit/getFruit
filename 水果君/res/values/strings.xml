@@ -44,9 +44,6 @@
     <string name="toast_error_comfirm_password">输入的两次密码不一致</string>
     <string name="blacklist">黑名单</string>
     <string name="chat">发起会话</string>
-    <string name="add_friend">添加好友</string>
-    <string name="send_state">已读</string>
-    <string name="longclick_speak">长按说话</string>
     <string name="picture">照片</string>
     <string name="camera">拍摄</string>
     <string name="location">位置</string>
@@ -56,6 +53,21 @@
     <string name="location_3">省市列表</string>
     <string name="location_tj">天津市</string>
     <string name="re_back">返回上一层</string>
-    <string name="title_activity_pay">app_name</string>
+    <string name="order_edit_1">订单内容</string>
+    <string name="order_edit_2">订单号：</string>
+    <string name="order_edit_3">订单金额：</string>
+    <string name="order_edit_4">订单状态：</string>
+    <string name="order_edit_5">送货方式：</string>
+    <string name="order_edit_6">付款方式：</string>
+    <string name="order_edit_7">收货地址：</string>
+    <string name="order_edit_8">订单留言：</string>
+    <string name="order_edit_9">提交订单</string>
+    <string name="order_edit_payment1">现金支付</string>
+    <string name="order_edit_method1">送货上门</string>
+    <string name="address_1">收货人姓名</string>
+    <string name="address_2">手机号</string>
+    <string name="address_3">学校</string>
+    <string name="address_4">详细地址</string>
+    <string name="address_5">完成</string>
 
 </resources>
