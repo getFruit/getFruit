@@ -10,16 +10,27 @@ public class Order extends BmobObject {
 	}
 
 
-    //private List<Fruit> fruits;//一单多果
+    
+    public Order(User user, Fruit fruit, Integer count) {
+		super();
+		this.user = user;
+		this.fruit = fruit;
+		this.count = count;
+	}
+
+
+
+	//private List<Fruit> fruits;//一单多果
     private User user;
     private Fruit fruit;
+    private Integer count;
     private State state;//订单状态
     private SendWay sendway;//派送方式
     private Double sum;//金额
     private PayWay payway;//支付方式
     private Boolean pay;//是否支付
     private UserAdress consignee;//收货人
-    private String meggenger;//留言
+    private String messenger;//留言
     private String orderid;
     
     public  enum State{
@@ -36,6 +47,12 @@ public class Order extends BmobObject {
     
     
     
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	public String getOrderid() {
 		return orderid;
 	}
@@ -45,7 +62,6 @@ public class Order extends BmobObject {
 	public void setSum(Double sum) {
 		this.sum = sum;
 	}
-	
 	public Double getSum() {
 		return sum;
 	}
@@ -91,11 +107,11 @@ public class Order extends BmobObject {
 	public void setConsignee(UserAdress consignee) {
 		this.consignee = consignee;
 	}
-	public String getMeggenger() {
-		return meggenger;
+	public String getMessenger() {
+		return messenger;
 	}
-	public void setMeggenger(String meggenger) {
-		this.meggenger = meggenger;
+	public void setMessenger(String messenger) {
+		this.messenger = messenger;
 	}
     
     

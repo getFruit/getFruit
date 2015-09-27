@@ -23,9 +23,10 @@
     <color name="bg_color_gray_2">#F3EFED</color>
     <color name="bg_color_gray_unact">#88000000</color>
     <color name="bg_color_black">#464646</color>
+    <color name="bg_color_green">#64C500</color>
     <color name="text_color_gray">#666666</color><!-- 文字颜色 -->
     <color name="text_color_green">#64C500</color><!-- 文字颜色 -->
-    
+    <color name="text_color_orange">#FFA16D</color>
     <color name="keyworld_shape_button">#ff30C93A</color>
     
     

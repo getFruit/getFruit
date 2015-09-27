@@ -80,6 +80,7 @@ public class HomeFragment extends BaseFragment{
 		loadData2();
 	}
 
+	
 
 	/** 
 	* @Title: initView 

@@ -1,7 +1,5 @@
 package com.get.fruit.bean;
 
-import java.io.Serializable;
-
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -17,7 +15,7 @@ public class Fruit extends BmobObject {
 	private Color color;//颜色
 	private Season season;//季节
 	private FruitShop shop;//所属商店
-	private float price;//价格
+	private Double price;//价格
 	private double count;//数量
 	private Integer paynum;//付款人数（直接写入实体，减少查询）
 	private Integer likesNumber;//收藏人数
@@ -148,13 +146,13 @@ public class Fruit extends BmobObject {
 
 
 
-	public float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
 
 
-	public void setPrice(float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

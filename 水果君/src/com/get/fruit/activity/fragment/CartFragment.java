@@ -1,5 +1,6 @@
 package com.get.fruit.activity.fragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,8 +18,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.bmob.im.bean.BmobChatUser;
-import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
@@ -27,9 +26,12 @@ import cn.bmob.v3.listener.UpdateListener;
 import com.get.fruit.R;
 import com.get.fruit.activity.BaseFragment;
 import com.get.fruit.activity.DetailActivity;
+import com.get.fruit.activity.OrderEditActivity;
 import com.get.fruit.adapter.util.BaseAdapterHelper;
 import com.get.fruit.adapter.util.QuickAdapter;
 import com.get.fruit.bean.CartItem;
+import com.get.fruit.bean.Fruit;
+import com.get.fruit.bean.Order;
 import com.get.fruit.util.CollectionUtils;
 import com.get.fruit.view.HeaderLayout;
 import com.get.fruit.view.HeaderLayout.onRightImageButtonClickListener;
@@ -229,8 +231,15 @@ public class CartFragment extends BaseFragment {
 			
 			@Override
 			public void onClick(View v) {
+				List<Order> items=new ArrayList<>();
+				for (Integer i:checkedItems) {
+					CartItem c=allItems.remove((int)i);
+					Order order=new Order(me,c.getFruit(),c.getCount());
+					items.add(order);
+				}
+				checkedItems.clear();
 				// TODO Auto-generated method stub
-				ShowLog("pay");
+				startAnimActivityWithData(OrderEditActivity.class, "orders", (Serializable) items);
 			}
 		});
 		

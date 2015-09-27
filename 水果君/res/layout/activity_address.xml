@@ -1,0 +1,160 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+   <include
+        android:id="@+id/common_actionbar"
+        layout="@layout/include_action_bar" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_1"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <EditText
+                android:id="@+id/address_name"
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:hint=""
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+          
+
+        </LinearLayout>
+		<LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>
+		  <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_2"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <EditText
+                android:id="@+id/address_number"
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:hint=""
+                android:inputType="number"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+          
+
+        </LinearLayout>
+		<LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>
+		  <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_3"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <EditText
+                android:id="@+id/address_zipcode"
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:hint=""
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+          
+
+        </LinearLayout>
+		<LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>
+		  <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/address_4"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+            
+            <EditText
+                android:id="@+id/address_detailed"
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="20dp"
+                android:hint=""
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+          
+
+        </LinearLayout>
+		<LinearLayout android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/line_color_gray"/>
+		 <Button
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:textSize="18sp"
+            android:text="@string/address_5" 
+            android:background="@color/bg_color_green"
+            android:textColor="@color/base_color_white"
+            android:layout_gravity="center|center_horizontal"
+            android:onClick="finish_submit"
+            />
+		
+</LinearLayout>

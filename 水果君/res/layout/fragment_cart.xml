@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.0"
-                    android:maxLength="4"
+                    android:maxLength="5"
                     android:textColor="@color/base_color_red"
                     android:textSize="26sp" />
             </LinearLayout>
@@ -98,7 +98,7 @@
                 android:gravity="center"
                 android:text="去结算"
                 android:textColor="@color/base_color_white"
-                android:textSize="24dp" />
+                android:textSize="22dp" />
     </LinearLayout>
 
 </RelativeLayout>

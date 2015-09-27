@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.util.BmobLog;
-import cn.bmob.push.a.This;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
@@ -91,12 +90,12 @@ public class App extends Application {
 	public static FruitShop getMyshop() {
 		return myshop;
 	}
-	
-	public static void setMyshop(FruitShop shop) {
-		 myshop=shop;
+
+	public static void setMyshop(FruitShop myshop) {
+		App.mInstance.getSpUtil();
+		App.myshop = myshop;
 	}
-	
-			
+
 	/**
 	 * 初始化百度相关sdk initBaidumap
 	 * 
@@ -118,7 +117,7 @@ public class App extends Application {
 	 * 
 	 * @Title: initBaiduLocClient
 	 * @Description: TODO
-	 * @param==============================================
+	 * @param
 	 * @return void
 	 * @throws
 	 */
